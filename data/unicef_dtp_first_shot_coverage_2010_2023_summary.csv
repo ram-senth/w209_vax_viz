@@ -1,0 +1,196 @@
+REF_AREA:Geographic area,2019,2020,2021,delta,delta_rank
+AFG: Afghanistan,75,78,74,3,188.5
+AGO: Angola,67,61,57,-6,30.5
+ALB: Albania,99,99,98,0,125.0
+AND: Andorra,99,99,99,0,125.0
+ARE: United Arab Emirates,99,90,96,-9,13.0
+ARG: Argentina,87,79,82,-8,18.5
+ARM: Armenia,96,96,96,0,125.0
+ATG: Antigua and Barbuda,98,98,93,0,125.0
+AUS: Australia,98,98,98,0,125.0
+AUT: Austria,93,95,95,2,184.0
+AZE: Azerbaijan,96,85,92,-11,8.5
+BDI: Burundi,97,98,96,1,174.0
+BEL: Belgium,98,98,98,0,125.0
+BEN: Benin,84,83,84,-1,75.0
+BFA: Burkina Faso,95,95,95,0,125.0
+BGD: Bangladesh,99,99,99,0,125.0
+BGR: Bulgaria,96,94,92,-2,64.5
+BHR: Bahrain,99,99,99,0,125.0
+BHS: Bahamas,91,97,79,6,194.0
+BIH: Bosnia and Herzegovina,89,89,89,0,125.0
+BLR: Belarus,98,97,98,-1,75.0
+BLZ: Belize,99,79,83,-20,2.0
+BOL: Bolivia (Plurinational State of),81,79,75,-2,64.5
+BRA: Brazil,79,88,74,9,195.0
+BRB: Barbados,92,86,83,-6,30.5
+BRN: Brunei Darussalam,99,99,99,0,125.0
+BTN: Bhutan,99,96,99,-3,54.0
+BWA: Botswana,98,98,98,0,125.0
+CAF: Central African Republic,54,54,54,0,125.0
+CAN: Canada,94,94,94,0,125.0
+CHE: Switzerland,98,98,97,0,125.0
+CHL: Chile,99,98,99,-1,75.0
+CHN: China,99,99,99,0,125.0
+CIV: Côte d'Ivoire,92,84,85,-8,18.5
+CMR: Cameroon,75,77,76,2,184.0
+COD: Democratic Republic of the Congo,84,83,81,-1,75.0
+COG: Congo,82,77,81,-5,35.5
+COK: Cook Islands,99,99,99,0,125.0
+COL: Colombia,95,92,90,-3,54.0
+COM: Comoros,96,93,95,-3,54.0
+CPV: Cabo Verde,96,93,93,-3,54.0
+CRI: Costa Rica,96,99,99,3,188.5
+CUB: Cuba,99,99,99,0,125.0
+CYP: Cyprus,98,98,98,0,125.0
+CZE: Czechia,99,99,98,0,125.0
+DEU: Germany,98,98,98,0,125.0
+DJI: Djibouti,90,76,70,-14,4.0
+DMA: Dominica,99,99,96,0,125.0
+DNK: Denmark,97,97,98,0,125.0
+DOM: Dominican Republic,96,86,99,-10,10.0
+DZA: Algeria,96,96,96,0,125.0
+ECU: Ecuador,85,74,78,-11,8.5
+EGY: Egypt,96,95,97,-1,75.0
+ERI: Eritrea,97,97,97,0,125.0
+ESP: Spain,98,98,96,0,125.0
+EST: Estonia,92,92,91,0,125.0
+ETH: Ethiopia,76,76,70,0,125.0
+FIN: Finland,98,98,98,0,125.0
+FJI: Fiji,99,99,99,0,125.0
+FRA: France,99,99,99,0,125.0
+FSM: Micronesia (Federated States of),97,98,95,1,174.0
+GAB: Gabon,77,69,76,-8,18.5
+GBR: United Kingdom,97,97,97,0,125.0
+GEO: Georgia,99,95,97,-4,42.5
+GHA: Ghana,97,94,99,-3,54.0
+GIN: Guinea,62,62,62,0,125.0
+GMB: Gambia,93,88,82,-5,35.5
+GNB: Guinea-Bissau,86,87,81,1,174.0
+GNQ: Equatorial Guinea,77,77,77,0,125.0
+GRC: Greece,99,99,99,0,125.0
+GRD: Grenada,97,79,79,-18,3.0
+GTM: Guatemala,92,92,89,0,125.0
+GUY: Guyana,99,99,98,0,125.0
+HND: Honduras,89,85,82,-4,42.5
+HRV: Croatia,98,98,98,0,125.0
+HTI: Haiti,75,75,75,0,125.0
+HUN: Hungary,99,99,99,0,125.0
+IDN: Indonesia,90,83,74,-7,25.0
+IND: India,94,87,88,-7,25.0
+IRL: Ireland,98,98,98,0,125.0
+IRN: Iran (Islamic Republic of),99,99,98,0,125.0
+IRQ: Iraq,93,90,89,-3,54.0
+ISL: Iceland,95,96,97,1,174.0
+ISR: Israel,99,99,99,0,125.0
+ITA: Italy,98,94,94,-4,42.5
+JAM: Jamaica,97,97,93,0,125.0
+JOR: Jordan,90,78,78,-12,6.0
+JPN: Japan,99,98,98,-1,75.0
+KAZ: Kazakhstan,99,94,98,-5,35.5
+KEN: Kenya,97,94,99,-3,54.0
+KGZ: Kyrgyzstan,99,90,89,-9,13.0
+KHM: Cambodia,94,94,94,0,125.0
+KIR: Kiribati,97,99,99,2,184.0
+KNA: Saint Kitts and Nevis,98,99,97,1,174.0
+KOR: Republic of Korea,98,98,98,0,125.0
+KWT: Kuwait,99,99,99,0,125.0
+LAO: Lao People's Democratic Republic,86,87,85,1,174.0
+LBN: Lebanon,96,87,88,-9,13.0
+LBR: Liberia,86,82,81,-4,42.5
+LBY: Libya,74,74,74,0,125.0
+LCA: Saint Lucia,99,90,89,-9,13.0
+LKA: Sri Lanka,99,96,96,-3,54.0
+LSO: Lesotho,92,92,92,0,125.0
+LTU: Lithuania,96,95,93,-1,75.0
+LUX: Luxembourg,99,99,99,0,125.0
+LVA: Latvia,99,99,96,0,125.0
+MAR: Morocco,99,99,99,0,125.0
+MCO: Monaco,99,99,99,0,125.0
+MDA: Republic of Moldova,91,86,87,-5,35.5
+MDG: Madagascar,76,73,65,-3,54.0
+MDV: Maldives,99,99,97,0,125.0
+MEX: Mexico,84,77,83,-7,25.0
+MHL: Marshall Islands,96,97,97,1,174.0
+MKD: North Macedonia,98,93,89,-5,35.5
+MLI: Mali,82,75,82,-7,25.0
+MLT: Malta,98,99,99,1,174.0
+MMR: Myanmar,93,87,45,-6,30.5
+MNE: Montenegro,94,94,94,0,125.0
+MNG: Mongolia,99,98,97,-1,75.0
+MOZ: Mozambique,91,83,67,-8,18.5
+MRT: Mauritania,88,80,75,-8,18.5
+MUS: Mauritius,97,94,93,-3,54.0
+MWI: Malawi,97,95,95,-2,64.5
+MYS: Malaysia,99,99,98,0,125.0
+NAM: Namibia,92,97,97,5,193.0
+NER: Niger,92,93,94,1,174.0
+NGA: Nigeria,68,70,70,2,184.0
+NIC: Nicaragua,99,94,88,-5,35.5
+NIU: Niue,99,99,99,0,125.0
+NLD: Netherlands (Kingdom of the),98,98,98,0,125.0
+NOR: Norway,99,98,98,-1,75.0
+NPL: Nepal,96,89,92,-7,25.0
+NRU: Nauru,99,99,99,0,125.0
+NZL: New Zealand,94,94,93,0,125.0
+OMN: Oman,99,99,99,0,125.0
+PAK: Pakistan,90,83,90,-7,25.0
+PAN: Panama,97,93,93,-4,42.5
+PER: Peru,97,93,90,-4,42.5
+PHL: Philippines,73,74,57,1,174.0
+PLW: Palau,99,99,99,0,125.0
+PNG: Papua New Guinea,44,48,39,4,191.0
+POL: Poland,99,99,99,0,125.0
+PRK: Democratic People's Republic of Korea,98,98,42,0,125.0
+PRT: Portugal,99,99,99,0,125.0
+PRY: Paraguay,88,84,79,-4,42.5
+PSE: State of Palestine,99,99,99,0,125.0
+QAT: Qatar,99,96,99,-3,54.0
+ROU: Romania,96,95,95,-1,75.0
+RUS: Russian Federation,97,97,97,0,125.0
+RWA: Rwanda,99,91,90,-8,18.5
+SAU: Saudi Arabia,96,96,97,0,125.0
+SDN: Sudan,97,96,94,-1,75.0
+SEN: Senegal,97,93,87,-4,42.5
+SGP: Singapore,98,98,98,0,125.0
+SLB: Solomon Islands,99,98,95,-1,75.0
+SLE: Sierra Leone,95,93,94,-2,64.5
+SLV: El Salvador,82,79,72,-3,54.0
+SMR: San Marino,90,92,91,2,184.0
+SOM: Somalia,52,52,52,0,125.0
+SRB: Serbia,99,97,97,-2,64.5
+SSD: South Sudan,51,51,51,0,125.0
+STP: Sao Tome and Principe,97,97,97,0,125.0
+SUR: Suriname,81,60,81,-21,1.0
+SVK: Slovakia,99,98,97,-1,75.0
+SVN: Slovenia,98,98,92,0,125.0
+SWE: Sweden,98,98,98,0,125.0
+SWZ: Eswatini,96,87,86,-9,13.0
+SYC: Seychelles,99,99,99,0,125.0
+SYR: Syrian Arab Republic,72,65,65,-7,25.0
+TCD: Chad,65,69,73,4,191.0
+TGO: Togo,90,87,88,-3,54.0
+THA: Thailand,99,99,99,0,125.0
+TJK: Tajikistan,98,98,97,0,125.0
+TKM: Turkmenistan,99,99,99,0,125.0
+TLS: Timor-Leste,90,87,87,-3,54.0
+TON: Tonga,99,99,99,0,125.0
+TTO: Trinidad and Tobago,97,98,95,1,174.0
+TUN: Tunisia,98,99,99,1,174.0
+TUR: Türkiye,99,99,95,0,125.0
+TUV: Tuvalu,99,99,99,0,125.0
+TZA: United Republic of Tanzania,91,88,82,-3,54.0
+UGA: Uganda,96,94,97,-2,64.5
+UKR: Ukraine,89,93,91,4,191.0
+URY: Uruguay,99,98,95,-1,75.0
+USA: United States,97,97,97,0,125.0
+UZB: Uzbekistan,96,96,99,0,125.0
+VCT: Saint Vincent and the Grenadines,99,99,99,0,125.0
+VEN: Venezuela (Bolivarian Republic of),85,73,73,-12,6.0
+VNM: Viet Nam,96,96,87,0,125.0
+VUT: Vanuatu,96,84,71,-12,6.0
+WSM: Samoa,97,99,96,2,184.0
+YEM: Yemen,81,83,82,2,184.0
+ZAF: South Africa,87,88,91,1,174.0
+ZMB: Zambia,94,88,94,-6,30.5
+ZWE: Zimbabwe,94,93,93,-1,75.0
