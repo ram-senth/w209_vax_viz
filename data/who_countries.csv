@@ -1,0 +1,203 @@
+name,region_number,region_code,region_subcode
+Afghanistan,7,EMR,D
+Albania,9,EUR,B
+Algeria,1,AFR,D
+Andorra,8,EUR,A
+Angola,1,AFR,D
+Antigua And Barbuda,4,AMR,B
+Argentina,4,AMR,B
+Armenia,9,EUR,B
+Australia,13,WPR,A
+Austria,8,EUR,A
+Azerbaijan,9,EUR,B
+Bahamas,4,AMR,B
+Bahrain,6,EMR,B
+Bangladesh,12,SEAR,D
+Barbados,4,AMR,B
+Belarus,10,EUR,C
+Belgium,8,EUR,A
+Belize,4,AMR,B
+Benin,1,AFR,D
+Bhutan,12,SEAR,D
+Bolivia,5,AMR,D
+Bosnia And Herzegovina,9,EUR,B
+Botswana,2,AFR,E
+Brazil,4,AMR,B
+Brunei Darussalam,13,WPR,A
+Bulgaria,9,EUR,B
+Burkina Faso,1,AFR,D
+Burundi,2,AFR,E
+Cambodia,14,WPR,B
+Cameroon,1,AFR,D
+Canada,3,AMR,A
+Cape Verde,1,AFR,D
+Central African Republic,2,AFR,E
+Chad,1,AFR,D
+Chile,4,AMR,B
+China,14,WPR,B
+Colombia,4,AMR,B
+Comoros,1,AFR,D
+Congo,2,AFR,E
+"The Congo, Democratic Republic Of",2,AFR,E
+Cook Islands,14,WPR,B
+Costa Rica,4,AMR,B
+Côte d'Ivoire,2,AFR,E
+Croatia,8,EUR,A
+Cuba,3,AMR,A
+Cyprus,6,EMR,B
+Czech Republic,8,EUR,A
+Democratic Peoples Republic Of Korea,12,SEAR,D
+Democratic Republic Of The Congo,2,AFR,E
+Denmark,8,EUR,A
+Djibouti,7,EMR,D
+Dominica,4,AMR,B
+Dominican Republic,4,AMR,B
+Ecuador,5,AMR,D
+Egypt,7,EMR,D
+El Salvador,4,AMR,B
+Equatorial Guinea,1,AFR,D
+Eritrea,2,AFR,E
+Estonia,10,EUR,C
+Ethiopia,2,AFR,E
+Fiji,14,WPR,B
+Finland,8,EUR,A
+France,8,EUR,A
+Gabon,1,AFR,D
+Gambia,1,AFR,D
+Georgia,9,EUR,B
+Germany,8,EUR,A
+Ghana,1,AFR,D
+Greece,8,EUR,A
+Grenada,4,AMR,B
+Guatemala,5,AMR,D
+Guinea,1,AFR,D
+Guinea-Bissau,1,AFR,D
+Guyana,4,AMR,B
+Haiti,5,AMR,D
+Honduras,4,AMR,B
+Hungary,10,EUR,C
+Iceland,8,EUR,A
+India,12,SEAR,D
+Indonesia,11,SEAR,B
+Iran (Islamic Republic Of),6,EMR,B
+Iraq,7,EMR,D
+Ireland,8,EUR,A
+Israel,8,EUR,A
+Italy,8,EUR,A
+Jamaica,4,AMR,B
+Japan,13,WPR,A
+Jordan,6,EMR,B
+Kazakhstan,10,EUR,C
+Kenya,2,AFR,E
+Kiribati,14,WPR,B
+"Korea, Democratic Peoples Republic of",12,SEAR,B
+"Korea, Republic Of",14,WPR,B
+Kuwait,6,EMR,B
+Kyrgyzstan,9,EUR,B
+Lao People's Democratic Republic,14,WPR,B
+Latvia,10,EUR,C
+Lebanon,6,EMR,B
+Lesotho,2,AFR,E
+Liberia,1,AFR,D
+Libyan Arab Jamahiriya,6,EMR,B
+Lithuania,10,EUR,C
+Luxembourg,8,EUR,A
+"Macedonia, The Former Yugoslav Republic Of",9,EUR,B
+Madagascar,1,AFR,D
+Malawi,2,AFR,E
+Malaysia,14,WPR,B
+Maldives,12,SEAR,D
+Mali,1,AFR,D
+Malta,8,EUR,A
+Marshall Islands,14,WPR,B
+Mauritania,1,AFR,D
+Mauritius,1,AFR,D
+Mexico,4,AMR,B
+Micronesia (Federated States Of),14,WPR,B
+"Moldova, Republic Of",10,EUR,C
+Monaco,8,EUR,A
+Mongolia,14,WPR,B
+Montenegro,9,EUR,B
+Morocco,7,EMR,D
+Mozambique,2,AFR,E
+Myanmar,12,SEAR,D
+Namibia,2,AFR,E
+Nauru,14,WPR,B
+Nepal,12,SEAR,D
+Netherlands,8,EUR,A
+New Zealand,13,WPR,A
+Nicaragua,5,AMR,D
+Niger,1,AFR,D
+Nigeria,1,AFR,D
+Niue,14,WPR,B
+Norway,8,EUR,A
+Oman,6,EMR,B
+Pakistan,7,EMR,D
+Palau,14,WPR,B
+Panama,4,AMR,B
+Papua New Guinea,14,WPR,B
+Paraguay,4,AMR,B
+Peru,5,AMR,D
+Philippines,14,WPR,B
+Poland,9,EUR,B
+Portugal,8,EUR,A
+Qatar,6,EMR,B
+Republic Of Korea,14,WPR,B
+Republic Of Moldova,10,EUR,C
+Romania,9,EUR,B
+Russian Federation,10,EUR,C
+Rwanda,2,AFR,E
+Saint Kitts And Nevis,4,AMR,B
+Saint Lucia,4,AMR,B
+Saint Vincent And The Grenadines,4,AMR,B
+Samoa,14,WPR,B
+San Marino,8,EUR,A
+Serbia,9,EUR,B
+Sao Tome And Principe,1,AFR,D
+Saudi Arabia,6,EMR,B
+Senegal,1,AFR,D
+Seychelles,1,AFR,D
+Sierra Leone,1,AFR,D
+Singapore,13,WPR,A
+Slovakia,9,EUR,B
+Slovenia,8,EUR,A
+Somalia,7,EMR,D
+Solomon Islands,14,WPR,B
+South Africa,2,AFR,E
+Spain,8,EUR,A
+Sri Lanka,11,SEAR,B
+State of Palestine,8,EUR,A
+Sudan,7,EMR,D
+South Sudan,7,EMR,D
+Suriname,4,AMR,B
+Swaziland,2,AFR,E
+Sweden,8,EUR,A
+Switzerland,8,EUR,A
+Syrian Arab Republic,6,EMR,B
+"Tanzania, United Republic Of",2,AFR,E
+Tajikistan,9,EUR,B
+Thailand,11,SEAR,B
+The Former Yugoslav Republic Of Macedonia,9,EUR,B
+Timor-Leste,11,SEAR,B
+Togo,1,AFR,D
+Tonga,14,WPR,B
+Trinidad And Tobago,4,AMR,B
+Tunisia,6,EMR,B
+Turkey,9,EUR,B
+Turkmenistan,9,EUR,B
+Tuvalu,14,WPR,B
+Uganda,2,AFR,E
+Ukraine,10,EUR,C
+United Arab Emirates,6,EMR,B
+United Kingdom,8,EUR,A
+United Republic of Tanzania,2,AFR,E
+United States Of America,3,AMR,A
+Uruguay,4,AMR,B
+Uzbekistan,9,EUR,B
+Vanuatu,14,WPR,B
+Venezuela,4,AMR,B
+Viet Nam,14,WPR,B
+Yemen,7,EMR,D
+Yugoslavia,9,EUR,B
+Zambia,2,AFR,E
+Zimbabwe,2,AFR,E
