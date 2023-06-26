@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
 import pandas as pd
 import os
 
@@ -32,7 +32,11 @@ def v1_natl_change():
     df_pivoted = df_countries.pivot_table('OBS_VALUE:Observation Value', ['REF_AREA:Geographic area'], 'TIME_PERIOD:Time period')
     df_pivoted['delta'] = df_pivoted[2020] - df_pivoted[2019]
     df_pivoted['delta_rank'] = df_pivoted['delta'].rank()
-    return df_pivoted.to_csv()
+    return Response(
+       df_pivoted.to_csv(),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=unicef_dtp_first_shot_coverage_2010_2023_summary.csv"})
 
 @app.route("/vaxviz/countries_csv/")
 def countries_csv():
@@ -44,7 +48,11 @@ def countries_csv():
     df_countries_with_alpha_3 = pd.merge(df_who_countries,df_country_iso_codes, left_on=df_who_countries["name"].str.lower(), right_on=df_country_iso_codes["name"].str.lower(), how='left')
     df_countries_with_alpha_3['name'] = df_countries_with_alpha_3['name_x']
     df_countries_with_alpha_3 = df_countries_with_alpha_3.drop(columns=['key_0', 'name_y', 'name_x'])
-    return df_countries_with_alpha_3.to_csv(index=False)
+    return Response(
+       df_countries_with_alpha_3.to_csv(index=False),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=countries_master.csv"})
 
 if __name__ == "__main__":
     app.run()

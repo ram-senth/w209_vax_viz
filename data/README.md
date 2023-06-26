@@ -7,7 +7,7 @@
 **unicef_dtp_first_shot_coverage_2010_2023_summary.csv** - Summary from DTP first shot coverage, with difference beween coverage in 2020 vs that in 2019 for all countries.
 
 ## Country Data 
-**countries_master.csv** - List of all countries, their various codes as well as their WHO region. Synthsized from Wikipedia and WHO data.
+**countries_master.csv** - List of all countries, their various codes as well as their WHO region. Synthsized from Wikipedia and WHO data listed below.
 
 **who_regions_master.csv** - List of WHO regions from WHO, derived from [Wikipedia data](https://en.wikipedia.org/wiki/List_of_WHO_regions) 
 
