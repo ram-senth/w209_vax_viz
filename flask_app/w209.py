@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Response
 import pandas as pd
 import os
+import json
 
 app = Flask(__name__)
 
@@ -48,11 +49,24 @@ def countries_csv():
     df_countries_with_alpha_3 = pd.merge(df_who_countries,df_country_iso_codes, left_on=df_who_countries["name"].str.lower(), right_on=df_country_iso_codes["name"].str.lower(), how='left')
     df_countries_with_alpha_3['name'] = df_countries_with_alpha_3['name_x']
     df_countries_with_alpha_3 = df_countries_with_alpha_3.drop(columns=['key_0', 'name_y', 'name_x'])
+
+    # Verification to ensure that we have all countries covered
+    try:
+        df_immunization_data = pd.read_csv(f'{BASE_DATA_FOLDER}/{UNICEF_DTP_DATA_FILE}')
+        # Extract country code from REF_AREA:Geographic area col in the immunization data
+        df_immunization_data['country_code'] = df_immunization_data['REF_AREA:Geographic area'].str.split(": ", expand=True, n=1)[0].astype('string')
+        df_merged = pd.merge(df_immunization_data,df_countries_with_alpha_3, left_on=df_immunization_data["country_code"], right_on=df_countries_with_alpha_3["alpha_3_code"], how='left')
+        df_missing_code = df_merged[(~df_merged['REF_AREA:Geographic area'].str.startswith('WHO')) & (df_merged['alpha_3_code'].isna())]
+        if df_missing_code['REF_AREA:Geographic area'].unique().size > 0:
+            return json.dumps({ 'error': f"Could not identify codes for {df_missing_code['REF_AREA:Geographic area'].unique().tolist()}."}), 500
+    except Exception as e:
+        return json.dumps({ 'error': f'Failed to verify: {e}' }), 500
+
+    # All good, return the generated data as a CSV attachment for browser to download.
     return Response(
        df_countries_with_alpha_3.to_csv(index=False),
        mimetype="text/csv",
-       headers={"Content-disposition":
-       "attachment; filename=countries_master.csv"})
+       headers={"Content-disposition":"attachment; filename=countries_master.csv"})
 
 if __name__ == "__main__":
     app.run()
