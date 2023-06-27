@@ -29,7 +29,7 @@ def debug_info():
 def v1_natl_change():
     # Ensure the data folder and its contents are uploaded to server before calling this endpoint
     df = pd.read_csv(f'{BASE_DATA_FOLDER}/{UNICEF_DTP_DATA_FILE}')
-    df_countries = df[(~df['REF_AREA:Geographic area'].str.startswith('WHO'))  & ((df['TIME_PERIOD:Time period'] == 2019) | (df['TIME_PERIOD:Time period'] == 2020)| (df['TIME_PERIOD:Time period'] == 2021))]
+    df_countries = df[(~df['REF_AREA:Geographic area'].str.startswith('WHO')) & ((df['TIME_PERIOD:Time period'] >= 2018))]
     df_pivoted = df_countries.pivot_table('OBS_VALUE:Observation Value', ['REF_AREA:Geographic area'], 'TIME_PERIOD:Time period')
     df_pivoted['delta'] = df_pivoted[2020] - df_pivoted[2019]
     df_pivoted['delta_rank'] = df_pivoted['delta'].rank()
