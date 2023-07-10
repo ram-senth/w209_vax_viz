@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <title>jQuery UI Tabs functionality</title>
+   <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <script>
+      $(function () {
+         $("#tabs-1").tabs();
+      });
+   </script>
+   <style>
+      #tabs-1 {
+         font-size: 14px;
+      }
+
+      .ui-widget-header {
+         background: steelblue;
+         border: 1px solid #b9cd6d;
+         color: lightyellow;
+         font-weight: bold;
+      }
+
+      .tableauPlaceholder {
+         height: 40vh;
+         width: 60vw;
+      }
+   </style>
+</head>
+
+<body>
+   <img src="https://www.ischool.berkeley.edu/sites/default/files/berkeleyischool-logo-blue-med.png"
+      alt="UC Berkeley School of Information" />
+   <div id="preamble">
+      <p>Immunization is saving millions of lives every year across the world. Vaccines play a key role in increasing
+         immunity and reducing infection risks by working with the human body’s natural defenses. According to WHO, we
+         now have vaccines to prevent more than 20 life-threatening diseases, helping people of all ages live longer and
+         healthier lives. It is estimated that vaccination prevents about 3.5 to 5 million deaths every year. Further,
+         as evidenced by the recent Covid pandemic, vaccines play a very critical role in prevention and control of
+         infectious disease outbreaks, thereby improving global health security. Overall, they have become an
+         indispensable tool in improving the wellness of humankind.
+      </p>
+      <p>Though we have come a long way, there is still work to be done. Vaccination is still a privilege and not a
+         basic right for a vast majority of the human population. According to UNICEF 2021 immunization coverage
+         estimates, developing countries with large populations of children contribute significantly to the number of
+         unvaccinated children despite achieving relatively high rates of immunization coverage. For example, India has
+         achieved 85 per cent coverage of DTP3. Still, about 3.3 million children were un or under-vaccinated in 2021
+         because of its large cohort of 23 million surviving infants. Efforts to raise global immunization levels will
+         require a strong focus on the countries where the highest numbers of unvaccinated children live – while also
+         ensuring that smaller countries with a subset of hard-to-reach children are not neglected.
+      </p>
+      <p>
+         The goal of our project is to explore the global vaccination trends and understand the hindrances in achieving
+         higher vaccination rates. We also want to identify interesting insights that can help governments and NGOs in
+         improving the effectiveness of vaccination drives.
+      </p>
+      <div id="tabs-1">
+         <ul>
+            <li><a href="#tabs-2">Impact of Pandemic</a></li>
+            <li><a href="#tabs-3">Factors Affecting Vaccination Rates</a></li>
+            <li><a href="#tabs-4">Disease Incidence and Vaccination Rates</a></li>
+         </ul>
+         <div id="tabs-2">
+            <h2>Did the Covid Pandemic cause a drop in vaccination rates?</h2>
+            <div>
+               <ul>
+                  <li>Preliminary investigation of data shows that the there was a 3% drop in global vaccine coverage
+                     numbers between 2019 and 2020.</li>
+                  <li>Our hypothesis is that the Covid pandemic caused this drop.</li>
+                  <li>To explore this further we plotted coverage of DTP first dose across the different WHO regions
+                  </li>
+                  <ul>
+                     <li>Africa</li>
+                     <li>Eastern Mediterranean</li>
+                     <li>Europe</li>
+                     <li>Southeast Asia</li>
+                     <li>Western Pacific</li>
+                  </ul>
+
+                  <li>We decided to explore DTP first dose as it is considered indicative of vaccine coverage in
+                     general.</li>
+                  <li>Plotting DTP coverage across the WHO regions showed that it was mixed. Some regions had a drop
+                     while it was flat in some and it even went up in one region.</li>
+                  <li>Flipping it from % coverage to % not covered made it easier to see the trends</li>
+                  <li>To get a more concrete idea, we plotted just the difference in coverage between 2019 and 2020 at
+                     country level. This showed that the story is not as straight forward. Some countries saw a drop in
+                     coverage while some saw big improvements</li>
+
+            </div>
+            <div class='tableauPlaceholder' id='viz1687843135814' style='position: relative'><noscript><a href='#'><img
+                        alt='Drop in DTP Vaccine Coverage During Covid Pandemic '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Regional-Initial&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                  <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                  <param name='embed_code_version' value='3' />
+                  <param name='site_root' value='' />
+                  <param name='name' value='VaxViz_impact_of_pandemic&#47;Regional-Initial' />
+                  <param name='tabs' value='no' />
+                  <param name='toolbar' value='yes' />
+                  <param name='static_image'
+                     value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Regional-Initial&#47;1.png' />
+                  <param name='animate_transition' value='yes' />
+                  <param name='display_static_image' value='yes' />
+                  <param name='display_spinner' value='yes' />
+                  <param name='display_overlay' value='yes' />
+                  <param name='display_count' value='yes' />
+                  <param name='language' value='en-US' />
+                  <param name='filter' value='publish=yes' />
+               </object></div>
+            <script
+               type='text/javascript'>                    var divElement = document.getElementById('viz1687843135814'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+            <div class='tableauPlaceholder' id='viz1687843206016' style='position: relative'><noscript><a href='#'><img
+                        alt='Increase in Zero Dose Children During Covid Pandemic '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Regional-Final&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                  <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                  <param name='embed_code_version' value='3' />
+                  <param name='site_root' value='' />
+                  <param name='name' value='VaxViz_impact_of_pandemic&#47;Regional-Final' />
+                  <param name='tabs' value='no' />
+                  <param name='toolbar' value='yes' />
+                  <param name='static_image'
+                     value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Regional-Final&#47;1.png' />
+                  <param name='animate_transition' value='yes' />
+                  <param name='display_static_image' value='yes' />
+                  <param name='display_spinner' value='yes' />
+                  <param name='display_overlay' value='yes' />
+                  <param name='display_count' value='yes' />
+                  <param name='language' value='en-US' />
+                  <param name='filter' value='publish=yes' />
+               </object></div>
+            <script
+               type='text/javascript'>                    var divElement = document.getElementById('viz1687843206016'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+            <div class='tableauPlaceholder' id='viz1687843265683' style='position: relative'><noscript><a href='#'><img
+                        alt='Change in DTP Coverage During Covid Pandemic by Country '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Countrywidechange&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                  <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                  <param name='embed_code_version' value='3' />
+                  <param name='site_root' value='' />
+                  <param name='name' value='VaxViz_impact_of_pandemic&#47;Countrywidechange' />
+                  <param name='tabs' value='no' />
+                  <param name='toolbar' value='yes' />
+                  <param name='static_image'
+                     value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;Countrywidechange&#47;1.png' />
+                  <param name='animate_transition' value='yes' />
+                  <param name='display_static_image' value='yes' />
+                  <param name='display_spinner' value='yes' />
+                  <param name='display_overlay' value='yes' />
+                  <param name='display_count' value='yes' />
+                  <param name='language' value='en-US' />
+                  <param name='filter' value='publish=yes' />
+               </object></div>
+            <script
+               type='text/javascript'>                    var divElement = document.getElementById('viz1687843265683'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+            <div class='tableauPlaceholder' id='viz1687843311902' style='position: relative'><noscript><a href='#'><img
+                        alt='Change In Coverage From 2019 To 2020 '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;ChangeIncoveragein2020-geoview&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                  <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                  <param name='embed_code_version' value='3' />
+                  <param name='site_root' value='' />
+                  <param name='name' value='VaxViz_impact_of_pandemic&#47;ChangeIncoveragein2020-geoview' />
+                  <param name='tabs' value='no' />
+                  <param name='toolbar' value='yes' />
+                  <param name='static_image'
+                     value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;ChangeIncoveragein2020-geoview&#47;1.png' />
+                  <param name='animate_transition' value='yes' />
+                  <param name='display_static_image' value='yes' />
+                  <param name='display_spinner' value='yes' />
+                  <param name='display_overlay' value='yes' />
+                  <param name='display_count' value='yes' />
+                  <param name='language' value='en-US' />
+                  <param name='filter' value='publish=yes' />
+               </object></div>
+            <script
+               type='text/javascript'>                    var divElement = document.getElementById('viz1687843311902'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+            <div class='tableauPlaceholder' id='viz1687843347786' style='position: relative'><noscript><a href='#'><img
+                        alt='Change In Coverage From 2019 to 2020 '
+                        src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;ChangeIncoverage-diffperiods&#47;1_rss.png'
+                        style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+                  <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                  <param name='embed_code_version' value='3' />
+                  <param name='site_root' value='' />
+                  <param name='name' value='VaxViz_impact_of_pandemic&#47;ChangeIncoverage-diffperiods' />
+                  <param name='tabs' value='no' />
+                  <param name='toolbar' value='yes' />
+                  <param name='static_image'
+                     value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Va&#47;VaxViz_impact_of_pandemic&#47;ChangeIncoverage-diffperiods&#47;1.png' />
+                  <param name='animate_transition' value='yes' />
+                  <param name='display_static_image' value='yes' />
+                  <param name='display_spinner' value='yes' />
+                  <param name='display_overlay' value='yes' />
+                  <param name='display_count' value='yes' />
+                  <param name='language' value='en-US' />
+                  <param name='filter' value='publish=yes' />
+               </object></div>
+            <script
+               type='text/javascript'>                    var divElement = document.getElementById('viz1687843347786'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+         </div>
+
+         <div id="tabs-3">
+            <p> WIP </p>
+         </div>
+         <div id="tabs-4">
+            <p> WIP </p>
+         </div>
+      </div>
+</body>
+
+</html>

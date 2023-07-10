@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap links -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+  <!-- style link -->
+  <link rel="stylesheet" href="./resources/main.css">
+  <link rel="stylesheet" href="./resources/bootstrap.min.css">
+  <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+  <script src="https://unpkg.com/scrollama"></script>
+</head>
+
+<body>
+  <!-- Nav bar -->
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+          <h2>Global Vaccination Trends</h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="active"><a class="nav-link" href="index.html">
+                <h3>Home</h3>
+              </a></li>
+            <li class=""><a class="nav-link" href="pandemic.html">
+                <h3>Diseases</h3>
+              </a></li>`
+            <li class=""><a class="nav-link" href="pandemic.html">
+                <h3>Covid Pandemic</h3>
+              </a></li>
+              <li class=""><a class="nav-link" href="pandemic.html">
+                <h3>Covid Pandemic</h3>
+              </a></li>
+              <li class=""><a class="nav-link" href="pandemic.html">
+                <h3>Covid Pandemic</h3>
+              </a></li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container py-4">
+      <!-- Jumobotron -->
+      <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">Impact of Pandemic On Vaccination</h1>
+          <p class="col-md-8 fs-4">
+            Explore how Covid impacted vaccination across countries.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrolly -->
+    <section id="scrolly">
+      <article>
+        <div class="step" data-step="1">
+          <p class="d-flex align-items-center">Before beginning, it’s a good idea to see what countries’ top-50 charts
+            are included in the exploration. It appears that the majority of countries in the analysis are from Europe
+            and South America.</p>
+        </div>
+        <div class="step" data-step="2">
+          <p class="d-flex align-items-center">Let’s start the analysis by remembering who was popular back in 2020.
+            Counting the number of times an artist appeared in various lists gives us good insight into who was popular.
+            It looks like Bad Bunny and Dua Lipa were all the rage in 2020, followed by The Weeknd.</p>
+        </div>
+        <div class="step" data-step="3">
+          <p class="d-flex align-items-center">Next, let’s refresh our memory about what popular songs came out in 2020.
+            Once again, counting the number of times a song made if onto a list gives a good indication of what albums
+            were popular. Blinding Lights and Rain On Me featuring Arianna Grande are tied for first place.</p>
+        </div>
+        <div class="step" data-step="4">
+          <p class="d-flex align-items-center">Now that we remember what artists and songs were populars, let’s examine
+            some of the characteristics of popular songs. Grouping the songs by the continent in which their lists
+            appears, it looks like Asian songs are much longer than other regions. Diving deeper into the countries from
+            Asia, we see that Indonesia is really driving up the average song duration for Asia.</p>
+        </div>
+        <div class="step" data-step="5">
+          <p class="d-flex align-items-center">Finally, let’s explore how different countries feel about implicit versus
+            explicit songs. With less than 20% of the songs on the Asia charts being explicit, it appears the Asian
+            cultures prefer implicit songs.</p>
+        </div>
+      </article>
+
+      <div class="sticky-thing">
+        <div id="vis"></div>
+      </div>
+    </section>
+
+    <section id="outro">
+      <div style="margin:5rem">
+        <hr class="featurette-divider">
+      </div>
+
+    </section>
+
+    <!-- Nav Cards -->
+    <div class="container py-4">
+      <div class="row align-items-md-stretch">
+        <div class="col-md-6 mb-4">
+          <div class="h-100 p-5 text-bg-dark rounded-3">
+            <h2>Top 50 Songs</h2>
+            <p>An exploration of some of the world’s most popular artists and albums in 2020. Includes a dive into song
+              characteristics and how those attributes vary from continent to continent, and country to country.</p>
+            <a href="./top-50.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h2>Top Performing Songs & Artists Over Time</h2>
+            <p>An exploration into the billboard weekly top 100 songs which is a compilation of the week's most popular
+              songs across all generes, ranked by streaming activities across platforms such as radios and musical
+              services (Spotify, Tidal, Apple Music).</p>
+            <a href="/w209-dataviz/top-charts"><button class="btn btn-outline-secondary" type="button">Browse
+                Charts</button></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+            <h2>Album Success and the Sophomore Slump</h2>
+            <p>Getting onto the Billboards is just half the battle: now that you’ve landed a hit debut album, how do you
+              follow up your breakout act?</p>
+            <a href="/w209-dataviz/album-success"><button class="btn btn-outline-secondary" type="button">Browse
+                Charts</button></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="h-100 p-5 text-bg-dark border rounded-3">
+            <h2>Exploring Song Attributes By Region</h2>
+            <p>Music breaks borders. You don’t have to understand the language to love the song, but you might hear
+              similarities in songs that do well in certain regions.</p>
+            <a href="/w209-dataviz/song-attributes"><button class="btn btn-outline-light" type="button">Browse
+                Charts</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+  <!-- Scrolly Script -->
+  <script>
+    // using d3 for convenience
+    var main = document.querySelector("main");
+    var scrolly = main.querySelector("#scrolly");
+    var sticky = scrolly.querySelector(".sticky-thing");
+    var article = scrolly.querySelector("article");
+    var steps = article.querySelectorAll(".step");
+
+    // initialize the scrollama
+    var scroller = scrollama();
+
+    // scrollama event handlers
+    function handleStepEnter(response) {
+      // response = { element, direction, index }
+      var el = response.element;
+
+      // remove is-active from all steps
+      // then add is-active to this step
+      steps.forEach(step => step.classList.remove('is-active'));
+      el.classList.add('is-active');
+
+      //   Vega Embed variable
+      var opt = {
+        mode: "vega-lite",
+        renderer: "svg",
+        actions: { export: true, source: false, editor: false }
+      };
+
+      // update graphic based on step
+      if (el.dataset.step == '1') {
+        vegaEmbed("#vis", '/w209-dataviz/topChartsMap', opt, function (error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+      else if (el.dataset.step == '2') {
+        vegaEmbed("#vis", '/w209-dataviz/top10Artists', opt, function (error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+      else if (el.dataset.step == '3') {
+        vegaEmbed("#vis", '/w209-dataviz/top10Tracks', opt, function (error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+      else if (el.dataset.step == '4') {
+        vegaEmbed("#vis", '/w209-dataviz/songDuration', opt, function (error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+      else if (el.dataset.step == '5') {
+        vegaEmbed("#vis", '/w209-dataviz/implicit-vs-explicit', opt, function (error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+
+    }
+
+    function init() {
+      scroller
+        .setup({
+          step: "#scrolly article .step",
+          offset: .6,
+          debug: false
+        })
+        .onStepEnter(handleStepEnter);
+
+      // setup resize event
+      window.addEventListener("resize", scroller.resize);
+    }
+
+    // kick things off
+
+
+    init();
+  </script>
+
+  <!-- Render Charts -->
+  <script type="text/javascript">
+    function parse(url, div) {
+      var opt = {
+        mode: "vega-lite",
+        renderer: "svg",
+        actions: { export: true, source: false, editor: false }
+      };
+    }
+
+  </script>
+
+
+
+  <!-- FOOTER -->
+  <footer class="footer bottom pt-4 bg-dark text-center" data-bs-theme="dark">
+    <div>
+      <span class="text-body-secondary">Thank you for viewing our visuals!</span>
+      <p><a href="#">Back to top</a></p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
