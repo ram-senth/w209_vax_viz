@@ -104,19 +104,19 @@ def v2_vax_rates_countries():
 
 
 
-@app.route("/vaxviz/pandemic/v1/national_change/")
-def v1_natl_change():
-    # Ensure the data folder and its contents are uploaded to server before calling this endpoint
-    df = pd.read_csv(f'{app.config["BASE_DATA_FOLDER"]}/{UNICEF_DTP_DATA_FILE}')
-    df_countries = df[(~df['REF_AREA:Geographic area'].str.startswith('WHO')) & ((df['TIME_PERIOD:Time period'] >= 2018))]
-    df_pivoted = df_countries.pivot_table('OBS_VALUE:Observation Value', ['REF_AREA:Geographic area'], 'TIME_PERIOD:Time period')
-    df_pivoted['delta'] = df_pivoted[2020] - df_pivoted[2019]
-    df_pivoted['delta_rank'] = df_pivoted['delta'].rank()
-    return Response(
-       df_pivoted.to_csv(),
-       mimetype="text/csv",
-       headers={"Content-disposition":
-       "attachment; filename=unicef_dtp_first_shot_coverage_2010_2023_summary.csv"})
+# @app.route("/vaxviz/pandemic/v1/national_change/")
+# def v1_natl_change():
+#     # Ensure the data folder and its contents are uploaded to server before calling this endpoint
+#     df = pd.read_csv(f'{app.config["BASE_DATA_FOLDER"]}/{UNICEF_DTP_DATA_FILE}')
+#     df_countries = df[(~df['REF_AREA:Geographic area'].str.startswith('WHO')) & ((df['TIME_PERIOD:Time period'] >= 2018))]
+#     df_pivoted = df_countries.pivot_table('OBS_VALUE:Observation Value', ['REF_AREA:Geographic area'], 'TIME_PERIOD:Time period')
+#     df_pivoted['delta'] = df_pivoted[2020] - df_pivoted[2019]
+#     df_pivoted['delta_rank'] = df_pivoted['delta'].rank()
+#     return Response(
+#        df_pivoted.to_csv(),
+#        mimetype="text/csv",
+#        headers={"Content-disposition":
+#        "attachment; filename=unicef_dtp_first_shot_coverage_2010_2023_summary.csv"})
 
 @app.route("/vaxviz/countries_master/")
 def countries_master():
@@ -148,6 +148,11 @@ def vaccines_master():
        df.to_csv(index=False),
        mimetype="text/csv",
        headers={"Content-disposition":"attachment; filename=vaccines_master.csv"})
+
+@app.route("/vaxviz/regions_master/")
+def regions_master():
+    df = helper_regions_master()
+    return df.to_csv(index=False)
 
 def helper_countries_vax_data_v2(merge_with_countries_master):
     # Read the raw data
