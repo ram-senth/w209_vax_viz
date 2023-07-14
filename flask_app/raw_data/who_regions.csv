@@ -1,0 +1,8 @@
+code,key_in_data,region_name
+AFR,WHO_AFRO: Africa,Africa
+AMR,WHO_AMRO: Americas, Americas
+EMR,WHO_EMRO: Eastern Mediterranean, Eastern Mediterranean
+EUR,WHO_EURO: Europe, Europe
+SEAR,WHO_SEARO: Southeast Asia, Southeast Asia
+WPR, WHO_WPRO: Western Pacific, Western Pacific
+REG_GLOBAL, WHO_REG_GLOBAL: World Health Organisation regions - Global, Global

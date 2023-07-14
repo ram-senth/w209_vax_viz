@@ -5,6 +5,7 @@ Algeria,1,AFR,D
 Andorra,8,EUR,A
 Angola,1,AFR,D
 Antigua And Barbuda,4,AMR,B
+Antigua and Barbuda,4,AMR,B
 Argentina,4,AMR,B
 Armenia,9,EUR,B
 Australia,13,WPR,A
@@ -20,7 +21,9 @@ Belize,4,AMR,B
 Benin,1,AFR,D
 Bhutan,12,SEAR,D
 Bolivia,5,AMR,D
+Bolivia (Plurinational State of),5,AMR,D
 Bosnia And Herzegovina,9,EUR,B
+Bosnia and Herzegovina,9,EUR,B
 Botswana,2,AFR,E
 Brazil,4,AMR,B
 Brunei Darussalam,13,WPR,A
@@ -31,6 +34,7 @@ Cambodia,14,WPR,B
 Cameroon,1,AFR,D
 Canada,3,AMR,A
 Cape Verde,1,AFR,D
+Cabo Verde,1,AFR,D
 Central African Republic,2,AFR,E
 Chad,1,AFR,D
 Chile,4,AMR,B
@@ -39,15 +43,19 @@ Colombia,4,AMR,B
 Comoros,1,AFR,D
 Congo,2,AFR,E
 "The Congo, Democratic Republic Of",2,AFR,E
+Democratic Republic Of The Congo,2,AFR,E
+Democratic Republic of the Congo,2,AFR,E
 Cook Islands,14,WPR,B
 Costa Rica,4,AMR,B
 Côte d'Ivoire,2,AFR,E
+Cote d'Ivoire,2,AFR,E
 Croatia,8,EUR,A
 Cuba,3,AMR,A
 Cyprus,6,EMR,B
 Czech Republic,8,EUR,A
+Czechia,8,EUR,A
 Democratic Peoples Republic Of Korea,12,SEAR,D
-Democratic Republic Of The Congo,2,AFR,E
+"Democratic People's Republic of Korea",12,SEAR,D
 Denmark,8,EUR,A
 Djibouti,7,EMR,D
 Dominica,4,AMR,B
@@ -80,6 +88,7 @@ Iceland,8,EUR,A
 India,12,SEAR,D
 Indonesia,11,SEAR,B
 Iran (Islamic Republic Of),6,EMR,B
+Iran (Islamic Republic of),6,EMR,B
 Iraq,7,EMR,D
 Ireland,8,EUR,A
 Israel,8,EUR,A
@@ -100,6 +109,7 @@ Lebanon,6,EMR,B
 Lesotho,2,AFR,E
 Liberia,1,AFR,D
 Libyan Arab Jamahiriya,6,EMR,B
+Libya,6,EMR,B
 Lithuania,10,EUR,C
 Luxembourg,8,EUR,A
 "Macedonia, The Former Yugoslav Republic Of",9,EUR,B
@@ -114,6 +124,7 @@ Mauritania,1,AFR,D
 Mauritius,1,AFR,D
 Mexico,4,AMR,B
 Micronesia (Federated States Of),14,WPR,B
+Micronesia (Federated States of),14,WPR,B
 "Moldova, Republic Of",10,EUR,C
 Monaco,8,EUR,A
 Mongolia,14,WPR,B
@@ -143,17 +154,22 @@ Poland,9,EUR,B
 Portugal,8,EUR,A
 Qatar,6,EMR,B
 Republic Of Korea,14,WPR,B
+Republic of Korea,14,WPR,B
 Republic Of Moldova,10,EUR,C
+Republic of Moldova,10,EUR,C
 Romania,9,EUR,B
 Russian Federation,10,EUR,C
 Rwanda,2,AFR,E
 Saint Kitts And Nevis,4,AMR,B
+Saint Kitts and Nevis,4,AMR,B
 Saint Lucia,4,AMR,B
 Saint Vincent And The Grenadines,4,AMR,B
+Saint Vincent and the Grenadines,4,AMR,B
 Samoa,14,WPR,B
 San Marino,8,EUR,A
 Serbia,9,EUR,B
 Sao Tome And Principe,1,AFR,D
+Sao Tome and Principe,1,AFR,D
 Saudi Arabia,6,EMR,B
 Senegal,1,AFR,D
 Seychelles,1,AFR,D
@@ -171,6 +187,7 @@ Sudan,7,EMR,D
 South Sudan,7,EMR,D
 Suriname,4,AMR,B
 Swaziland,2,AFR,E
+Eswatini,2,AFR,E
 Sweden,8,EUR,A
 Switzerland,8,EUR,A
 Syrian Arab Republic,6,EMR,B
@@ -178,10 +195,12 @@ Syrian Arab Republic,6,EMR,B
 Tajikistan,9,EUR,B
 Thailand,11,SEAR,B
 The Former Yugoslav Republic Of Macedonia,9,EUR,B
+Republic of North Macedonia,9,EUR,B
 Timor-Leste,11,SEAR,B
 Togo,1,AFR,D
 Tonga,14,WPR,B
 Trinidad And Tobago,4,AMR,B
+Trinidad and Tobago,4,AMR,B
 Tunisia,6,EMR,B
 Turkey,9,EUR,B
 Turkmenistan,9,EUR,B
@@ -192,10 +211,12 @@ United Arab Emirates,6,EMR,B
 United Kingdom,8,EUR,A
 United Republic of Tanzania,2,AFR,E
 United States Of America,3,AMR,A
+United States,3,AMR,A
 Uruguay,4,AMR,B
 Uzbekistan,9,EUR,B
 Vanuatu,14,WPR,B
 Venezuela,4,AMR,B
+Venezuela (Bolivarian Republic of),4,AMR,B
 Viet Nam,14,WPR,B
 Yemen,7,EMR,D
 Yugoslavia,9,EUR,B

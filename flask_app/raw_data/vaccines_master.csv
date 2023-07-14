@@ -1,0 +1,15 @@
+code,name,diseases,description,more_info
+"BCG",Bacillus Calmette–Guérin,Tuberculosis,
+"DTP1",Diphtheria tetanus toxoid and pertussis first-dose,Diphtheria, Tetanus and Pertussis,
+"DTP3",Diphtheria tetanus toxoid and pertussis third-dose,Diphtheria, Tetanus and Pertussis,
+"Hepb3",Hepatitis B,Hepatitis B,https://www.immunize.org/vis/vis_hepatitis_b.asp
+"Hepbb",,,
+"Hib3",Haemophilus influenzae type b,Haemophilus influenzae type b,https://www.immunize.org/vis/vis_hib.asp
+"IPV1",Inactivated poliovirus vaccine,Polio,https://www.immunize.org/vis/vis_polio_ipv.asp
+"MCV1",Measles-containing-vaccine first-dose,Measles,
+"MCV2",Measles-containing-vaccine second-dose,Measles,
+"PCV3",Pneumococcal Conjugate vaccines,Pneumococcal Diseases,https://www.immunize.org/vis/vis_pcv.asp
+"Pol3",,,
+"Rotac",Rotavirus vaccines completed dose,Rotavirus,
+"RCV1",Rubella containing vaccine,Rubella,
+"YFV",Yellow Fever Vaccine,Yellow Fever,https://www.immunize.org/vis/vis_yellow_fever.asp
