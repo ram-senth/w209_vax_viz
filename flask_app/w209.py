@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response, request, send_file
 import pandas as pd
 import os
 import json
@@ -64,7 +64,12 @@ def v2_vax_rates_who_regions():
     if df_missing_code['region_code'].unique().size > 0:
         return json.dumps({ 'error': f"Could not identify codes for {df_missing_code['region_code'].unique().tolist()}."}), 500
     df_merged = df_merged.drop(columns=['key_0', 'code', 'key_in_data'])
-    return df_merged.to_csv();
+
+    return Response(
+       df_merged.to_csv(index=False),
+       mimetype="text/csv",
+       headers={"Content-disposition":
+       "attachment; filename=unicef_regional_coverage_2015_2021.csv"})
 
 
 
@@ -103,8 +108,10 @@ def v2_vax_rates_countries():
 
 @app.route("/vaxviz/pandemic/v2/vaxrates/whoregions/dtp1story")
 def regional_dtp_story():
-    df = pd.read_csv(f'{app.config["BASE_DATA_FOLDER"]}/regional_stories.csv')
-    return df.to_csv(index=False)
+    try:
+        return send_file('raw_data/regional_stories.csv', 'mimetype=text/csv', as_attachment=True, download_name="regional_stories.csv");
+    except Exception as e:
+        return json.dumps({ 'error': e}), 500
 
 # @app.route("/vaxviz/pandemic/v1/national_change/")
 # def v1_natl_change():
@@ -145,16 +152,19 @@ def countries_master():
 
 @app.route("/vaxviz/vaccines_master/")
 def vaccines_master():
-    df = pd.read_csv(f'{app.config["BASE_DATA_FOLDER"]}/{VACCINES_MASTER_FILE}')
-    return Response(
-       df.to_csv(index=False),
-       mimetype="text/csv",
-       headers={"Content-disposition":"attachment; filename=vaccines_master.csv"})
+    try:
+        return send_file(f'raw_data/{VACCINES_MASTER_FILE}', 'mimetype=text/csv', as_attachment=True, download_name="vaccines_master.csv");
+    except Exception as e:
+        return json.dumps({ 'error': e}), 500
 
 @app.route("/vaxviz/regions_master/")
 def regions_master():
     df = helper_regions_master()
-    return df.to_csv(index=False)
+    return Response(
+       df.to_csv(index=False),
+       mimetype="text/csv",
+       headers={"Content-disposition":"attachment; filename=regions_master.csv"})
+
 
 def helper_countries_vax_data_v2(merge_with_countries_master):
     # Read the raw data
