@@ -54,9 +54,8 @@ def v2_vax_rates_who_regions():
     df_global['region_code'] = 'REG_GLOBAL'
     df_merged = pd.concat([df_regional, df_global], ignore_index=True, verify_integrity=True)
     df_merged['Coverage'] = df_merged['Vaccinated'] / df_merged['Target'] * 100
-    # df_merged['Coverage'] = df_merged['Coverage'].astype(int)
-    df_merged['Not Covered'] = (df_merged['Target'] - df_merged['Vaccinated']) / df_merged['Target'] * 100
-    # df_merged['Not Covered'] = df_merged['Not Covered'].astype(int)
+    df_merged['Not Covered'] = 100 - df_merged['Coverage']
+    df_merged['Unvaccinated'] = df_merged['Target'] - df_merged['Vaccinated']
 
     # Add region name.
     df_regions = helper_regions_master()
@@ -102,7 +101,10 @@ def v2_vax_rates_countries():
        headers={"Content-disposition":
        f"attachment; filename={out_filename}"})
 
-
+@app.route("/vaxviz/pandemic/v2/vaxrates/whoregions/dtp1story")
+def regional_dtp_story():
+    df = pd.read_csv(f'{app.config["BASE_DATA_FOLDER"]}/regional_stories.csv')
+    return df.to_csv(index=False)
 
 # @app.route("/vaxviz/pandemic/v1/national_change/")
 # def v1_natl_change():

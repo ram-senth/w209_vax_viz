@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>VaxViz-Pandemic</title>
+<link rel="stylesheet" type="text/css" href="./resources/inspector.css">
+<head>
+
+<script type="module">
+    import define_01 from "./resources/pandemic_01/index.js";
+    import {Runtime as Runtime_01, Library as Library_01, Inspector as Inspector_01} from "./resources/pandemic_01/runtime.js";
+
+    import define_02 from "./resources/pandemic_02/index.js";
+    import {Runtime as Runtime_02, Library as Library_02, Inspector as Inspector_02} from "./resources/pandemic_02/runtime.js";
+
+    // const runtime = new Runtime();
+    // const main = runtime.module(define_01, Inspector.into(document.body));
+
+    // const runtime = new Runtime();
+    function showViz1() {
+        console.log("Showing viz");
+        const main = (new Runtime_01).module(define_01, name => {
+            // if (name === "viewof sel_vaccine") return new Inspector(document.querySelector("#vis"));
+            // if (name === "viewof yFieldD") return new Inspector(document.querySelector("#vis"));
+            if (name === "layout") return new Inspector_01(document.querySelector("#vis"));
+
+            // return ["plotty","chart_data","x","y","story","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
+        });
+    }
+
+    function showViz2() {
+        console.log("Showing viz");
+        const main = (new Runtime_02).module(define_02, name => {
+            // if (name === "viewof sel_vaccine") return new Inspector(document.querySelector("#vis"));
+            // if (name === "viewof yFieldD") return new Inspector(document.querySelector("#vis"));
+            if (name === "layout") return new Inspector_02(document.querySelector("#vis"));
+
+            // return ["plotty","chart_data","x","y","story","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
+        });
+    }
+
+    function clearViz() {
+        const div = document.querySelector("#vis");
+        while(div.firstChild && div.removeChild(div.firstChild));
+    }
+
+    window.showViz1 = showViz1;
+    window.showViz2 = showViz2;
+    window.clearViz = clearViz;
+</script>
+</head>
+<body>
+    <button onclick="showViz1()">Show 1</button>
+    <button onclick="showViz2()">Show 2</button>
+    <button onclick="clearViz()">Clear</button>
+    <div width="50%" id="vis">
+    </div>
+</body>

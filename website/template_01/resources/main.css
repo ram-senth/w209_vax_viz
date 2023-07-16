@@ -233,25 +233,25 @@ article {
 }
 
 .sticky-thing {
-  position: -webkit-sticky;
+  /* position: -webkit-sticky;
   position: sticky;
   width: 30%;
   margin: 0;
   background-color: #ffffff;
   z-index: 0;
   top: 12.5vh;
-  height: 75vh;
+  height: 75vh; */
   /* Center everything inside */
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .sticky-thing p {
-  padding: 1rem;
+  /* padding: 1rem;
   font-size: 8rem;
   font-weight: 900;
-  color: #fff;
+  color: #fff; */
 }
 
 .step {

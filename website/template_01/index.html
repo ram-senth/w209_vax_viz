@@ -1,210 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Bootstrap links -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-    />
-
-    <!-- style link -->
-    <link rel="stylesheet" href="./resources/main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Visualization of world wide vaccination trends"
-    />
-    <meta name="author" content="Ram, Sunayna and Janhavi" />
+<head>
     <title>Global Vaccination Trends</title>
 
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.3/examples/carousel/"
-    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Ram Senthamarai, Sunayna Jain, and Janhavi Subedarpage"/>
+    <meta name="generator" content="Hugo 0.111.3"/>
+    <!-- Bootstrap links -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"/>
+    <!-- style link -->
+    <link rel="stylesheet" href="./resources/main.css"/>
+    <link rel="stylesheet" href="./resources/bootstrap.min.css"/>
 
-    <link rel="stylesheet" href="./resources/main_page.css" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/"/>
+    <link rel="stylesheet" href="./resources/bootstrap.min.css">
+        <style>
+          .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+          }
 
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="./resources/main.css" />
-  </head>
+          @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+          }
 
-  <body>
-    <!-- Nav bar -->
-    <header data-bs-theme="dark">
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">
-            <h2>Vax Viz</h2>
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="active">
-                <a class="nav-link" href="index.html">
-                  <h3>Home</h3>
-                </a>
-              </li>
-              <li class="">
-                <a class="nav-link" href="pandemic.html">
-                  <h3>Spread of Diseases</h3>
-                </a>
-              </li>
-              `
-              <li class="">
-                <a class="nav-link" href="pandemic.html">
-                  <h3>Vaccination Coverage</h3>
-                </a>
-              </li>
-              <li class="">
-                <a class="nav-link" href="pandemic.html">
-                  <h3>Covid Pandemic</h3>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+          .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+          }
 
-    <div id="carouselCaptions" class="carousel slide" data-ride="carousel">
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-      <div class="carousel-inner" style="height: 450px">
-        <div class="carousel-item active cover-overlay" style="height: 450px">
-          <img
-            src="./resources/first.jpg"
-            class="carouselImg d-block w-100"
-            alt="..."
-          />
-          <div class="container">
-            <div class="carousel-caption text-start">
-              <h1 class="text-center">
-                Incidence of top 5 diseases in the world
-              </h1>
-              <p class="text-center">
-                A look at global spread of Polio, AIDS..... diseases.
-              </p>
-              <p class="text-center">
-                <a class="btn btn-lg btn-primary" href="pandemic.html"
-                  >Browse Charts</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item cover-overlay" style="height: 450px">
-          <img
-            src="./resources/second.jpg"
-            class="carouselImg d-block w-100"
-            alt="..."
-          />
-          <div class="container">
-            <div class="carousel-caption text-start">
-              <h1 class="text-center">Vaccination Coverage</h1>
-              <p class="text-center">
-                An analysis of the vaccination coverage across the globe
-              </p>
-              <p class="text-center">
-                <a class="btn btn-lg btn-primary" href="pandemic.html"
-                  >Browse Charts</a
-                >
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item cover-overlay" style="height: 450px">
-          <img
-            src="./resources/third.jpg"
-            class="carouselImg d-block w-100"
-            alt="..."
-          />
-          <div class="container">
-            <div class="carousel-caption text-start">
-              <h1 class="text-center">Impact of Covid on Vaccination rates</h1>
-              <p class="text-center">
-                Understand how the Covid pandemic affected vaccination rates
-                across the world.
-              </p>
-              <p class="text-center">
-                <a class="btn btn-lg btn-primary" href="pandemic.html"
-                  >Browse Charts</a
-                >
-              </p>
-            </div>
-          </div>
+          .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+          }
+
+          .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+          }
+
+          .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+          }
+
+          .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+          }
+          .bd-mode-toggle {
+            z-index: 1500;
+          }
+        </style>
+
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="./resources/main.css">
+      </head>
+</head>
+<body>
+  <!-- Nav bar -->
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="active"><a class="nav-link" href="./"><h3>Home</h3></a></li>
+          <li class=""><a class="nav-link" href="./diseases.html"><h3>Diseases</h3></a></li>
+          <li class=""><a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a></li>
+          <li class=""><a class="nav-link" href="./pandemic.html"><h3>Covid Pandemic</h3></a></li>
+        </ul>
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselCaptions"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselCaptions"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    </nav>
+  </header>
+
+  <div id="carouselCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active cover-overlay">
+        <img src="./resources/first.jpg" class="carouselImg d-block w-100" alt="...">
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Incidence of top 5 diseases in the world</h1>
+            <p>A look at global spread of Polio, AIDS..... diseases.</p>
+            <p><a class="btn btn-lg btn-primary" href="./diseases.html">Browse Charts</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item cover-overlay">
+        <img src="./resources/second.jpg" class="carouselImg d-block w-100" alt="...">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Vaccination Coverage</h1>
+            <p>An analysis of the vaccination coverage across the globe</p>
+            <p><a class="btn btn-lg btn-primary" href="./vaccination.html">Browse Charts</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item cover-overlay">
+        <img src="./resources/third.jpg" class="carouselImg d-block w-100" alt="...">
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Impact of Covid on Vaccination rates</h1>
+            <p>Understand how the Covid pandemic affected vaccination rates
+                across the world.</p>
+            <p><a class="btn btn-lg btn-primary" href="./pandemic.html">Browse Charts</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 
-    <!-- Marketing messaging and featurettes
+
+  <!-- Marketing messaging and featurettes
   ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
 
-    <div class="container marketing">
-      <!-- START THE FEATURETTES -->
-      <div class="row featurette">
-        <div class="order-md-1">
-          <h2 class="featurette-heading fw-normal lh-1 text-center">Vax Viz</h2>
-          <br />
-          <p class="leads text-center">
+  
+  <div class="container marketing">
+    <!-- START THE FEATURETTES -->
+    <div class="row featurette">
+      <div class="order-md-1">
+        <h2 class="featurette-heading fw-normal lh-1 text-center">Vaccination <span class="text-body-secondary">Introduction</span></h2>
+          <p class="lead text-center">
             Immunization is saving millions of lives every year across the
             world. Vaccines play a key role in increasing immunity and reducing
             infection risks by working with the human body’s natural defenses.
@@ -230,7 +207,7 @@
             live – while also ensuring that smaller countries with a subset of
             hard-to-reach children are not neglected.
           </p>
-          <p class="leads text-center">
+          <p class="lead text-center">
             The goal of our project is to explore the global vaccination trends
             and understand the hindrances in achieving higher vaccination rates.
             We also want to identify interesting insights that can help
@@ -238,140 +215,83 @@
             drives.
           </p>
         </div>
-      </div>
-
-      <hr class="featurette-divider" />
-
-      <div class="row featurette">
-        <div class="col-md-7 order-md-1">
-          <h2 class="featurette-heading fw-normal lh-1">
-            Diseases<span class="text-body-secondary"> by Country</span>
-          </h2>
-          <p class="lead">
-            Country wide prevalence of diseases across the world over time.
-          </p>
-          <p>
-            <a class="btn btn-lg btn-primary" href="pandemic.html"
-              >Browse Charts</a
-            >
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1 d-flex align-items-center">
-          <a href="pandemic.html">
-            <img
-              src="./resources/history_of_polio.png"
-              alt=""
-              class="feature-charts featurette-image img-fluid mx-auto"
-          /></a>
-        </div>
-      </div>
-
-      <hr class="featurette-divider" />
-
-      <div class="row featurette">
-        <div class="col-md-7 order-md-2">
-          <h2 class="featurette-heading fw-normal lh-1">
-            Impact of Covid
-            <span class="text-body-secondary">Across Countries</span>
-          </h2>
-          <p class="lead">
-            Explore impact of the pandemic on vaccination rates.
-          </p>
-          <p>
-            <a class="btn btn-lg btn-primary" href="pandemic.html"
-              >Browse Charts</a
-            >
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1 d-flex align-items-center">
-          <a href="pandemic.html"
-            ><img
-              src="./resources/overall_vax.jpg"
-              alt=""
-              class="feature-charts featurette-image img-fluid mx-auto"
-          /></a>
-        </div>
-      </div>
-
-      <hr class="featurette-divider" />
-
-      <div class="row featurette">
-        <div class="col-md-7 order-md-1">
-          <h2 class="featurette-heading fw-normal lh-1">
-            Impact of Covid
-            <span class="text-body-secondary">Across Countries</span>
-          </h2>
-          <p class="lead">
-            Explore impact of the pandemic on vaccination rates.
-          </p>
-          <p>
-            <a class="btn btn-lg btn-primary" href="pandemic.html"
-              >Browse Charts</a
-            >
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1 d-flex align-items-center">
-          <a href="pandemic.html"
-            ><img
-              src="./resources/pandemic.jpg"
-              alt=""
-              class="feature-charts featurette-image img-fluid mx-auto"
-          /></a>
-        </div>
-      </div>
-
-      <hr class="featurette-divider" />
-
-      <!-- /END THE FEATURETTES -->
-
-      <!-- AUTHORS -->
-      <div class="container text-center">
-        <h2 class="featurette-heading fw-normal mb-5">Meet the team</h2>
-        <div class="row pt-5 pb-5">
-          <div class="col-lg">
-            <img
-              src="./resources/ram.jpeg"
-              alt="Ram Senthamarai"
-              class="profile-pics rounded-circle featurette-image img-fluid mx-auto"
-            />
-            <h2 class="fw-normal">Ram<br />Senthamarai</h2>
-          </div>
-          <!-- /.col-lg -->
-          <div class="col-lg">
-            <img
-              src="./resources/sunayna.jpeg"
-              alt=""
-              class="profile-pics rounded-circle featurette-image img-fluid mx-auto"
-            />
-            <h2 class="fw-normal">Sunayna<br />Jain</h2>
-          </div>
-          <!-- /.col-lg -->
-          <div class="col-lg">
-            <img
-              src="./resources/janhavi.jpeg"
-              alt=""
-              class="profile-pics rounded-circle featurette-image img-fluid mx-auto"
-            />
-            <h2 class="fw-normal">Janhavi<br />Subedarpage</h2>
-          </div>
-          <!-- /.col-lg -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /END AUTHORS -->
     </div>
-    <!-- /.container -->
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-1">
+        <h2 class="featurette-heading fw-normal lh-1 text-center">Diseases<span class="text-body-secondary"> by Country</span></h2>
+        <p class="lead"> Country wide prevalence of diseases across the world over time.</p>
+        <p><a class="btn btn-lg btn-primary" href="./diseases.html">Browse Charts</a></p>
+      </div>
+      <div class="col-md-5 order-md-1 d-flex align-items-center">
+       <a href="./diseases.html"> <img src="./resources/history_of_polio.png" alt="" class="feature-charts featurette-image img-fluid mx-auto"></a>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1 text-center">Vaccination<span class="text-body-secondary"> Rates</span></h2>
+        <p class="lead"> Look at how different countries have adopted vaccines.</p>
+        <p><a class="btn btn-lg btn-primary" href="./vaccination.html">Browse Charts</a></p>
+      </div>
+      <div class="col-md-5 order-md-1 d-flex align-items-center">
+       <a href="./diseases.html"> <img src="./resources/overall_vax.jpg" alt="" class="feature-charts featurette-image img-fluid mx-auto"></a>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-1">
+        <h2 class="featurette-heading fw-normal lh-1">Covid <span class="text-body-secondary">Impact</span></h2>
+        <p class="lead">Explore impact of the pandemic on vaccination rates.</p>
+        <p><a class="btn btn-lg btn-primary" href="./pandemic.html">Browse Charts</a></p>
+      </div>
+      <div class="col-md-5 order-md-1 d-flex align-items-center">
+        <a href="#"><img src="./resources/pandemic.jpg"
+            alt="" class="feature-charts featurette-image img-fluid mx-auto"></a>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+    <!-- AUTHORS -->
+    <div class="container text-center">
+      <h2 class="featurette-heading fw-normal mb-5 ">Site <span class="text-body-secondary">Authors.</span></h2>
+      <div class="row pt-5 pb-5">
+        <div class="col-lg">
+          <img src="./resources/ram.jpeg" alt="" class="profile-pics rounded-circle featurette-image img-fluid mx-auto">
+          <h2 class="fw-normal">Ram<br/>Senthamarai</h2>
+        </div><!-- /.col-lg -->
+        <div class="col-lg">
+          <img src="./resources/sunayna.jpeg" alt="" class="profile-pics rounded-circle featurette-image img-fluid mx-auto">
+          <h2 class="fw-normal">Sunayna<br/>Jain</h2>
+        </div><!-- /.col-lg -->
+        <div class="col-lg">
+          <img src="./resources/janhavi.jpeg" alt="" class="profile-pics rounded-circle featurette-image img-fluid mx-auto">
+          <h2 class="fw-normal">Janhavi<br/>Subedarpage</h2>
+        </div><!-- /.col-lg -->
+      </div><!-- /.row -->
+    </div>
+    <!-- /END AUTHORS -->
+
+  </div><!-- /.container -->
+
 
     <script src="./resources/bootstrap.bundle.min.js"></script>
 
     <!-- FOOTER -->
-    <footer class="footer bottom pt-4 bg-dark text-center" data-bs-theme="dark">
-      <div>
-        <span class="text-body-secondary"
-          >Thank you for viewing our visuals!</span
-        >
-        <p><a href="#">Back to top</a></p>
-      </div>
-    </footer>
-  </body>
+ <footer class="footer bottom pt-4 bg-dark text-center" data-bs-theme="dark">
+  <div>
+    <span class="text-body-secondary">Thank you for viewing our visuals!</span>
+    <p><a href="#">Back to top</a></p>
+  </div>
+</footer>
+
+</body>
 </html>
