@@ -17,9 +17,9 @@ false
 function _sel_vaccine(select,vaccines){return(
 select({
   options: vaccines,
-  title: "Vaccine",
-  description:
-    "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
+  title: "Vaccine:  ",
+  // description:
+  //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
   value: "DTP1"
 })
 )}
@@ -27,10 +27,17 @@ select({
 function _yFieldD(select,metricDispNames){return(
 select({
   options: metricDispNames,
-  title: "Metric to plot",
-  value: "Not Vaccinated(#)",
-  description:
-    "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
+  title: "Metric to plot:  ",
+  value: "Not Vaccinated(#)"
+  // description:
+  //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
+})
+)}
+
+function _leg(Legend,color,regions){return(
+Legend(color, {
+  width: 500,
+  tickFormat: (v) => regions[v]
 })
 )}
 
@@ -38,7 +45,7 @@ function _layout(plotty){return(
 plotty()
 )}
 
-function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regions,sel_vaccine,yFieldD,y,yField,seriesData,story_data,to_story_key,show_tooltip,hide_tooltip,highlight_series,dehighlight_all_series,enable_initial_story,narrate,story){return(
+function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yField,sel_vaccine,yFieldD,seriesData,color,story_data,to_story_key,show_tooltip,hide_tooltip,highlight_series,dehighlight_all_series,Legend,regions,enable_initial_story,narrate,story){return(
 () => {
   const target = html`<div id="myviz">`;
 
@@ -53,25 +60,27 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .attr("class", "gDrawing")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  gDrawing
-    .append("g")
-    .call(d3.axisBottom(x))
-    .attr("transform", `translate(0, ${height - margin.top - margin.bottom})`);
+  // Display the axes.
   gDrawing
     .append("g")
     .attr("class", "xAxis")
+    .style("font-size", "12px")
+    .call(d3.axisBottom(x))
     .attr("transform", `translate(0, ${iheight})`)
     .append("text")
+    .text("Year")
     .attr("class", "axisLabel")
     .style("fill", "black")
     .attr("transform", `translate(${iwidth}, 30)`)
     .style("text-anchor", "end");
-
   gDrawing
     .append("g")
     .attr("class", "yAxis")
+    .style("font-size", "12px")
+    .call(d3.axisLeft(y))
     .append("text")
     .attr("class", "axisLabel")
+    .text(yField)
     .style("fill", "black")
     .attr("transform", `translate(0, -10)`)
     .style("text-anchor", "middle");
@@ -80,6 +89,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
   gDrawing
     .append("text")
     .attr("class", "chartHeader")
+    .style("font-size", "21px")
     .style("text-anchor", "middle")
     .attr("transform", `translate(${iwidth / 2}, ${0 - margin.top / 2})`);
 
@@ -90,39 +100,12 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .attr("height", iheight)
     .attr("fill", "#eee");
 
-  // Add legend
-  const legendWidth = 500;
-  gDrawing
-    .append("g")
-    .attr(
-      "transform",
-      `translate(${width - margin.right - legendWidth - 200}, ${iheight + 15})`
-    )
-    .append(() =>
-      Legend(color, {
-        width: legendWidth,
-        tickFormat: (v) => regions.get(v)
-      })
-    );
-
   // Display the chart title.
   gDrawing
     .select(".chartHeader")
     .text(`Regional ${sel_vaccine} Vaccination - ${yFieldD}`);
 
-  // Display the axes.
-  gDrawing
-    .select(".xAxis")
-    .call(d3.axisBottom(x))
-    .select(".axisLabel")
-    .text("Year");
-  gDrawing
-    .select(".yAxis")
-    .call(d3.axisLeft(y))
-    .select(".axisLabel")
-    .text(yField);
-
-  // Add a group element for each series separately control series level interactions
+  // Add a group element for each series to separately control series level interactions
   const serie = gDrawing
     .selectAll()
     .data(seriesData)
@@ -143,7 +126,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
         .y((d) => y(d[yField]))(d[1])
     );
 
-  // Draw two additional circles to highlight just the story points
+  // Draw two outer circles to highlight just the story points.
   serie
     .append("g")
     .attr("class", (d) => `storypoints_${d[0]}`)
@@ -158,8 +141,6 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .style("stroke-width", (d) => (story_data.has(to_story_key(d)) ? 10 : 0))
     .style("stroke", (d) => color(d.region_code))
     .style("stroke-opacity", 0.5);
-
-  // Second dimmer circle for story points
   serie
     .append("g")
     .attr("class", (d) => `storypoints_${d[0]}`)
@@ -188,6 +169,9 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .attr("fill", (d) => color(d.region_code));
 
   // Add interaction.
+  // Add tooltip and story popup at the end to keep it on top of all other layers.
+  const tooltip = gDrawing.append("g").attr("class", "ttip");
+
   const points = gDrawing.selectAll(".point");
   const lines = gDrawing.selectAll(".line");
   const story_points = gDrawing.selectAll(".storypoint");
@@ -229,8 +213,21 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     dehighlight_all_series(gDrawing)
   );
 
-  // Add tooltip and story popup at the end to keep it on top of all other layers.
-  const tooltip = gDrawing.append("g").attr("class", "tooltip");
+  // Add legend
+  const legendWidth = 500;
+  gDrawing
+    .append("g")
+    .style("font-size", "12px")
+    .attr(
+      "transform",
+      `translate(${width - margin.right - legendWidth - 200}, ${iheight + 15})`
+    )
+    .append(() =>
+      Legend(color, {
+        width: legendWidth,
+        tickFormat: (v) => regions.get(v)
+      })
+    );
 
   if (
     enable_initial_story &&
@@ -469,7 +466,7 @@ d3
   .nice()
 )}
 
-function _23(y){return(
+function _24(y){return(
 y.domain()
 )}
 
@@ -486,18 +483,18 @@ function _y(d3,chart_data,yField,height,margin)
 
 
 function _height(width){return(
-0.5 * width
+0.45 * width
 )}
 
 function _yField(metricNamesMap,yFieldD){return(
 metricNamesMap[yFieldD]
 )}
 
-function _27(md){return(
+function _28(md){return(
 md`## Data`
 )}
 
-function _28(md){return(
+function _29(md){return(
 md`### Preprocessing`
 )}
 
@@ -555,7 +552,7 @@ function _metricDispNames(){return(
 ]
 )}
 
-function _35(md){return(
+function _36(md){return(
 md`### Load Data`
 )}
 
@@ -607,7 +604,7 @@ function _DATA_URL_BASE(){return(
 "https://apps-summer.ischool.berkeley.edu/~ram.senth/w209/vaxviz"
 )}
 
-function _42(md){return(
+function _43(md){return(
 md`## Imports`
 )}
 
@@ -640,8 +637,9 @@ export default function define(runtime, observer) {
   main.variable(observer("sel_vaccine")).define("sel_vaccine", ["Generators", "viewof sel_vaccine"], (G, _) => G.input(_));
   main.variable(observer("viewof yFieldD")).define("viewof yFieldD", ["select","metricDispNames"], _yFieldD);
   main.variable(observer("yFieldD")).define("yFieldD", ["Generators", "viewof yFieldD"], (G, _) => G.input(_));
+  main.variable(observer("leg")).define("leg", ["Legend","color","regions"], _leg);
   main.variable(observer("layout")).define("layout", ["plotty"], _layout);
-  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","Legend","color","regions","sel_vaccine","yFieldD","y","yField","seriesData","story_data","to_story_key","show_tooltip","hide_tooltip","highlight_series","dehighlight_all_series","enable_initial_story","narrate","story"], _plotty);
+  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","yField","sel_vaccine","yFieldD","seriesData","color","story_data","to_story_key","show_tooltip","hide_tooltip","highlight_series","dehighlight_all_series","Legend","regions","enable_initial_story","narrate","story"], _plotty);
   main.variable(observer("hide_tooltip")).define("hide_tooltip", ["callout"], _hide_tooltip);
   main.variable(observer("show_tooltip")).define("show_tooltip", ["callout","tooltip_text"], _show_tooltip);
   main.variable(observer("narrate")).define("narrate", ["hide_tooltip","show_tooltip","x","y","yField"], _narrate);
@@ -657,29 +655,30 @@ export default function define(runtime, observer) {
   main.variable(observer("margin")).define("margin", _margin);
   main.variable(observer("color")).define("color", ["d3"], _color);
   main.variable(observer("x")).define("x", ["d3","chart_data","width","margin"], _x);
-  main.variable(observer()).define(["y"], _23);
+  main.variable(observer()).define(["y"], _24);
   main.variable(observer("y")).define("y", ["d3","chart_data","yField","height","margin"], _y);
   main.variable(observer("height")).define("height", ["width"], _height);
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
-  main.variable(observer()).define(["md"], _27);
   main.variable(observer()).define(["md"], _28);
+  main.variable(observer()).define(["md"], _29);
   main.variable(observer("story")).define("story", ["d3","chart_data","story_data"], _story);
   main.variable(observer("seriesData")).define("seriesData", ["d3","chart_data"], _seriesData);
   main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","sel_vaccine"], _chart_data);
   main.variable(observer("vaccines")).define("vaccines", ["regional_vax_number"], _vaccines);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
-  main.variable(observer()).define(["md"], _35);
+  main.variable(observer()).define(["md"], _36);
   main.variable(observer("story_data")).define("story_data", ["FileAttachment","d3"], _story_data);
   main.variable(observer("vaccines_master")).define("vaccines_master", ["FileAttachment"], _vaccines_master);
   main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
   main.variable(observer("regional_vax_number")).define("regional_vax_number", ["FileAttachment","fmt"], _regional_vax_number);
   main.variable(observer("fmt")).define("fmt", ["d3"], _fmt);
   main.variable(observer("DATA_URL_BASE")).define("DATA_URL_BASE", _DATA_URL_BASE);
-  main.variable(observer()).define(["md"], _42);
+  main.variable(observer()).define(["md"], _43);
   main.variable(observer("d3Fetch")).define("d3Fetch", ["require"], _d3Fetch);
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
+  main.import("Swatches", child1);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("data")).define("data", ["require"], _data);
   const child2 = runtime.module(define2);

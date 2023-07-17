@@ -82,7 +82,7 @@
           }
 
           #vis div {
-              margin-top: 25px;
+              margin-top: 5px;
               font-size: 21px;
               text-align: center;
               animation: fadein 2s;
@@ -90,6 +90,26 @@
               -webkit-animation: fadein 2s; /* Safari and Chrome */
               -o-animation: fadein 2s; /* Opera */
           }
+
+          #visControls div {
+              display: flex;
+              /* justify-content: center;
+              align-items: center; */
+              height: 20px;
+              margin-left: 20px;
+              margin-top: 4px;
+              font-size: 12px;
+              /* text-align: center; */
+              animation: fadein 2s;
+              -moz-animation: fadein 2s; /* Firefox */
+              -webkit-animation: fadein 2s; /* Safari and Chrome */
+              -o-animation: fadein 2s; /* Opera */
+          }
+
+          .xAxis text {
+            font-size: 12;
+          }
+
           @keyframes fadein {
               from {
                   opacity:0;
@@ -165,28 +185,28 @@
               <div class="step" data-step="1">
                 <p>
                   About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.
+                  <br/>
+                  About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.
                   <div id="chart1_sel1"></div>
                   <div id="chart1_sel2"></div>
-                  </p>
+                </p>
               </div>
               <div class="step" data-step="2">
-                <p class="d-flex align-items-center">Let’s start the analysis by remembering who was popular back in 2020. Counting the number of times an artist appeared in various lists gives us good insight into who was popular. It looks like Bad Bunny and Dua Lipa were all the rage in 2020, followed by The Weeknd.</p>
+                <p class="d-flex align-items-center">About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.</p>
               </div>
               <div class="step" data-step="3">
-                <p class="d-flex align-items-center">Next, let’s refresh our memory about what popular songs came out in 2020. Once again, counting the number of times a song made if onto a list gives a good indication of what albums were popular. Blinding Lights and Rain On Me featuring Arianna Grande are tied for first place.</p>
+                <p class="d-flex align-items-center">About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.</p>
               </div>
               <div class="step" data-step="4">
-                <p class="d-flex align-items-center">Now that we remember what artists and songs were populars, let’s examine some of the characteristics of popular songs. Grouping the songs by the continent in which their lists appears, it looks like Asian songs are much longer than other regions. Diving deeper into the countries from Asia, we see that Indonesia is really driving up the average song duration for Asia.</p>
-              </div>
-              <div class="step" data-step="5">
-                <p class="d-flex align-items-center">Finally, let’s explore how different countries feel about implicit versus explicit songs. With less than 20% of the songs on the Asia charts being explicit, it appears the Asian cultures prefer implicit songs.</p>
+                <p class="d-flex align-items-center">About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.</p>
               </div>
             </article>
 
           <!-- <div id="dummy"></div> -->
           <div class="sticky-thing">
-                <div id="vis"></div>
-            </div>
+            <div id="vis"></div>
+            <div id="visControls"></div>
+          </div>
           </section>
 
           <section id="outro">
@@ -238,7 +258,8 @@
       const sticky = scrolly.querySelector(".sticky-thing");
       const article = scrolly.querySelector("article");
       const steps = article.querySelectorAll(".step");
-      const targetRef = "#vis";
+      const chartTargetRef = "#vis";
+      const controlsTargetRef = "#visControls";
 
       // initialize the scrollama
       const scroller = scrollama();
@@ -254,17 +275,18 @@
         steps.forEach(step => step.classList.remove('is-active'));
         el.classList.add('is-active');
 
-        clearView(targetRef);
+        clearView(chartTargetRef);
+        clearView(controlsTargetRef);
 
         // update graphic based on step
         if(el.dataset.step=='1') {
-          createStep1(targetRef);
+          createStep1(chartTargetRef, controlsTargetRef);
         }
         else if (el.dataset.step=='2'){
-          createStep2(targetRef);
+          createStep2(chartTargetRef, controlsTargetRef);
         }
         else if (el.dataset.step=='3'){
-          createStep3(targetRef);
+          createStep3(chartTargetRef, controlsTargetRef);
         }
         else if (el.dataset.step=='4'){
         }
@@ -289,6 +311,7 @@
       // Observable related scripts
       import define_01 from "./resources/pandemic_01/index.js";
       import {Runtime as Runtime_01, Inspector as Inspector_01} from "./resources/pandemic_01/runtime.js";
+
       import define_02 from "./resources/pandemic_02/index.js";
       import {Runtime as Runtime_02, Inspector as Inspector_02} from "./resources/pandemic_02/runtime.js";
       import define_03 from "./resources/pandemic_03/index.js";
@@ -302,32 +325,34 @@
         document.querySelector("#chart1_sel2").innerHTML = "";
       }
 
-      function createStep1(targetRef) {
-        const targetDiv = document.querySelector(targetRef);
-        // const divSelGroup = document.createElement('div');
-        // const divSel1 = document.createElement('div');
+      function createStep1(chartTargetRef, controlsTargetRef) {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const controlsTargetDiv = document.querySelector(controlsTargetRef);
+
+        // const divSel1 = document.querySelector("#chart1_sel1");
+        // const divSel2 = document.querySelector("#chart1_sel2")
+
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "50%";
         // divSel1.style.width = "330px";
         // divSel1.style.float = "left";
 
-        // const divSel2 = document.createElement('div');
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "50%";
         // divSel2.style.marginLeft = "350px";
         // divSel2.style.float = "right";
 
-        // divSelGroup.appendChild(divSel1);
-        // divSelGroup.appendChild(divSel2);
-        const divChart = document.createElement('div');
-        // targetDiv.appendChild(divSelGroup);
-        targetDiv.appendChild(divChart);
+        controlsTargetDiv.appendChild(divSel1);
+        controlsTargetDiv.appendChild(divSel2);
 
         // Load the chart
-        console.log('Now loading first chart');
-
-        (new Runtime_01()).module(define_01, name => {
-            if (name === "viewof sel_vaccine") return new Inspector_01(document.querySelector("#chart1_sel1"));
-            if (name === "viewof yFieldD") return new Inspector_01(document.querySelector("#chart1_sel2"));
-            if (name === "layout") return new Inspector_01(divChart);
-              return ["plotty","chart_data","x","y","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
-          });
+        const rt = (new Runtime_01()).module(define_01, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_01(divSel1);
+          if (name === "viewof yFieldD") return new Inspector_01(divSel2);
+          if (name === "layout") return new Inspector_01(chartTargetDiv);
+            return ["plotty","chart_data","x","y","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
+        });
+        console.log("here");
       }
 
       function createStep2(targetRef) {
