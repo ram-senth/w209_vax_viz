@@ -1,6 +1,5 @@
 import define1 from "./a33468b95d0b15b0@808.js";
-import define2 from "./450051d7f1174df8@255.js";
-import define3 from "./e93997d5089d7165@2303.js";
+import define2 from "./e93997d5089d7165@2303.js";
 
 function _1(md){return(
 md`# VaxViz-Pandemic-01`
@@ -39,7 +38,7 @@ plotty()
 )}
 
 function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yField,sel_vaccine,yFieldD,seriesData,color,story_data,to_story_key,show_tooltip,hide_tooltip,highlight_series,dehighlight_all_series,Legend,regions,enable_initial_story,narrate,story){return(
-() => {
+(spotlight) => {
   const target = html`<div id="myviz">`;
 
   const svg = d3
@@ -440,13 +439,13 @@ function _margin(){return(
 
 function _color(d3){return(
 d3.scaleOrdinal([
-  "#e41a1c",
+  "#f781bf",
   "#377eb8",
   "#4daf4a",
   "#984ea3",
   "#ff7f00",
   "#a65628",
-  "#f781bf",
+  "#e41a1c",
   "#999999"
 ])
 )}
@@ -489,10 +488,6 @@ md`## Data`
 
 function _28(md){return(
 md`### Preprocessing`
-)}
-
-function _29(story_data){return(
-story_data
 )}
 
 function _story(d3,chart_data,story_data)
@@ -567,7 +562,7 @@ function _metricDispNames(){return(
 ]
 )}
 
-function _36(md){return(
+function _35(md){return(
 md`### Load Data`
 )}
 
@@ -619,20 +614,12 @@ function _DATA_URL_BASE(){return(
 "https://apps-summer.ischool.berkeley.edu/~ram.senth/w209/vaxviz"
 )}
 
-function _43(md){return(
+function _42(md){return(
 md`## Imports`
-)}
-
-function _d3Fetch(require){return(
-require("d3-fetch")
 )}
 
 function _d3(require){return(
 require("d3@6")
-)}
-
-function _data(require){return(
-require("vega-datasets@2")
 )}
 
 export default function define(runtime, observer) {
@@ -675,31 +662,25 @@ export default function define(runtime, observer) {
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
   main.variable(observer()).define(["md"], _27);
   main.variable(observer()).define(["md"], _28);
-  main.variable(observer()).define(["story_data"], _29);
   main.variable(observer("story")).define("story", ["d3","chart_data","story_data"], _story);
   main.variable(observer("seriesData")).define("seriesData", ["d3","chart_data"], _seriesData);
   main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","sel_vaccine"], _chart_data);
   main.variable(observer("vaccines")).define("vaccines", ["regional_vax_number"], _vaccines);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
-  main.variable(observer()).define(["md"], _36);
+  main.variable(observer()).define(["md"], _35);
   main.variable(observer("story_data")).define("story_data", ["FileAttachment","d3"], _story_data);
   main.variable(observer("vaccines_master")).define("vaccines_master", ["FileAttachment"], _vaccines_master);
   main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
   main.variable(observer("regional_vax_number")).define("regional_vax_number", ["FileAttachment","fmt"], _regional_vax_number);
   main.variable(observer("fmt")).define("fmt", ["d3"], _fmt);
   main.variable(observer("DATA_URL_BASE")).define("DATA_URL_BASE", _DATA_URL_BASE);
-  main.variable(observer()).define(["md"], _43);
-  main.variable(observer("d3Fetch")).define("d3Fetch", ["require"], _d3Fetch);
+  main.variable(observer()).define(["md"], _42);
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
-  main.import("swatches", child1);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
-  main.variable(observer("data")).define("data", ["require"], _data);
   const child2 = runtime.module(define2);
-  main.import("Scrubber", child2);
-  const child3 = runtime.module(define3);
-  main.import("slider", child3);
-  main.import("select", child3);
+  main.import("slider", child2);
+  main.import("select", child2);
   return main;
 }

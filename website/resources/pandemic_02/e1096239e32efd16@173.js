@@ -49,11 +49,18 @@ select({
 })
 )}
 
-function _layout(Plot,height,width,chart_data,yField,d3,leftYear,occlusionY,formatters,yFieldD,rightYear){return(
+function _layout(Plot,height,width,leftYear,rightYear,chart_data,yField,d3,occlusionY,formatters,yFieldD){return(
 Plot.plot({
   height: height,
   width: width,
-  x: { axis: "top", type: "ordinal", tickFormat: "", inset: 240, label: null },
+  x: {
+    axis: "top",
+    type: "ordinal",
+    tickFormat: "",
+    inset: 300,
+    label: null,
+    fontSize: 12
+  },
   y: { axis: null, inset: 20 },
   color: {
     domain: [false, true],
@@ -64,13 +71,14 @@ Plot.plot({
     fontSize: 12
   },
   marks: [
+    Plot.ruleX([`${leftYear}`, `${rightYear}`], { stroke: "#ccc" }),
     Plot.line(chart_data, {
       x: "Year",
       y: yField,
       stroke: (d) => d.region_code === "REG_GLOBAL",
-
       sort: { channel: "stroke" },
-      z: "region_name"
+      z: "region_name",
+      strokeWidth: 3
     }),
     d3
       .groups(chart_data, (d) => d.Year === leftYear)
@@ -239,7 +247,7 @@ export default function define(runtime, observer) {
   main.variable(observer("leftYear")).define("leftYear", ["Generators", "viewof leftYear"], (G, _) => G.input(_));
   main.variable(observer("viewof rightYear")).define("viewof rightYear", ["select","availYears"], _rightYear);
   main.variable(observer("rightYear")).define("rightYear", ["Generators", "viewof rightYear"], (G, _) => G.input(_));
-  main.variable(observer("layout")).define("layout", ["Plot","height","width","chart_data","yField","d3","leftYear","occlusionY","formatters","yFieldD","rightYear"], _layout);
+  main.variable(observer("layout")).define("layout", ["Plot","height","width","leftYear","rightYear","chart_data","yField","d3","occlusionY","formatters","yFieldD"], _layout);
   main.variable(observer("occlusionY")).define("occlusionY", ["Plot","d3"], _occlusionY);
   main.variable(observer("formatters")).define("formatters", _formatters);
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
