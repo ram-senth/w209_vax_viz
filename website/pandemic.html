@@ -329,18 +329,11 @@
         const chartTargetDiv = document.querySelector(chartTargetRef);
         const controlsTargetDiv = document.querySelector(controlsTargetRef);
 
-        // const divSel1 = document.querySelector("#chart1_sel1");
-        // const divSel2 = document.querySelector("#chart1_sel2")
-
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "50%";
-        // divSel1.style.width = "330px";
-        // divSel1.style.float = "left";
 
         const divSel2 = document.createElement('div');
         divSel2.style.flexBasis = "50%";
-        // divSel2.style.marginLeft = "350px";
-        // divSel2.style.float = "right";
 
         controlsTargetDiv.appendChild(divSel1);
         controlsTargetDiv.appendChild(divSel2);
@@ -352,16 +345,37 @@
           if (name === "layout") return new Inspector_01(chartTargetDiv);
             return ["plotty","chart_data","x","y","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
         });
-        console.log("here");
       }
 
       function createStep2(targetRef) {
-        const targetDiv = document.querySelector(targetRef);
-        // Load the chart
-        console.log('Now loading second chart');
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const controlsTargetDiv = document.querySelector(controlsTargetRef);
 
-        new Runtime_02().module(define_02, name => {
-          if (name === "layout") return new Inspector_02(targetDiv);
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "25%";
+
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel3 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel4 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        controlsTargetDiv.appendChild(divSel1);
+        controlsTargetDiv.appendChild(divSel2);
+        controlsTargetDiv.appendChild(divSel3);
+        controlsTargetDiv.appendChild(divSel4);
+
+        // Load the chart
+        const rt = (new Runtime_02()).module(define_02, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_02(divSel1);
+          if (name === "viewof yFieldD") return new Inspector_02(divSel2);
+          if (name === "viewof leftYear") return new Inspector_02(divSel3);
+          if (name === "viewof rightYear") return new Inspector_02(divSel4);
+          if (name === "layout") return new Inspector_02(chartTargetDiv);
+          return ["chart_data","yField"].includes(name);
         });
       }
 

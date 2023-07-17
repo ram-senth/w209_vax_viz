@@ -3,7 +3,7 @@ import define2 from "./450051d7f1174df8@255.js";
 import define3 from "./e93997d5089d7165@2303.js";
 
 function _1(md){return(
-md`# VaxViz-Pandemic-2`
+md`# VaxViz-Pandemic-01`
 )}
 
 function _2(md){return(
@@ -11,15 +11,15 @@ md`## Chart`
 )}
 
 function _enable_initial_story(){return(
-false
+true
 )}
 
 function _sel_vaccine(select,vaccines){return(
 select({
   options: vaccines,
-  title: "Vaccine",
-  description:
-    "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
+  title: "Vaccine:  ",
+  // description:
+  //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
   value: "DTP1"
 })
 )}
@@ -27,10 +27,10 @@ select({
 function _yFieldD(select,metricDispNames){return(
 select({
   options: metricDispNames,
-  title: "Metric to plot",
-  value: "Not Vaccinated(#)",
-  description:
-    "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
+  title: "Metric to plot:  ",
+  value: "Not Vaccinated(#)"
+  // description:
+  //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
 })
 )}
 
@@ -38,7 +38,7 @@ function _layout(plotty){return(
 plotty()
 )}
 
-function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regions,sel_vaccine,yFieldD,y,yField,seriesData,story_data,to_story_key,show_tooltip,hide_tooltip,highlight_series,dehighlight_all_series,enable_initial_story,narrate,story){return(
+function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yField,sel_vaccine,yFieldD,seriesData,color,story_data,to_story_key,show_tooltip,hide_tooltip,highlight_series,dehighlight_all_series,Legend,regions,enable_initial_story,narrate,story){return(
 () => {
   const target = html`<div id="myviz">`;
 
@@ -53,25 +53,27 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .attr("class", "gDrawing")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  gDrawing
-    .append("g")
-    .call(d3.axisBottom(x))
-    .attr("transform", `translate(0, ${height - margin.top - margin.bottom})`);
+  // Display the axes.
   gDrawing
     .append("g")
     .attr("class", "xAxis")
+    .style("font-size", "12px")
+    .call(d3.axisBottom(x))
     .attr("transform", `translate(0, ${iheight})`)
     .append("text")
+    .text("Year")
     .attr("class", "axisLabel")
     .style("fill", "black")
     .attr("transform", `translate(${iwidth}, 30)`)
     .style("text-anchor", "end");
-
   gDrawing
     .append("g")
     .attr("class", "yAxis")
+    .style("font-size", "12px")
+    .call(d3.axisLeft(y))
     .append("text")
     .attr("class", "axisLabel")
+    .text(yField)
     .style("fill", "black")
     .attr("transform", `translate(0, -10)`)
     .style("text-anchor", "middle");
@@ -80,6 +82,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
   gDrawing
     .append("text")
     .attr("class", "chartHeader")
+    .style("font-size", "21px")
     .style("text-anchor", "middle")
     .attr("transform", `translate(${iwidth / 2}, ${0 - margin.top / 2})`);
 
@@ -88,41 +91,14 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .append("rect")
     .attr("width", iwidth)
     .attr("height", iheight)
-    .attr("fill", "lightblue");
-
-  // Add legend
-  const legendWidth = 500;
-  gDrawing
-    .append("g")
-    .attr(
-      "transform",
-      `translate(${width - margin.right - legendWidth - 200}, ${iheight + 15})`
-    )
-    .append(() =>
-      Legend(color, {
-        width: legendWidth,
-        tickFormat: (v) => regions.get(v)
-      })
-    );
+    .attr("fill", "#eee");
 
   // Display the chart title.
   gDrawing
     .select(".chartHeader")
     .text(`Regional ${sel_vaccine} Vaccination - ${yFieldD}`);
 
-  // Display the axes.
-  gDrawing
-    .select(".xAxis")
-    .call(d3.axisBottom(x))
-    .select(".axisLabel")
-    .text("Year");
-  gDrawing
-    .select(".yAxis")
-    .call(d3.axisLeft(y))
-    .select(".axisLabel")
-    .text(yField);
-
-  // Add a group element for each series separately control series level interactions
+  // Add a group element for each series to separately control series level interactions
   const serie = gDrawing
     .selectAll()
     .data(seriesData)
@@ -143,7 +119,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
         .y((d) => y(d[yField]))(d[1])
     );
 
-  // Draw two additional circles to highlight just the story points
+  // Draw two outer circles to highlight just the story points.
   serie
     .append("g")
     .attr("class", (d) => `storypoints_${d[0]}`)
@@ -158,8 +134,6 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .style("stroke-width", (d) => (story_data.has(to_story_key(d)) ? 10 : 0))
     .style("stroke", (d) => color(d.region_code))
     .style("stroke-opacity", 0.5);
-
-  // Second dimmer circle for story points
   serie
     .append("g")
     .attr("class", (d) => `storypoints_${d[0]}`)
@@ -188,6 +162,9 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     .attr("fill", (d) => color(d.region_code));
 
   // Add interaction.
+  // Add tooltip and story popup at the end to keep it on top of all other layers.
+  const tooltip = gDrawing.append("g").attr("class", "ttip");
+
   const points = gDrawing.selectAll(".point");
   const lines = gDrawing.selectAll(".line");
   const story_points = gDrawing.selectAll(".storypoint");
@@ -229,8 +206,21 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,Legend,color,regio
     dehighlight_all_series(gDrawing)
   );
 
-  // Add tooltip and story popup at the end to keep it on top of all other layers.
-  const tooltip = gDrawing.append("g").attr("class", "tooltip");
+  // Add legend
+  const legendWidth = 500;
+  gDrawing
+    .append("g")
+    .style("font-size", "12px")
+    .attr(
+      "transform",
+      `translate(${width - margin.right - legendWidth - 200}, ${iheight + 15})`
+    )
+    .append(() =>
+      Legend(color, {
+        width: legendWidth,
+        tickFormat: (v) => regions.get(v)
+      })
+    );
 
   if (
     enable_initial_story &&
@@ -486,7 +476,7 @@ function _y(d3,chart_data,yField,height,margin)
 
 
 function _height(width){return(
-0.4 * width
+0.45 * width
 )}
 
 function _yField(metricNamesMap,yFieldD){return(
@@ -495,6 +485,14 @@ metricNamesMap[yFieldD]
 
 function _27(md){return(
 md`## Data`
+)}
+
+function _28(md){return(
+md`### Preprocessing`
+)}
+
+function _29(story_data){return(
+story_data
 )}
 
 function _story(d3,chart_data,story_data)
@@ -513,22 +511,29 @@ function _story(d3,chart_data,story_data)
       region: "REG_GLOBAL",
       year: 2021,
       text: story_data.get("2021::REG_GLOBAL::DTP1")[0].highlight,
-      data: regions_data_map.get("REG_GLOBAL").get(2021)[0]
+      data: regions_data_map.get("REG_GLOBAL").get(2021)[0],
+      next: {
+        region: "AFR",
+        year: 2019,
+        text: story_data.get("2019::AFR::DTP1")[0].highlight,
+        data: regions_data_map.get("AFR").get(2019)[0],
+        next: {
+          region: "SEAR",
+          year: 2020,
+          text: story_data.get("2020::SEAR::DTP1")[0].highlight,
+          data: regions_data_map.get("SEAR").get(2020)[0],
+          next: {
+            region: "EMR",
+            year: 2020,
+            text: story_data.get("2020::EMR::DTP1")[0].highlight,
+            data: regions_data_map.get("EMR").get(2020)[0]
+          }
+        }
+      }
     }
   };
 }
 
-
-function _story_data(d3,DATA_URL_BASE){return(
-d3
-  .csv(`${DATA_URL_BASE}/pandemic/v2/vaxrates/whoregions/dtp1story`)
-  .then((d) => {
-    d.map((row) => {
-      row.highlight = row.highlight.replaceAll("\\n", "\n");
-    });
-    return d3.group(d, (d) => d.key);
-  })
-)}
 
 function _seriesData(d3,chart_data){return(
 d3.groups(chart_data, (d) => d.region_code)
@@ -538,54 +543,8 @@ function _chart_data(regional_vax_number,sel_vaccine){return(
 regional_vax_number.filter((v) => v.Vaccine == sel_vaccine)
 )}
 
-function _vaccines(country_vax_numbers){return(
-Array.from(new Set(country_vax_numbers.map((v) => v.Vaccine)))
-)}
-
-function _vaccines_master(d3,DATA_URL_BASE){return(
-d3.csv(`${DATA_URL_BASE}/vaccines_master`)
-)}
-
-function _DATA_URL_BASE(){return(
-"https://apps-summer.ischool.berkeley.edu/~ram.senth/w209/vaxviz"
-)}
-
-function _regions(d3,DATA_URL_BASE){return(
-d3
-  .csv(`${DATA_URL_BASE}/regions_master`)
-  .then(
-    (regions) =>
-      new Map(regions.map((region) => [region.code, region.region_name]))
-  )
-)}
-
-function _countries(d3,DATA_URL_BASE){return(
-d3.csv(`${DATA_URL_BASE}/countries_master`)
-)}
-
-function _regional_vax_number(d3,DATA_URL_BASE,fmt){return(
-d3
-  .csv(`${DATA_URL_BASE}/pandemic/v2/vaxrates/whoregions`)
-  .then((data) => {
-    data.map((row) => {
-      row.Year = fmt(row.Year);
-      row.Coverage = +row.Coverage;
-      row.Vaccinated = +row.Vaccinated;
-      row.Unvaccinated = +row.Unvaccinated;
-      row.Target = +row.Target;
-      row["Not Covered"] = +row["Not Covered"];
-    });
-    return data;
-  })
-)}
-
-function _country_vax_numbers(d3,DATA_URL_BASE){return(
-d3
-  .csv(`${DATA_URL_BASE}/pandemic/v2//vaxrates/countries?pivot_on_year=true`)
-  .then
-  // The ids need to be padded with 0 if needed to create a consistent 5 character length value.
-  // (data) => new Map(data.map((r) => [r.id.padStart(5, "0"), +r.rate]))
-  ()
+function _vaccines(regional_vax_number){return(
+Array.from(new Set(regional_vax_number.map((v) => v.Vaccine)))
 )}
 
 function _metricNamesMap()
@@ -608,11 +567,59 @@ function _metricDispNames(){return(
 ]
 )}
 
+function _36(md){return(
+md`### Load Data`
+)}
+
+function _story_data(FileAttachment,d3){return(
+FileAttachment("regional_stories.csv")
+  .csv()
+  .then((d) => {
+    d.map((row) => {
+      row.highlight = row.highlight.replaceAll("\\n", "\n");
+    });
+    return d3.group(d, (d) => d.key);
+  })
+)}
+
+function _vaccines_master(FileAttachment){return(
+FileAttachment("vaccines_master.csv").csv()
+)}
+
+function _regions(FileAttachment){return(
+FileAttachment("regions_master.csv")
+  .csv()
+  .then(
+    (regions) =>
+      new Map(regions.map((region) => [region.code, region.region_name]))
+  )
+)}
+
+function _regional_vax_number(FileAttachment,fmt){return(
+FileAttachment("unicef_regional_coverage_2015_2021.csv")
+  .csv()
+  .then((data) => {
+    data.map((row) => {
+      row.Year = fmt(row.Year);
+      row.Coverage = +row.Coverage;
+      row.Vaccinated = +row.Vaccinated;
+      row.Unvaccinated = +row.Unvaccinated;
+      row.Target = +row.Target;
+      row["Not Covered"] = +row["Not Covered"];
+    });
+    return data;
+  })
+)}
+
 function _fmt(d3){return(
 d3.timeParse("%Y")
 )}
 
-function _42(md){return(
+function _DATA_URL_BASE(){return(
+"https://apps-summer.ischool.berkeley.edu/~ram.senth/w209/vaxviz"
+)}
+
+function _43(md){return(
 md`## Imports`
 )}
 
@@ -630,6 +637,14 @@ require("vega-datasets@2")
 
 export default function define(runtime, observer) {
   const main = runtime.module();
+  function toString() { return this.url; }
+  const fileAttachments = new Map([
+    ["vaccines_master.csv", {url: new URL("./files/f5250596cae55df5f198a45fb75edccef41404fdaeb90cf73db91f3e4a1af978448859990b9db172b5dd69a10dbbbda4860913313d005ae40d8171cd1f28e738.csv", import.meta.url), mimeType: "text/csv", toString}],
+    ["regions_master.csv", {url: new URL("./files/05d199b4b5b31907d15b326d31d62754a460838de71e4432d0ae1df4512a4f8186539ed67d0fd07a71039820406527d9de6f742f0eb02e06af2c1bee3045a374.csv", import.meta.url), mimeType: "text/csv", toString}],
+    ["unicef_regional_coverage_2015_2021.csv", {url: new URL("./files/becd2331310fd5cb391ed25c51d4f17e372ea3b23b1d87a90df2b0ea5cf714887c526bee621bc9ca50647f0f5018955ab55986bb76694d4c34997488e8f638c2.csv", import.meta.url), mimeType: "text/csv", toString}],
+    ["regional_stories.csv", {url: new URL("./files/777fd8805c230db86e2fd699fec43e95637ca0da771618ae92b38a9daa5d5ba5234fc8eb7493e6ec53deed62ec0ef2a5bd242d9ed1518513dfafee458fa87285.csv", import.meta.url), mimeType: "text/csv", toString}]
+  ]);
+  main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["md"], _1);
   main.variable(observer()).define(["md"], _2);
   main.variable(observer("enable_initial_story")).define("enable_initial_story", _enable_initial_story);
@@ -638,7 +653,7 @@ export default function define(runtime, observer) {
   main.variable(observer("viewof yFieldD")).define("viewof yFieldD", ["select","metricDispNames"], _yFieldD);
   main.variable(observer("yFieldD")).define("yFieldD", ["Generators", "viewof yFieldD"], (G, _) => G.input(_));
   main.variable(observer("layout")).define("layout", ["plotty"], _layout);
-  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","Legend","color","regions","sel_vaccine","yFieldD","y","yField","seriesData","story_data","to_story_key","show_tooltip","hide_tooltip","highlight_series","dehighlight_all_series","enable_initial_story","narrate","story"], _plotty);
+  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","yField","sel_vaccine","yFieldD","seriesData","color","story_data","to_story_key","show_tooltip","hide_tooltip","highlight_series","dehighlight_all_series","Legend","regions","enable_initial_story","narrate","story"], _plotty);
   main.variable(observer("hide_tooltip")).define("hide_tooltip", ["callout"], _hide_tooltip);
   main.variable(observer("show_tooltip")).define("show_tooltip", ["callout","tooltip_text"], _show_tooltip);
   main.variable(observer("narrate")).define("narrate", ["hide_tooltip","show_tooltip","x","y","yField"], _narrate);
@@ -659,24 +674,26 @@ export default function define(runtime, observer) {
   main.variable(observer("height")).define("height", ["width"], _height);
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
   main.variable(observer()).define(["md"], _27);
+  main.variable(observer()).define(["md"], _28);
+  main.variable(observer()).define(["story_data"], _29);
   main.variable(observer("story")).define("story", ["d3","chart_data","story_data"], _story);
-  main.variable(observer("story_data")).define("story_data", ["d3","DATA_URL_BASE"], _story_data);
   main.variable(observer("seriesData")).define("seriesData", ["d3","chart_data"], _seriesData);
   main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","sel_vaccine"], _chart_data);
-  main.variable(observer("vaccines")).define("vaccines", ["country_vax_numbers"], _vaccines);
-  main.variable(observer("vaccines_master")).define("vaccines_master", ["d3","DATA_URL_BASE"], _vaccines_master);
-  main.variable(observer("DATA_URL_BASE")).define("DATA_URL_BASE", _DATA_URL_BASE);
-  main.variable(observer("regions")).define("regions", ["d3","DATA_URL_BASE"], _regions);
-  main.variable(observer("countries")).define("countries", ["d3","DATA_URL_BASE"], _countries);
-  main.variable(observer("regional_vax_number")).define("regional_vax_number", ["d3","DATA_URL_BASE","fmt"], _regional_vax_number);
-  main.variable(observer("country_vax_numbers")).define("country_vax_numbers", ["d3","DATA_URL_BASE"], _country_vax_numbers);
+  main.variable(observer("vaccines")).define("vaccines", ["regional_vax_number"], _vaccines);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
+  main.variable(observer()).define(["md"], _36);
+  main.variable(observer("story_data")).define("story_data", ["FileAttachment","d3"], _story_data);
+  main.variable(observer("vaccines_master")).define("vaccines_master", ["FileAttachment"], _vaccines_master);
+  main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
+  main.variable(observer("regional_vax_number")).define("regional_vax_number", ["FileAttachment","fmt"], _regional_vax_number);
   main.variable(observer("fmt")).define("fmt", ["d3"], _fmt);
-  main.variable(observer()).define(["md"], _42);
+  main.variable(observer("DATA_URL_BASE")).define("DATA_URL_BASE", _DATA_URL_BASE);
+  main.variable(observer()).define(["md"], _43);
   main.variable(observer("d3Fetch")).define("d3Fetch", ["require"], _d3Fetch);
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
+  main.import("swatches", child1);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   main.variable(observer("data")).define("data", ["require"], _data);
   const child2 = runtime.module(define2);
