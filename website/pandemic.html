@@ -81,7 +81,7 @@
             font-size: 1.5rem;
           }
 
-          #vis div {
+          #vis.div {
               margin-top: 5px;
               font-size: 21px;
               text-align: center;
@@ -91,7 +91,7 @@
               -o-animation: fadein 2s; /* Opera */
           }
 
-          #visControls div {
+          #visControlsTop.div #visControlsBottom.div {
               display: flex;
               /* justify-content: center;
               align-items: center; */
@@ -106,8 +106,20 @@
               -o-animation: fadein 2s; /* Opera */
           }
 
-          .xAxis text {
-            font-size: 12;
+          .tick, text.axisLabel {
+            font-size: 14px;
+          }
+
+          #chartHeader {
+            font-size: 1.2em !important;
+          }
+          #visChartHeader {
+            font-size: 18px !important;
+            text-align: center;
+          }
+
+          g.ttip {
+            font-size: 14px !important;
           }
 
           @keyframes fadein {
@@ -186,9 +198,8 @@
                 <p>
                   About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.
                   <br/>
-                  About 25 million children were un-or under-vaccinated in 2021, 2 million more than in 2020, and 6 million more than in 2019. The number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.
-                  <div id="chart1_sel1"></div>
-                  <div id="chart1_sel2"></div>
+                  <br/>
+                  <span id="chart1_notes"></span>
                 </p>
               </div>
               <div class="step" data-step="2">
@@ -204,8 +215,10 @@
 
           <!-- <div id="dummy"></div> -->
           <div class="sticky-thing">
+            <div id="visControlsTop"></div>
+            <div id="visChartHeader" class="chartHeader"></div>
             <div id="vis"></div>
-            <div id="visControls"></div>
+            <div id="visControlsBottom"></div>
           </div>
           </section>
 
@@ -258,16 +271,16 @@
       const sticky = scrolly.querySelector(".sticky-thing");
       const article = scrolly.querySelector("article");
       const steps = article.querySelectorAll(".step");
-      const chartTargetRef = "#vis";
-      const controlsTargetRef = "#visControls";
 
       // initialize the scrollama
       const scroller = scrollama();
 
+      const chartTargetRef = "#vis";
+      const topControlsTargetRef = "#visControlsTop";
+      const bottomControlsTargetRef = "#visControlsBottom";
 
       // scrollama event handlers
       function handleStepEnter(response) {
-        // response = { element, direction, index }
         var el = response.element;
 
         // remove is-active from all steps
@@ -275,18 +288,20 @@
         steps.forEach(step => step.classList.remove('is-active'));
         el.classList.add('is-active');
 
-        clearView(chartTargetRef);
-        clearView(controlsTargetRef);
+        clearView(document.querySelector(chartTargetRef));
+        clearView(document.querySelector(topControlsTargetRef));
+        clearView(document.querySelector(bottomControlsTargetRef));
+        clearView(document.querySelector("#visChartHeader"))
 
         // update graphic based on step
         if(el.dataset.step=='1') {
-          createStep1(chartTargetRef, controlsTargetRef);
+          createStep1();
         }
         else if (el.dataset.step=='2'){
-          createStep2(chartTargetRef, controlsTargetRef);
+          createStep2();
         }
         else if (el.dataset.step=='3'){
-          createStep3(chartTargetRef, controlsTargetRef);
+          createStep3();
         }
         else if (el.dataset.step=='4'){
         }
@@ -309,47 +324,69 @@
       }
 
       // Observable related scripts
+      // Import runtime and other Observable objects for first chart
       import define_01 from "./resources/pandemic_01/index.js";
       import {Runtime as Runtime_01, Inspector as Inspector_01} from "./resources/pandemic_01/runtime.js";
 
+      // Import runtime and other Observable objects for second chart
       import define_02 from "./resources/pandemic_02/index.js";
       import {Runtime as Runtime_02, Inspector as Inspector_02} from "./resources/pandemic_02/runtime.js";
+
+      // Import runtime and other Observable objects for third chart
       import define_03 from "./resources/pandemic_03/index.js";
       import {Runtime as Runtime_03, Inspector as Inspector_03} from "./resources/pandemic_03/runtime.js";
 
-      function clearView(targetRef) {
-        const targetDiv = document.querySelector(targetRef);
+      function clearView(targetDiv) {
         targetDiv.innerHTML = "";
 
-        document.querySelector("#chart1_sel1").innerHTML = "";
-        document.querySelector("#chart1_sel2").innerHTML = "";
+        document.querySelector("#chart1_notes").innerHTML = "";
+        // document.querySelector("#chart1_sel2").innerHTML = "";
       }
 
-      function createStep1(chartTargetRef, controlsTargetRef) {
+      function createStep1() {
         const chartTargetDiv = document.querySelector(chartTargetRef);
-        const controlsTargetDiv = document.querySelector(controlsTargetRef);
+        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
+        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
 
         const divSel1 = document.createElement('div');
-        divSel1.style.flexBasis = "50%";
+        divSel1.style.flexBasis = "33%";
 
         const divSel2 = document.createElement('div');
-        divSel2.style.flexBasis = "50%";
+        divSel2.style.flexBasis = "33%";
 
-        controlsTargetDiv.appendChild(divSel1);
-        controlsTargetDiv.appendChild(divSel2);
+        const divSel3 = document.createElement('div');
+        divSel2.style.flexBasis = "33%";
 
+        const divSel4 = document.createElement('div');
+        divSel2.style.flexBasis = "1%";
+
+        topControlsTargetDiv.appendChild(divSel1);
+        topControlsTargetDiv.appendChild(divSel2);
+        topControlsTargetDiv.appendChild(divSel3);
+        topControlsTargetDiv.appendChild(divSel4);
+        // bottomControlsTargetDiv.appendChild(divSel2);
+        // bottomControlsTargetDiv.appendChild(divSel3);
+        // bottomControlsTargetDiv.appendChild(divSel4);
+
+        function displayVaxinfo(info) {
+          document.querySelector("#chart1_notes").innerHTML = info;
+        }
         // Load the chart
         const rt = (new Runtime_01()).module(define_01, name => {
-          if (name === "viewof sel_vaccine") return new Inspector_01(divSel1);
-          if (name === "viewof yFieldD") return new Inspector_01(divSel2);
+          if (name === "viewof replay_button") return new Inspector_01(divSel1);
+          if (name === "viewof sel_vaccine") return new Inspector_01(divSel2);
+          if (name === "viewof yFieldD") return new Inspector_01(divSel3);
+          if (name === "vaxInfo") return {fulfilled(value) { displayVaxinfo(value); }};
           if (name === "layout") return new Inspector_01(chartTargetDiv);
-            return ["plotty","chart_data","x","y","seriesData","narrate","line2","yField","tooltip_text","show_tooltip"].includes(name);
+            return ["plotty","showHighlights","chartData","autoHighlight","x","y","seriesData","showOneHighlight","line2","yField","tooltipText","showTooltip"].includes(name);
         });
+
       }
 
-      function createStep2(targetRef) {
+      function createStep2() {
         const chartTargetDiv = document.querySelector(chartTargetRef);
-        const controlsTargetDiv = document.querySelector(controlsTargetRef);
+        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
+        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
 
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
@@ -363,10 +400,10 @@
         const divSel4 = document.createElement('div');
         divSel2.style.flexBasis = "25%";
 
-        controlsTargetDiv.appendChild(divSel1);
-        controlsTargetDiv.appendChild(divSel2);
-        controlsTargetDiv.appendChild(divSel3);
-        controlsTargetDiv.appendChild(divSel4);
+        topControlsTargetDiv.appendChild(divSel1);
+        topControlsTargetDiv.appendChild(divSel2);
+        topControlsTargetDiv.appendChild(divSel3);
+        topControlsTargetDiv.appendChild(divSel4);
 
         // Load the chart
         const rt = (new Runtime_02()).module(define_02, name => {
@@ -375,18 +412,19 @@
           if (name === "viewof leftYear") return new Inspector_02(divSel3);
           if (name === "viewof rightYear") return new Inspector_02(divSel4);
           if (name === "layout") return new Inspector_02(chartTargetDiv);
+          if (name === "chartTitle") return {fulfilled(value) { document.querySelector("#visChartHeader").innerHTML = value; }};
           return ["chart_data","yField"].includes(name);
         });
       }
 
-      function createStep3(targetRef) {
-        const targetDiv = document.querySelector(targetRef);
-        // Load the chart
-        console.log('Now loading third chart');
+      function createStep3() {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
+        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
 
         new Runtime_03().module(define_03, name => {
           if (name === "viewof curState") return true;
-          if (name === "chartview") return new Inspector_03(targetDiv);
+          if (name === "chartview") return new Inspector_03(chartTargetDiv);
         });
       }
 

@@ -49,33 +49,40 @@ select({
 })
 )}
 
-function _layout(Plot,height,width,leftYear,rightYear,chart_data,yField,d3,occlusionY,formatters,yFieldD){return(
+function _chartTitle(yFieldD,leftYear,rightYear){return(
+`Compare ${yFieldD} Between ${leftYear} and ${rightYear}`
+)}
+
+function _layout(Plot,iheight,iwidth,leftYear,rightYear,chart_data,yField,d3,occlusionY,formatters){return(
 Plot.plot({
-  height: height,
-  width: width,
+  height: iheight,
+  width: iwidth,
   x: {
     axis: "top",
     type: "ordinal",
     tickFormat: "",
     inset: 300,
     label: null,
-    fontSize: 12
+    fontSize: 14
   },
   y: { axis: null, inset: 20 },
   color: {
-    domain: [false, true],
-    range: ["steelblue", "red"]
+    domain: ["REG_GLOBAL", "SEAR", "REST"],
+    range: ["red", "orange", "steelblue"]
   },
   style: {
     backgroundColor: "#eee",
-    fontSize: 12
+    fontSize: 14
   },
   marks: [
     Plot.ruleX([`${leftYear}`, `${rightYear}`], { stroke: "#ccc" }),
     Plot.line(chart_data, {
       x: "Year",
       y: yField,
-      stroke: (d) => d.region_code === "REG_GLOBAL",
+      stroke: (d) =>
+        d.region_code === "REG_GLOBAL" || d.region_code === "SEAR"
+          ? d.region_code
+          : "REST",
       sort: { channel: "stroke" },
       z: "region_name",
       strokeWidth: 3
@@ -89,15 +96,22 @@ Plot.plot({
             x: "Year",
             y: yField,
             text: left
-              ? (d) => `${d.region_name} ${formatters[yField](d[yField])}`
-              : (d) => `${formatters[yField](d[yField])} ${d.region_name}`,
+              ? (d) =>
+                  `${d.region_name} ${formatters[yField](
+                    d[yField],
+                    left,
+                    d.region_code
+                  )}`
+              : (d) =>
+                  `${formatters[yField](d[yField], left, d.region_code)} ${
+                    d.region_name
+                  }`,
             textAnchor: left ? "end" : "start",
             dx: left ? -3 : 3
           })
         )
       )
-  ],
-  caption: `Compare ${yFieldD} Between ${leftYear} and ${rightYear}`
+  ]
 })
 )}
 
@@ -125,7 +139,7 @@ function _occlusionY(Plot,d3){return(
             "y",
             d3.forceY(({ y }) => y)
           ) // gravitate towards the original y
-          .force("collide", d3.forceCollide().radius(5.5)) // collide
+          .force("collide", d3.forceCollide().radius(7.5)) // collide
           .stop()
           .tick(20);
         for (const { y, node, i } of nodes) Y[i] = y;
@@ -137,18 +151,20 @@ function _occlusionY(Plot,d3){return(
 
 function _formatters()
 {
-  const percent_formatter = (number) =>
+  const percent_formatter = (number, left, region_code) =>
     `${Intl.NumberFormat("en-US", {
       maximumSignificantDigits: 3,
       maximumFractionDigits: 2,
       minimumFractionDigits: 2
     }).format(number)}%`;
 
-  const number_formatter = (number) =>
+  const number_formatter = (number, left, region_code) =>
     `${Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
-      minimumFractionDigits: 0
-    }).format(number)}`;
+      minimumFractionDigits: 2
+    }).format(number / 1000000)}${
+      left && region_code === "REG_GLOBAL" ? " Million" : ""
+    }`;
 
   return {
     Coverage: percent_formatter,
@@ -163,11 +179,23 @@ function _yField(metricNamesMap,yFieldD){return(
 metricNamesMap[yFieldD]
 )}
 
-function _height(width){return(
-0.45 * width
+function _margin(){return(
+{ left: 100, top: 50, right: 150, bottom: 50 }
 )}
 
-function _12(md){return(
+function _iwidth(width,margin){return(
+width - margin.left - margin.right
+)}
+
+function _iheight(height,margin){return(
+height - margin.top - margin.bottom
+)}
+
+function _height(width){return(
+0.4 * width
+)}
+
+function _16(md){return(
 md`## Data`
 )}
 
@@ -222,7 +250,7 @@ FileAttachment("unicef_regional_coverage_2015_2021.csv")
   })
 )}
 
-function _19(md){return(
+function _23(md){return(
 md`## Imports`
 )}
 
@@ -247,19 +275,23 @@ export default function define(runtime, observer) {
   main.variable(observer("leftYear")).define("leftYear", ["Generators", "viewof leftYear"], (G, _) => G.input(_));
   main.variable(observer("viewof rightYear")).define("viewof rightYear", ["select","availYears"], _rightYear);
   main.variable(observer("rightYear")).define("rightYear", ["Generators", "viewof rightYear"], (G, _) => G.input(_));
-  main.variable(observer("layout")).define("layout", ["Plot","height","width","leftYear","rightYear","chart_data","yField","d3","occlusionY","formatters","yFieldD"], _layout);
+  main.variable(observer("chartTitle")).define("chartTitle", ["yFieldD","leftYear","rightYear"], _chartTitle);
+  main.variable(observer("layout")).define("layout", ["Plot","iheight","iwidth","leftYear","rightYear","chart_data","yField","d3","occlusionY","formatters"], _layout);
   main.variable(observer("occlusionY")).define("occlusionY", ["Plot","d3"], _occlusionY);
   main.variable(observer("formatters")).define("formatters", _formatters);
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
+  main.variable(observer("margin")).define("margin", _margin);
+  main.variable(observer("iwidth")).define("iwidth", ["width","margin"], _iwidth);
+  main.variable(observer("iheight")).define("iheight", ["height","margin"], _iheight);
   main.variable(observer("height")).define("height", ["width"], _height);
-  main.variable(observer()).define(["md"], _12);
+  main.variable(observer()).define(["md"], _16);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
   main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","sel_vaccine","leftYear","rightYear"], _chart_data);
   main.variable(observer("vaccines")).define("vaccines", ["regional_vax_number"], _vaccines);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
   main.variable(observer("availYears")).define("availYears", ["regional_vax_number"], _availYears);
   main.variable(observer("regional_vax_number")).define("regional_vax_number", ["FileAttachment"], _regional_vax_number);
-  main.variable(observer()).define(["md"], _19);
+  main.variable(observer()).define(["md"], _23);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
