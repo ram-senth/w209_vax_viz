@@ -88,13 +88,17 @@ def v2_vax_rates_countries():
 
     try:
         df = helper_countries_vax_data_v2(True)
-        df = df[['Name', 'alpha_3_code', 'Vaccine', 'Year', 'Coverage', 'Vaccinated', 'Target']]
+        print(f'df.columns: {df.columns}')
+
+        df = df[['Name', 'alpha_3_code', 'alpha_2_code', 'numeric_code', 'region_code', 'Vaccine', 'Year', 'Coverage', 'Vaccinated', 'Target']]
+        df.numeric_code = df.numeric_code.astype(int)
+        df.numeric_code = df.numeric_code.astype(str)
     except Exception as e:
         return json.dumps({ 'error': f'Failed to verify: {e}' }), 500
 
     # Use pivot to convert the yearly values to columns.
     if pivot_on_year:
-        df = pd.pivot_table(df, index=['Name', 'alpha_3_code', 'Vaccine'], columns=['Year'], values=['Coverage', 'Vaccinated', 'Target'])
+        df = pd.pivot_table(df, index=['Name', 'alpha_3_code', 'alpha_2_code', 'numeric_code', 'region_code', 'Vaccine'], columns=['Year'], values=['Coverage', 'Vaccinated', 'Target'])
         df.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df.columns.values ]
         out_filename = 'unicef_national_coverage_2015_2021_pivot.csv'
     else:
@@ -143,7 +147,9 @@ def countries_master():
             return json.dumps({ 'error': f"Could not identify codes for {df_missing_code['REF_AREA:Geographic area'].unique().tolist()}."}), 500
     except Exception as e:
         return json.dumps({ 'error': f'Failed to verify: {e}' }), 500
-
+    df_countries_with_alpha_3 = df_countries_with_alpha_3[df_countries_with_alpha_3.name!= 'Yugoslavia']
+    df_countries_with_alpha_3.numeric_code = df_countries_with_alpha_3.numeric_code.astype(int)
+    df_countries_with_alpha_3.numeric_code = df_countries_with_alpha_3.numeric_code.astype(str)
     # All good, return the generated data as a CSV attachment for browser to download.
     return Response(
        df_countries_with_alpha_3.to_csv(index=False),
