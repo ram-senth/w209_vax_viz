@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Bootstrap links -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <!-- style link -->
+      <link rel="stylesheet" href="./resources/main.css">
+      <link rel="stylesheet" href="./resources/bootstrap.min.css">
+      <link rel="stylesheet" href="./resources/inspector.css">
+      <style>
+          #scrolly {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            background-color: #fff;
+            padding: 1rem;
+          }
+
+          #scrolly > * {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+          }
+
+          article {
+            position: relative;
+            padding: 0 1rem;
+            max-width: 30rem;
+          }
+
+          .sticky-thing {
+            position: -webkit-sticky;
+            position: sticky;
+            width: 30%;
+            margin: 0;
+            background-color: #ffffff;
+            z-index: 0;
+            top: 12.5vh;
+            height: 75vh;
+            /* Center everything inside */
+            /* display: flex; */
+            align-items: center;
+            justify-content: center;
+          }
+
+          .sticky-thing p {
+            padding: 1rem;
+            font-size: 8rem;
+            font-weight: 900;
+            color: #fff;
+          }
+
+          .step {
+            margin: 0 auto 2rem auto;
+            background-color: #fff;
+            color: #3b3b3b;
+          }
+
+          .step:last-child {
+            margin-bottom: 0;
+          }
+
+          .step.is-active {
+            background-color: #f3f3f3;
+            color: #3b3b3b;
+          }
+
+          .step p {
+            text-align: center;
+
+            min-height: 50vh;
+            padding: 1rem;
+            font-size: 1.5rem;
+          }
+
+          #vis.div {
+              margin-top: 5px;
+              font-size: 21px;
+              text-align: center;
+              animation: fadein 2s;
+              -moz-animation: fadein 2s; /* Firefox */
+              -webkit-animation: fadein 2s; /* Safari and Chrome */
+              -o-animation: fadein 2s; /* Opera */
+          }
+
+          #visControlsTop.div #visControlsBottom.div {
+              display: flex;
+              /* justify-content: center;
+              align-items: center; */
+              height: 20px;
+              margin-left: 20px;
+              margin-top: 4px;
+              font-size: 12px;
+              /* text-align: center; */
+              animation: fadein 2s;
+              -moz-animation: fadein 2s; /* Firefox */
+              -webkit-animation: fadein 2s; /* Safari and Chrome */
+              -o-animation: fadein 2s; /* Opera */
+          }
+
+          .tick, text.axisLabel {
+            font-size: 14px;
+          }
+
+          #chartHeader {
+            font-size: 1.2em !important;
+          }
+          #visChartHeader {
+            font-size: 18px !important;
+            text-align: center;
+          }
+
+          g.ttip {
+            font-size: 14px !important;
+          }
+
+          @keyframes fadein {
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-moz-keyframes fadein { /* Firefox */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-webkit-keyframes fadein { /* Safari and Chrome */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-o-keyframes fadein { /* Opera */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity: 1;
+              }
+          }
+      </style>
+      <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+      <script src="https://unpkg.com/scrollama"></script>
+  </head>
+
+  <body>
+    <!-- Nav bar -->
+    <header data-bs-theme="dark">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="active"><a class="nav-link" href="./"><h3>Home</h3></a></li>
+            <li class=""><a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a></li>
+            <li class=""><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
+            <li class=""><a class="nav-link" href="./pandemic.html"><h3>Covid Pandemic</h3></a></li>
+          </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+        <div class="container py-4">
+            <!-- Jumobotron -->
+            <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">The timeline of Polio</h1>
+                    <p class="col-md-8 fs-4">
+                      Dive into the history of Polio from being a deadly epidemic to largely eradicated.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Scrolly -->
+        <section id="scrolly">
+            <article>
+              <div class="step" data-step="1">
+                <p>
+                  In the early 1900s, polio was one of the most feared diseases in industrialized countries, paralysing thousands of children every year. The introduction of vaccines in the 1950s and 1960s however, led to a drastic reduction and finally eradication in these countries. Let's zoom in and explore the incidence of polio in the United States in 1900s.
+                  <br/>
+                  <br/>
+                  <span id="chart1_notes"></span>
+                </p>
+              </div>
+              <div class="step" data-step="2">
+                <p class="d-flex align-items-center">The US saw multiple outbreaks of the polio epidemic. The 'iron lung' ventilator, which was instrumental in preventing deaths from polio, was invented in 1928. Note the reduction in deaths after the mass production of iron lungs began in 1930s. Even though deaths reduced consistently with the advancements in technology, case numbers came under control only after the introduction of vaccines.
+
+                The Americas were declared polio free in 1994. Let's look at the eradication effectrs in the rest of the world.</p>
+              </div>
+              <div class="step" data-step="3">
+                <p class="d-flex align-items-center">Most countries had achieved eardication of Polio by 2000. It remains endemic only in Pakistan and Afghanistan in 2022. The visual highlights the decade in which a country achieved eradication of Polio. </p>
+              </div>
+              <div class="step" data-step="4">
+                <p class="d-flex align-items-center">Wild poliovirus is the most commonly known form of the poliovirus. However, there is another form of polio that can spread within communities: circulating vaccine-derived poliovirus, or cVDPV. While cVDPVs are rare, they have been increasing in recent years due to low immunization rates within communities. In the visual on the right, we explore the correlation between vaccination rates and cVDPV cases as a function of time. The relationship between the spread od cVDPV and vaccination coverage is more complex, as expected. However, the top countries with highest number of cVDPV cases are also the countries with the lowest vaccination rates for Polio.</p>
+              </div>
+            </article>
+
+          <!-- <div id="dummy"></div> -->
+          <div class="sticky-thing">
+            <div id="visControlsTop"></div>
+            <div id="visChartHeader" class="chartHeader"></div>
+            <div id="vis"></div>
+            <div id="visControlsBottom"></div>
+          </div>
+          </section>
+
+          <section id="outro">
+            <div style="margin:5rem">
+                <hr class="featurette-divider">
+            </div>
+
+          </section>
+
+            <!-- Nav Cards -->
+        <div class="container py-4">
+            <div class="row align-items-md-stretch">
+              <div class="col-md-6 mb-4">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                      <h2>Vaccination Rates</h2>
+                      <p>Look at how different countries have adopted vaccines.</p>
+                      <a href="./vaccination.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <h2>The Story of Polio</h2>
+                    <p>A look at the progression of Polio and the role of vaccines in controlling it.</p>
+                    <a href="./polio.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                      <h2>Impact of Covid Across Countries</h2>
+                      <p>Explore impact of the pandemic on vaccination.</p>
+                      <a href="./pandemic.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 text-bg-dark border rounded-3">
+                    &nbsp;
+                  </div>
+              </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Scrolly Script -->
+    <script type="module">
+      // using d3 for convenience
+      const main = document.querySelector("main");
+      const scrolly = main.querySelector("#scrolly");
+      const sticky = scrolly.querySelector(".sticky-thing");
+      const article = scrolly.querySelector("article");
+      const steps = article.querySelectorAll(".step");
+
+      // initialize the scrollama
+      const scroller = scrollama();
+
+      const chartTargetRef = "#vis";
+      const topControlsTargetRef = "#visControlsTop";
+      const bottomControlsTargetRef = "#visControlsBottom";
+      const chartHeaderTargetRef = "#visChartHeader";
+
+      // scrollama event handlers
+      function handleStepEnter(response) {
+        var el = response.element;
+
+        // remove is-active from all steps
+        // then add is-active to this step
+        steps.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        clearView(document.querySelector(chartTargetRef));
+        clearView(document.querySelector(topControlsTargetRef));
+        clearView(document.querySelector(bottomControlsTargetRef));
+        clearView(document.querySelector(chartHeaderTargetRef));
+
+        // update graphic based on step
+        if(el.dataset.step=='1') {
+          createStep1();
+        }
+        else if (el.dataset.step=='2'){
+          createStep2();
+        }
+        else if (el.dataset.step=='3'){
+          createStep3();
+        }
+        else if (el.dataset.step=='4'){
+          createStep4();
+        }
+        else if (el.dataset.step=='5'){
+        }
+
+      }
+
+      function init() {
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: .6,
+            debug: false
+          })
+          .onStepEnter(handleStepEnter);
+
+        // setup resize event
+        window.addEventListener("resize", scroller.resize);
+      }
+
+      // Observable related scripts
+      // Import runtime and other Observable objects for first chart
+      import define_01 from "./resources/polio_01/index.js";
+      import {Runtime as Runtime_01, Inspector as Inspector_01} from "./resources/polio_01/runtime.js";
+
+      // Import runtime and other Observable objects for second chart
+      import define_02 from "./resources/polio_02/index.js";
+      import {Runtime as Runtime_02, Inspector as Inspector_02} from "./resources/polio_02/runtime.js";
+
+      // Import runtime and other Observable objects for third chart
+      import define_03 from "./resources/polio_03/index.js";
+      import {Runtime as Runtime_03, Inspector as Inspector_03} from "./resources/polio_03/runtime.js";
+
+      // Import runtime and other Observable objects for third chart
+      import define_04 from "./resources/polio_04/index.js";
+      import {Runtime as Runtime_04, Inspector as Inspector_04} from "./resources/polio_04/runtime.js";
+
+      function clearView(targetDiv) {
+        targetDiv.innerHTML = "";
+
+        document.querySelector("#chart1_notes").innerHTML = "";
+      }
+
+
+      function createStep1() {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
+
+       new Runtime_01().module(define_01, name => {
+        if (name === "title") return new Inspector_01(chartHeaderTargetDiv);
+        if (name === "timeline") return new Inspector_01(chartTargetDiv);
+      });
+     }
+
+
+      function createStep2() {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+
+        // Load the chart
+        (new Runtime_02()).module(define_02, name => {
+          if (name === "svg") return new Inspector_02(chartTargetDiv);});
+      }
+
+
+      function createStep3() {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
+
+        new Runtime_03().module(define_03, name => {
+          if (name === "title") return new Inspector_03(chartHeaderTargetDiv);
+          if (name === "callout") return true;
+          if (name === "tooltip_string") return true;
+          if (name === "valuemap") return true;
+          if (name === "titlemap") return true;
+          if (name === "chart") return new Inspector_03(chartTargetDiv);
+          return ["callout", "tooltip_string", "valuemap", 'titlemap'].includes(name);
+        });
+      }
+
+
+      function createStep4() {
+       const chartTargetDiv = document.querySelector(chartTargetRef);
+       const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
+        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
+
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "50%";
+
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "50%";
+
+        topControlsTargetDiv.appendChild(divSel1);
+        topControlsTargetDiv.appendChild(divSel2);
+
+        // Load the chart
+        const rt = (new Runtime_04()).module(define_04, name => {
+          if (name === "viewof country") return new Inspector_04(divSel1);
+          if (name === "viewof replay") return new Inspector_04(divSel2);
+          if (name === "title") return new Inspector_04(chartHeaderTargetDiv);
+          if (name === "chart") return new Inspector_04(chartTargetDiv);
+          return ["filtered_data"].includes(name);
+        });
+      }
+
+      // kick things off
+      init();
+    </script>
+
+      <!-- FOOTER -->
+    <footer class="footer bottom pt-4 bg-dark text-center" data-bs-theme="dark">
+        <div>
+          <span class="text-body-secondary">Thank you for viewing our visuals!</span>
+          <p><a href="#">Back to top</a></p>
+        </div>
+    </footer>
+  </body>
+</html>

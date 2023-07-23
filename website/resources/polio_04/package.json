@@ -1,0 +1,14 @@
+{
+  "name": "69f9c852d5ac35f9",
+  "main": "69f9c852d5ac35f9@400.js",
+  "version": "400.0.0",
+  "homepage": "https://observablehq.com/d/69f9c852d5ac35f9",
+  "author": {
+    "name": "Berkeley MIDS W209 Information Visualization Course",
+    "url": "https://observablehq.com/@berkeleyvis"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
