@@ -34,20 +34,7 @@ useActualNumbers
   : "cov_change_2019_to_2021"
 )}
 
-function _colorScale(d3,geoWorld,countField)
-{
-  const extent = d3.extent(
-    geoWorld.objects.countries.geometries.map((v) => v.properties[countField])
-  );
-
-  return d3
-    .scaleDiverging()
-    .domain([extent[1], 0, extent[0]])
-    .interpolator(d3.interpolatePuOr);
-}
-
-
-function _map3(html,d3,width,height,geoCountries,path,colorCountry,geoOutline,geoGraticule,geoLand,geoBorders,showTooltip,hideTooltip,legend,colorScale,sel_vaccine)
+function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,geoCountries,path,colorCountry,geoOutline,geoGraticule,geoLand,geoBorders,showTooltip,hideTooltip,iheight,legend,colorScale,useActualNumbers,number_formatter,percent_formatter)
 {
   const target = html`<div id="myviz">`;
 
@@ -56,9 +43,20 @@ function _map3(html,d3,width,height,geoCountries,path,colorCountry,geoOutline,ge
     .append("svg")
     .attr("viewBox", [0, 0, width, height])
     .style("display", "block");
-  const g = svg.append("g");
+
+  const g = svg
+    .append("g")
+    .attr("class", "gDrawing")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
   // .attr("clip-path", `url(${new URL("#clip", location)})`);
   // .attr("clip-path", path(outline));
+
+  // Add the title of the plot.
+  g.append("text")
+    .attr("class", "chartHeader")
+    .style("text-anchor", "middle")
+    .attr("transform", `translate(${iwidth / 2}, ${0 - margin.top / 2})`)
+    .text(`${sel_vaccine} Coverage Change between 2019 and 2021`);
 
   // Add tooltip and story popup at the end to keep it on top of all other layers.
   const tooltip = g.append("g").attr("class", "ttip");
@@ -99,27 +97,27 @@ function _map3(html,d3,width,height,geoCountries,path,colorCountry,geoOutline,ge
   countriesInMap.on("touchend mouseleave", () => hideTooltip(tooltip));
 
   // Add legend
-  const legendWidth = 650;
+  const legendWidth = 400;
   g.append("g")
     .style("font-size", "12px")
     .attr(
       "transform",
-      `translate(${width - legendWidth + 115}, ${height - 120})`
+      `translate(${width - margin.left - legendWidth - 100}, ${iheight})`
     )
     .append(() =>
       legend({
         color: colorScale,
-        title: `Change in ${sel_vaccine} coverage between 2019 and 2021`
+        width: legendWidth,
+        // TODO: Tick values when useActualNumbers is true
+        tickValues: [9, 7, 5, 3, 1, 0, -10, -20, -30, -40, -50, -60],
+        tickFormat: (v) =>
+          useActualNumbers ? number_formatter(v) : percent_formatter(v)
       })
     );
 
   return target;
 }
 
-
-function _margin(){return(
-{ left: 100, top: 50, right: 300, bottom: 150 }
-)}
 
 function _showTooltip(callout,tooltipText){return(
 (gDrawing, tooltip, x, y, d) => {
@@ -139,20 +137,8 @@ function _hideTooltip(callout){return(
 }
 )}
 
-function _tooltipText(){return(
+function _tooltipText(percent_formatter,number_formatter){return(
 (data) => {
-  const percent_formatter = (number) =>
-    `${Intl.NumberFormat("en-US", {
-      maximumSignificantDigits: 3,
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 2
-    }).format(number)}%`;
-
-  const number_formatter = (number) =>
-    `${Intl.NumberFormat("en-US", {
-      maximumFractionDigits: 2,
-      minimumFractionDigits: 0
-    }).format(number)}`;
   const covChange =
     "cov_change_2019_to_2021" in data.properties
       ? percent_formatter(data.properties.cov_change_2019_to_2021)
@@ -161,9 +147,26 @@ function _tooltipText(){return(
     "count_change_2019_to_2021" in data.properties
       ? number_formatter(data.properties.count_change_2019_to_2021)
       : "No data";
-  return `${data.properties.name}\n2019 to 2021\n% change: ${covChange}\nCount change: ${numChange}`;
+  return `${data.properties.name}\nCount change: ${numChange}\nCoverage change: ${covChange}`;
   // }
 }
+)}
+
+function _percent_formatter(){return(
+(number) =>
+  `${Intl.NumberFormat("en-US", {
+    maximumSignificantDigits: 3,
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+  }).format(number)}%`
+)}
+
+function _number_formatter(){return(
+(number) =>
+  `${Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  }).format(number)}`
 )}
 
 function _callout(){return(
@@ -222,37 +225,36 @@ function _callout(){return(
 }
 )}
 
-function _15(geoWorld){return(
-geoWorld.objects.countries.geometries.filter(
-  (v) => v.properties.name === "India"
-)[0].properties
-)}
-
-function _16(countryVaxData,geoWorld){return(
-countryVaxData.countryData
-  .get(
-    geoWorld.objects.countries.geometries.filter(
-      (v) => v.properties.name === "India"
-    )[0].id
-  )
-  .get("DTP1")[0]
-)}
-
-function _colorCountry(countField,colorScale,countriesMaster,regionColors){return(
+function _colorCountry(countField,colorScale){return(
 (d) => {
   if (countField in d.properties) {
     return colorScale(d.properties[countField]);
   } else {
     return "gray";
   }
-  if (countriesMaster.get(d.id)) {
-    const regionCode = countriesMaster.get(d.id)[0].region_code;
-    return regionColors(regionCode);
-  } else {
-    return "gray";
-  }
+  // WHO region based coloring - not used yet
+  // if (countriesMaster.get(d.id)) {
+  //   const regionCode = countriesMaster.get(d.id)[0].region_code;
+  //   return regionColors(regionCode);
+  // } else {
+  //   return "gray";
+  // }
 }
 )}
+
+function _colorScale(d3,geoWorld,countField)
+{
+  const extent = d3.extent(
+    geoWorld.objects.countries.geometries.map((v) => v.properties[countField])
+  );
+
+  return d3
+    .scaleDiverging()
+    .domain([extent[1], 0, extent[0]])
+    .interpolator(d3.interpolatePuOr)
+    .nice();
+}
+
 
 function _projection(d3Map){return(
 d3Map.geoNaturalEarth1()
@@ -262,10 +264,14 @@ function _path(d3Map,projection){return(
 d3Map.geoPath(projection)
 )}
 
-function _height(d3,projection,width,geoOutline)
+function _height(iheight,margin){return(
+iheight + margin.top + margin.bottom
+)}
+
+function _iheight(d3,projection,iwidth,geoOutline)
 {
   const [[x0, y0], [x1, y1]] = d3
-    .geoPath(projection.fitWidth(width, geoOutline))
+    .geoPath(projection.fitWidth(iwidth, geoOutline))
     .bounds(geoOutline);
   const dy = Math.ceil(y1 - y0),
     l = Math.min(Math.ceil(x1 - x0), dy);
@@ -273,6 +279,31 @@ function _height(d3,projection,width,geoOutline)
   return dy;
 }
 
+
+function _iwidth(width,margin){return(
+width - margin.left - margin.right
+)}
+
+function _margin(){return(
+{ left: 20, top: 50, right: 300, bottom: 50 }
+)}
+
+function _regionColors(d3){return(
+d3.scaleOrdinal([
+  "#f781bf",
+  "#377eb8",
+  "#4daf4a",
+  "#984ea3",
+  "#ff7f00",
+  "#a65628",
+  "#e41a1c",
+  "#999999"
+])
+)}
+
+function _24(md){return(
+md`## Data`
+)}
 
 function _geoOutline(){return(
 { type: "Sphere" }
@@ -286,20 +317,12 @@ function _geoLand(topojson,geoWorld){return(
 topojson.feature(geoWorld, geoWorld.objects.land)
 )}
 
-function _geoCountries(topojson,geoWorld){return(
-topojson.feature(geoWorld, geoWorld.objects.countries)
-)}
-
 function _geoBorders(topojson,geoWorld){return(
 topojson.mesh(
   geoWorld,
   geoWorld.objects.countries,
   (a, b) => a !== b
 )
-)}
-
-function _26(countryVaxData,sel_vaccine){return(
-countryVaxData.countryData.get("356").has(sel_vaccine)
 )}
 
 function _geoWorld(world_50m,countryVaxData,sel_vaccine)
@@ -349,6 +372,10 @@ function _geoWorld(world_50m,countryVaxData,sel_vaccine)
 }
 
 
+function _geoCountries(topojson,geoWorld){return(
+topojson.feature(geoWorld, geoWorld.objects.countries)
+)}
+
 function _world_50m(FileAttachment){return(
 FileAttachment("countries-50m.json").json()
 )}
@@ -359,19 +386,6 @@ FileAttachment("countries_master@1.csv")
   .then((data) => {
     return d3.group(data, (d) => d.numeric_code.padStart(3, "0"));
   })
-)}
-
-function _regionColors(d3){return(
-d3.scaleOrdinal([
-  "#f781bf",
-  "#377eb8",
-  "#4daf4a",
-  "#984ea3",
-  "#ff7f00",
-  "#a65628",
-  "#e41a1c",
-  "#999999"
-])
 )}
 
 function _countryVaxData(FileAttachment,d3){return(
@@ -388,6 +402,10 @@ FileAttachment(
     );
     return { vaccines: vaccines, countryData: grouped };
   })
+)}
+
+function _34(md){return(
+md`# Imports`
 )}
 
 function _d3(require){return(
@@ -414,30 +432,33 @@ export default function define(runtime, observer) {
   main.variable(observer("sel_vaccine")).define("sel_vaccine", ["Generators", "viewof sel_vaccine"], (G, _) => G.input(_));
   main.variable(observer("useActualNumbers")).define("useActualNumbers", _useActualNumbers);
   main.variable(observer("countField")).define("countField", ["useActualNumbers"], _countField);
-  main.variable(observer("colorScale")).define("colorScale", ["d3","geoWorld","countField"], _colorScale);
-  main.variable(observer("map3")).define("map3", ["html","d3","width","height","geoCountries","path","colorCountry","geoOutline","geoGraticule","geoLand","geoBorders","showTooltip","hideTooltip","legend","colorScale","sel_vaccine"], _map3);
-  main.variable(observer("margin")).define("margin", _margin);
+  main.variable(observer("map3")).define("map3", ["html","d3","width","height","margin","iwidth","sel_vaccine","geoCountries","path","colorCountry","geoOutline","geoGraticule","geoLand","geoBorders","showTooltip","hideTooltip","iheight","legend","colorScale","useActualNumbers","number_formatter","percent_formatter"], _map3);
   main.variable(observer("showTooltip")).define("showTooltip", ["callout","tooltipText"], _showTooltip);
   main.variable(observer("hideTooltip")).define("hideTooltip", ["callout"], _hideTooltip);
-  main.variable(observer("tooltipText")).define("tooltipText", _tooltipText);
+  main.variable(observer("tooltipText")).define("tooltipText", ["percent_formatter","number_formatter"], _tooltipText);
+  main.variable(observer("percent_formatter")).define("percent_formatter", _percent_formatter);
+  main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("callout")).define("callout", _callout);
-  main.variable(observer()).define(["geoWorld"], _15);
-  main.variable(observer()).define(["countryVaxData","geoWorld"], _16);
-  main.variable(observer("colorCountry")).define("colorCountry", ["countField","colorScale","countriesMaster","regionColors"], _colorCountry);
+  main.variable(observer("colorCountry")).define("colorCountry", ["countField","colorScale"], _colorCountry);
+  main.variable(observer("colorScale")).define("colorScale", ["d3","geoWorld","countField"], _colorScale);
   main.variable(observer("projection")).define("projection", ["d3Map"], _projection);
   main.variable(observer("path")).define("path", ["d3Map","projection"], _path);
-  main.variable(observer("height")).define("height", ["d3","projection","width","geoOutline"], _height);
+  main.variable(observer("height")).define("height", ["iheight","margin"], _height);
+  main.variable(observer("iheight")).define("iheight", ["d3","projection","iwidth","geoOutline"], _iheight);
+  main.variable(observer("iwidth")).define("iwidth", ["width","margin"], _iwidth);
+  main.variable(observer("margin")).define("margin", _margin);
+  main.variable(observer("regionColors")).define("regionColors", ["d3"], _regionColors);
+  main.variable(observer()).define(["md"], _24);
   main.variable(observer("geoOutline")).define("geoOutline", _geoOutline);
   main.variable(observer("geoGraticule")).define("geoGraticule", ["d3"], _geoGraticule);
   main.variable(observer("geoLand")).define("geoLand", ["topojson","geoWorld"], _geoLand);
-  main.variable(observer("geoCountries")).define("geoCountries", ["topojson","geoWorld"], _geoCountries);
   main.variable(observer("geoBorders")).define("geoBorders", ["topojson","geoWorld"], _geoBorders);
-  main.variable(observer()).define(["countryVaxData","sel_vaccine"], _26);
   main.variable(observer("geoWorld")).define("geoWorld", ["world_50m","countryVaxData","sel_vaccine"], _geoWorld);
+  main.variable(observer("geoCountries")).define("geoCountries", ["topojson","geoWorld"], _geoCountries);
   main.variable(observer("world_50m")).define("world_50m", ["FileAttachment"], _world_50m);
   main.variable(observer("countriesMaster")).define("countriesMaster", ["FileAttachment","d3"], _countriesMaster);
-  main.variable(observer("regionColors")).define("regionColors", ["d3"], _regionColors);
   main.variable(observer("countryVaxData")).define("countryVaxData", ["FileAttachment","d3"], _countryVaxData);
+  main.variable(observer()).define(["md"], _34);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   const child1 = runtime.module(define1).derive(["projection"], main);
   main.import("d3", "d3Map", child1);
