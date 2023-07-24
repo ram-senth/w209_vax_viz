@@ -109,7 +109,8 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,geoCountries,path,
         color: colorScale,
         width: legendWidth,
         // TODO: Tick values when useActualNumbers is true
-        tickValues: [9, 7, 5, 3, 1, 0, -10, -20, -30, -40, -50, -60],
+        // Auto calculating tick values are a little tricky as the values are different on either side of 0 as well as across vaccines
+        // tickValues: [9, 7, 5, 3, 1, 0, -10, -20, -30, -40, -50, -60],
         tickFormat: (v) =>
           useActualNumbers ? number_formatter(v) : percent_formatter(v)
       })
