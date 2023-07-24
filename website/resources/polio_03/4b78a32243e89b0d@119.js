@@ -1,7 +1,7 @@
 import define1 from "./a33468b95d0b15b0@808.js";
 
 function _1(md){return(
-md`# Choropleth - v2`
+md`# Choropleth - v2 (Cloned by Ram)`
 )}
 
 function _title(md){return(
@@ -32,6 +32,7 @@ function _chart(valuemap,d3,legend,countries,callout,tooltip_string,countrymesh)
       "#66c2a5"
     ].reverse()
   );
+
   const path = d3.geoPath(d3.geoEqualEarth());
   const format = (d) => `${d}`;
 
@@ -41,6 +42,7 @@ function _chart(valuemap,d3,legend,countries,callout,tooltip_string,countrymesh)
     .attr("height", 500)
     .attr("viewBox", [0, 0, 975, 500])
     .attr("style", "max-width: 100%; height: auto;");
+  const tooltip = svg.append("g").attr("class", "ttip");
 
   svg
     .append("g")
@@ -56,10 +58,10 @@ function _chart(valuemap,d3,legend,countries,callout,tooltip_string,countrymesh)
     .attr("d", path)
     .on("touchmove mousemove", function (event, d) {
       d3.select(this).attr("stroke", "black").attr("stroke-width", 3).raise();
+      tooltip.raise();
       const [x, y] = d3.pointer(event);
-      // tooltip group's .call is used to display country detail.
       tooltip
-        .attr("transform", `translate(${x},${y + 10})`)
+        .attr("transform", `translate(${x}, ${y + 10})`)
         .call(callout, tooltip_string(d));
     })
     .on("touchend mouseleave", function (event, d) {
@@ -76,8 +78,6 @@ function _chart(valuemap,d3,legend,countries,callout,tooltip_string,countrymesh)
     .attr("stroke", "white")
     .attr("stroke-linejoin", "round")
     .attr("d", path);
-
-  const tooltip = svg.append("g").attr("class", "tooltip");
 
   return svg.node();
 }
@@ -160,7 +160,6 @@ new Map([
   ["Myanmar(Burma)", "Myanmar"],
   ["SriLanka", "Sri Lanka"],
   ["Democratic People's Republic of Korea", "North Korea"],
-  // ["Congo", "Dem. Rep. Congo"],
   ["Yemen(Sana)", "Yemen"],
   ["Dominican Republic", "Dominican Rep."],
   ["EquatorialGuinea", "Eq. Guinea"],
@@ -180,8 +179,6 @@ new Map([
   ["SaoTomeandPrincipe", "São Tomé and Principe"],
   ["SolomonIslands", "Solomon Is."],
   ["S.Sudan", "Sudan"],
-  // ["Somalia", "Somaliland"],
-  // ["Sudan", "Sudan"],
   ["Swaziland", "eSwatini"],
   ["Syria", "Syria"],
   ["NewCaledonia", "New Caledonia"],

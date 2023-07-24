@@ -1,6 +1,6 @@
-# Choropleth - v2
+# Choropleth - v2 (Cloned by Ram)
 
-https://observablehq.com/d/d2c0c03693b1e2cf@101
+https://observablehq.com/d/4b78a32243e89b0d@119
 
 View this notebook in your browser by running a web server in this folder. For
 example:
@@ -14,14 +14,14 @@ import this module directly into your application. To npm install:
 
 ~~~sh
 npm install @observablehq/runtime@5
-npm install https://api.observablehq.com/d/d2c0c03693b1e2cf@101.tgz?v=3
+npm install https://api.observablehq.com/d/4b78a32243e89b0d@119.tgz?v=3
 ~~~
 
 Then, import your notebook and the runtime as:
 
 ~~~js
 import {Runtime, Inspector} from "@observablehq/runtime";
-import define from "d2c0c03693b1e2cf";
+import define from "4b78a32243e89b0d";
 ~~~
 
 To log the value of the cell named “foo”:
