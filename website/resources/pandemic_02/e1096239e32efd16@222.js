@@ -14,8 +14,8 @@ select({
   options: vaccines,
   title: "Vaccine:  ",
   // description:
-  //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP1"
+  //   "Select the vaccine to focus on. DTP3 is considered the standard to measure overall vaccine coverage.",
+  value: "DTP3"
 })
 )}
 
@@ -67,8 +67,8 @@ Plot.plot({
   },
   y: { axis: null, inset: 20 },
   color: {
-    domain: ["REG_GLOBAL", "SEAR", "REST"],
-    range: ["red", "orange", "steelblue"]
+    domain: ["REG_GLOBAL", "SEAR", "AFR", "REST"],
+    range: ["red", "orange", "brown", "steelblue"]
   },
   style: {
     backgroundColor: "#eee",
@@ -80,7 +80,9 @@ Plot.plot({
       x: "Year",
       y: yField,
       stroke: (d) =>
-        d.region_code === "REG_GLOBAL" || d.region_code === "SEAR"
+        d.region_code === "REG_GLOBAL" ||
+        d.region_code === "SEAR" ||
+        d.region_code === "AFR"
           ? d.region_code
           : "REST",
       sort: { channel: "stroke" },
@@ -163,7 +165,12 @@ function _formatters()
       maximumFractionDigits: 2,
       minimumFractionDigits: 2
     }).format(number / 1000000)}${
-      left && region_code === "REG_GLOBAL" ? " Million" : ""
+      left &&
+      (region_code === "REG_GLOBAL" ||
+        region_code === "SEAR" ||
+        region_code === "AFR")
+        ? " Million"
+        : ""
     }`;
 
   return {

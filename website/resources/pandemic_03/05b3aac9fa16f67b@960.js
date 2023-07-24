@@ -20,7 +20,7 @@ select({
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP1"
+  value: "DTP3"
 })
 )}
 
@@ -243,6 +243,10 @@ function _colorCountry(countField,colorScale){return(
 }
 )}
 
+function _15(geoWorld,countField){return(
+geoWorld.objects.countries.geometries.map((v) => v.properties[countField])
+)}
+
 function _colorScale(d3,geoWorld,countField)
 {
   const extent = d3.extent(
@@ -441,6 +445,7 @@ export default function define(runtime, observer) {
   main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("callout")).define("callout", _callout);
   main.variable(observer("colorCountry")).define("colorCountry", ["countField","colorScale"], _colorCountry);
+  main.variable(observer()).define(["geoWorld","countField"], _15);
   main.variable(observer("colorScale")).define("colorScale", ["d3","geoWorld","countField"], _colorScale);
   main.variable(observer("projection")).define("projection", ["d3Map"], _projection);
   main.variable(observer("path")).define("path", ["d3Map","projection"], _path);

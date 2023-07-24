@@ -35,7 +35,7 @@ select({
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP1"
+  value: "DTP3"
 })
 )}
 
@@ -696,7 +696,7 @@ md`### Load Data`
 )}
 
 function _storyMaster(FileAttachment,d3,regionalVaxNumbers,toHighlightKey){return(
-FileAttachment("regional_stories@4.csv")
+FileAttachment("regional_stories@5.csv")
   .csv()
   .then((d) => {
     const data_map = d3.group(regionalVaxNumbers, (d) => toHighlightKey(d));
@@ -714,7 +714,7 @@ FileAttachment("regional_stories@4.csv")
 )}
 
 function _vaccinesMaster(FileAttachment){return(
-FileAttachment("vaccines_master@5.csv")
+FileAttachment("vaccines_master@8.csv")
   .csv()
   .then((data) => {
     return new Map(data.map((row) => [row.vaccine_code, row]));
@@ -764,8 +764,8 @@ export default function define(runtime, observer) {
   const fileAttachments = new Map([
     ["unicef_regional_coverage_2015_2021.csv", {url: new URL("./files/becd2331310fd5cb391ed25c51d4f17e372ea3b23b1d87a90df2b0ea5cf714887c526bee621bc9ca50647f0f5018955ab55986bb76694d4c34997488e8f638c2.csv", import.meta.url), mimeType: "text/csv", toString}],
     ["regions_master.csv", {url: new URL("./files/05d199b4b5b31907d15b326d31d62754a460838de71e4432d0ae1df4512a4f8186539ed67d0fd07a71039820406527d9de6f742f0eb02e06af2c1bee3045a374.csv", import.meta.url), mimeType: "text/csv", toString}],
-    ["regional_stories@4.csv", {url: new URL("./files/34820729bc5faf2c1e00511b6da76470d6979600de6f50e9ddee90ada3d85d143e725bde66ad805917669a52cbaa7eeb1c408495cb35f86a231c951a4223fe89.csv", import.meta.url), mimeType: "text/csv", toString}],
-    ["vaccines_master@5.csv", {url: new URL("./files/fbbbaae11833e2334e9ad1d6cd9b328c34bd0ef2b076d7cd534501292af6de7337d48f906bf2140039aa09c62beab3f8068c2f60338f9ce71574b5cd268402cc.csv", import.meta.url), mimeType: "text/csv", toString}]
+    ["regional_stories@5.csv", {url: new URL("./files/1ae9cee95ef8b233f851d88e93472f555d1391ee53c25a0fd2498ab1aef4e546c9c6ac9c1b15df4751882a08e265a96316a00e9dcafe7024290e19066720d59c.csv", import.meta.url), mimeType: "text/csv", toString}],
+    ["vaccines_master@8.csv", {url: new URL("./files/24a8bc42908e4d8f8b981adb02bf8f85dba3a090dd0a6f892f4a5527ee9109799a481a61c2efcbe35324d335292c55e8380efa2e4e5bf7c076e311c2dc6b2f2d.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["md"], _1);
