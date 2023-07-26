@@ -170,6 +170,25 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item px-4" ><a class="nav-link" href="./"><h3>Introduction</h3></a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="./vaccination.html"><h3>Vaccination Coverage</h3></a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
+            <li class="nav-item active px-4"><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
+          </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- <header data-bs-theme="dark">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="active"><a class="nav-link" href="./"><h3>Home</h3></a></li>
             <li class=""><a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a></li>
             <li class=""><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
@@ -178,7 +197,7 @@
           </div>
         </div>
       </nav>
-    </header>
+    </header> -->
     <main>
         <div class="container py-4">
             <!-- Jumobotron -->
@@ -379,6 +398,7 @@
         function displayVaxinfo(info) {
           document.querySelector("#chart1_notes").innerHTML = info;
         }
+
         // Load the chart
         const rt = (new Runtime_01()).module(define_01, name => {
           if (name === "viewof replay_button") return new Inspector_01(divSel1);
@@ -388,7 +408,6 @@
           if (name === "layout") return new Inspector_01(chartTargetDiv);
             return ["plotty","showHighlights","chartData","autoHighlight","x","y","seriesData","showOneHighlight","line2","yField","tooltipText","showTooltip"].includes(name);
         });
-
       }
 
       function createStep2() {
@@ -431,10 +450,31 @@
         const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
 
         const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "25%";
+
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel3 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel4 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
         topControlsTargetDiv.appendChild(divSel1);
+        topControlsTargetDiv.appendChild(divSel2);
+        topControlsTargetDiv.appendChild(divSel3);
+        topControlsTargetDiv.appendChild(divSel4);
+
         new Runtime_03().module(define_03, name => {
           if (name === "viewof sel_vaccine") return new Inspector_03(divSel1);
+
+          if (name === "viewof detailLevel") return new Inspector_03(divSel2);
+          if (name === "viewof leftYear") return new Inspector_03(divSel3);
+          if (name === "viewof rightYear") return new Inspector_03(divSel4);
+
           if (name === "map3") return new Inspector_03(chartTargetDiv);
+          return ["tooltipText","geoWorld","showTooltip","colorScale","geoLand","geoBorders","geoCountries","colorCountry","valueFor","countField"].includes(name);
         });
       }
 

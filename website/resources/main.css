@@ -187,6 +187,16 @@ div#vis.vega-embed.has-actions {
   -webkit-overflow-scrolling: touch;
 }
 
+.nav-item.active a {
+  color: lightsalmon !important;
+  font-weight: bold !important;
+
+}
+
+.nav-item a {
+  color: steelblue !important;
+}
+
 .btn-bd-primary {
   --bd-violet-bg: #712cf9;
   --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
