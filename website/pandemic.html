@@ -14,6 +14,7 @@
       <link rel="stylesheet" href="./resources/main.css">
       <link rel="stylesheet" href="./resources/bootstrap.min.css">
       <link rel="stylesheet" href="./resources/inspector.css">
+      <link rel="stylesheet" href="./resources/main.css">
       <style>
           #scrolly {
             position: relative;
@@ -180,24 +181,6 @@
       </nav>
     </header>
 
-    <!-- <header data-bs-theme="dark">
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="active"><a class="nav-link" href="./"><h3>Home</h3></a></li>
-            <li class=""><a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a></li>
-            <li class=""><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
-            <li class=""><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
-          </ul>
-          </div>
-        </div>
-      </nav>
-    </header> -->
     <main>
         <div class="container py-4">
             <!-- Jumobotron -->
@@ -237,6 +220,9 @@
                 <p class="d-flex align-items-center">South East Asia region saw the highest increase, both in terms of % as well as number of unvaccinated children. Africa saw an increase of 2 million. However, since it already had higher base number of unvaccinated children, the overall numbers are much higher.</p>
               </div>
               <div class="step" data-step="3">
+                <p class="d-flex align-items-center">Next we will look at country level numbers for a finer grain understanding of the impact. Its interesting to see that some countries like Sudan, Nigeria, Ukraine actually managed to increase coverage numbers. It turns out that these countries included other vaccines in their push for Covid vaccination.</p>
+              </div>
+              <div class="step" data-step="4">
                 <p class="d-flex align-items-center">Next we will look at country level numbers for a finer grain understanding of the impact. Its interesting to see that some countries like Sudan, Nigeria, Ukraine actually managed to increase coverage numbers. It turns out that these countries included other vaccines in their push for Covid vaccination.</p>
               </div>
             </article>
@@ -335,6 +321,9 @@
         else if (el.dataset.step=='3'){
           createStep3();
         }
+        else if (el.dataset.step=='4'){
+          createStep4();
+        }
       }
 
       function init() {
@@ -342,7 +331,8 @@
           .setup({
             step: "#scrolly article .step",
             offset: .6,
-            debug: false
+            debug: false,
+            progress: true
           })
           .onStepEnter(handleStepEnter);
 
@@ -362,6 +352,10 @@
       // Import runtime and other Observable objects for third chart
       import define_03 from "./resources/pandemic_03/index.js";
       import {Runtime as Runtime_03, Inspector as Inspector_03} from "./resources/pandemic_03/runtime.js";
+
+      // Import runtime and other Observable objects for third chart
+      import define_04 from "./resources/pandemic_04/index.js";
+      import {Runtime as Runtime_04, Inspector as Inspector_04} from "./resources/pandemic_04/runtime.js";
 
       function clearView(targetDiv) {
         targetDiv.innerHTML = "";
@@ -404,7 +398,7 @@
           if (name === "viewof replay_button") return new Inspector_01(divSel1);
           if (name === "viewof sel_vaccine") return new Inspector_01(divSel2);
           if (name === "viewof yFieldD") return new Inspector_01(divSel3);
-          if (name === "vaxInfo") return {fulfilled(value) { displayVaxinfo(value); }};
+          // if (name === "vaxInfo") return {fulfilled(value) { displayVaxinfo(value); }};
           if (name === "layout") return new Inspector_01(chartTargetDiv);
             return ["plotty","showHighlights","chartData","autoHighlight","x","y","seriesData","showOneHighlight","line2","yField","tooltipText","showTooltip"].includes(name);
         });
@@ -468,12 +462,45 @@
 
         new Runtime_03().module(define_03, name => {
           if (name === "viewof sel_vaccine") return new Inspector_03(divSel1);
-
-          if (name === "viewof detailLevel") return new Inspector_03(divSel2);
+          if (name === "viewof sel_metric") return new Inspector_03(divSel2);
           if (name === "viewof leftYear") return new Inspector_03(divSel3);
           if (name === "viewof rightYear") return new Inspector_03(divSel4);
 
-          if (name === "map3") return new Inspector_03(chartTargetDiv);
+          if (name === "chart") return new Inspector_03(chartTargetDiv);
+          return ["data"].includes(name);
+        });
+      }
+
+      function createStep4() {
+        const chartTargetDiv = document.querySelector(chartTargetRef);
+        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
+        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
+
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "25%";
+
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel3 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        const divSel4 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
+
+        topControlsTargetDiv.appendChild(divSel1);
+        topControlsTargetDiv.appendChild(divSel2);
+        topControlsTargetDiv.appendChild(divSel3);
+        topControlsTargetDiv.appendChild(divSel4);
+
+        new Runtime_04().module(define_04, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_04(divSel1);
+
+          if (name === "viewof detailLevel") return new Inspector_04(divSel2);
+          if (name === "viewof leftYear") return new Inspector_04(divSel3);
+          if (name === "viewof rightYear") return new Inspector_04(divSel4);
+
+          if (name === "map3") return new Inspector_04(chartTargetDiv);
           return ["tooltipText","geoWorld","showTooltip","colorScale","geoLand","geoBorders","geoCountries","colorCountry","valueFor","countField"].includes(name);
         });
       }

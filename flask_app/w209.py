@@ -43,6 +43,12 @@ def v2_vax_rates_who_regions():
         df = helper_countries_vax_data_v2(True)
     except Exception as e:
         return json.dumps({ 'error': f'Failed to verify: {e}' }), 500
+
+    if 'pivot_on_year' in request.args:
+        pivot_on_year = (request.args['pivot_on_year'].lower() == 'true')
+    else:
+        pivot_on_year = False
+
     df = df.drop(columns=['Coverage', 'name', 'key_0', 'region_number', 'region_subcode', 'numeric_code', 'iso_3166_2'])
 
     # Create region level summary
@@ -62,17 +68,24 @@ def v2_vax_rates_who_regions():
     df_merged = pd.merge(df_merged, df_regions, left_on=df_merged["region_code"], right_on=df_regions["code"], how='left')
     df_missing_code = df_merged[(df_merged['region_name'].isna())]
     if df_missing_code['region_code'].unique().size > 0:
-        return json.dumps({ 'error': f"Could not identify codes for {df_missing_code['region_code'].unique().tolist()}."}), 500
+        response_json = { "error": f"Could not identify codes for {df_missing_code['region_code'].unique().tolist()}."}
+        return json.dumps(response_json), 500
     df_merged = df_merged.drop(columns=['key_0', 'code', 'key_in_data'])
 
+    if pivot_on_year:
+        # 'region_code','region_name','Vaccine','Year','Vaccinated','Target','Coverage','Not Covered','Unvaccinated'
+        df_merged = pd.pivot_table(df_merged, index=['region_code', 'region_name', 'Vaccine'], columns=['Year'], values=['Coverage', 'Vaccinated', 'Target', 'Not Covered', 'Unvaccinated'])
+        df_merged.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df_merged.columns.values ]
+        out_filename = 'unicef_regional_coverage_2015_2021_pivot.csv'
+
+    else:
+        out_filename = 'unicef_regional_coverage_2015_2021.csv'
+
     return Response(
-       df_merged.to_csv(index=False),
+       df_merged.to_csv(),
        mimetype="text/csv",
        headers={"Content-disposition":
-       "attachment; filename=unicef_regional_coverage_2015_2021.csv"})
-
-
-
+       f"attachment; filename={out_filename}"})
 
 @app.route("/vaxviz/pandemic/v2/vaxrates/countries", methods = ['GET'])
 def v2_vax_rates_countries():
@@ -88,9 +101,10 @@ def v2_vax_rates_countries():
 
     try:
         df = helper_countries_vax_data_v2(True)
-        print(f'df.columns: {df.columns}')
 
         df = df[['Name', 'alpha_3_code', 'alpha_2_code', 'numeric_code', 'region_code', 'Vaccine', 'Year', 'Coverage', 'Vaccinated', 'Target']]
+        df['Not Covered'] = 100 - df['Coverage']
+        df['Unvaccinated'] = df['Target'] - df['Vaccinated']
         df.numeric_code = df.numeric_code.astype(int)
         df.numeric_code = df.numeric_code.astype(str)
     except Exception as e:
@@ -98,7 +112,7 @@ def v2_vax_rates_countries():
 
     # Use pivot to convert the yearly values to columns.
     if pivot_on_year:
-        df = pd.pivot_table(df, index=['Name', 'alpha_3_code', 'alpha_2_code', 'numeric_code', 'region_code', 'Vaccine'], columns=['Year'], values=['Coverage', 'Vaccinated', 'Target'])
+        df = pd.pivot_table(df, index=['Name', 'alpha_3_code', 'alpha_2_code', 'numeric_code', 'region_code', 'Vaccine'], columns=['Year'], values=['Coverage', 'Vaccinated', 'Target', 'Not Covered', 'Unvaccinated'])
         df.columns = [ '_'.join([str(c) for c in c_list]) for c_list in df.columns.values ]
         out_filename = 'unicef_national_coverage_2015_2021_pivot.csv'
     else:

@@ -12,7 +12,7 @@ md`## Chart`
 )}
 
 function _enableAutoHighlights(){return(
-true
+false
 )}
 
 function _replay_button(highlightsByVaccine,sel_vaccine,Button,showHighlights)
@@ -60,7 +60,7 @@ function _vaxInfo(vaccinesMaster,sel_vaccine)
 }
 
 
-function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vaccine,seriesData,color,yField,highlights,toHighlightKey,showTooltip,hideTooltip,focusOnSeries,defocusSeries,Legend,regions){return(
+function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vaccine,seriesData,color,yField,highlights,toHighlightKey,pulsate,showTooltip,hideTooltip,focusOnSeries,defocusSeries,Legend,regions){return(
 (spotlight) => {
   const target = html`<div id="myviz">`;
 
@@ -103,12 +103,13 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     .attr("transform", `translate(0, -10)`)
     .style("text-anchor", "middle");
 
-  // Add the placeholder for the title of the plot.
-  gDrawing
+  // Add title of the plot.
+  const title = gDrawing
     .append("text")
     .attr("class", "chartHeader")
     .style("text-anchor", "middle")
-    .attr("transform", `translate(${iwidth / 2}, ${0 - margin.top / 2})`);
+    .attr("transform", `translate(${iwidth / 2}, ${0 - margin.top / 2})`)
+    .text(`Regional ${sel_vaccine} Vaccination - ${yFieldD}`);
 
   // Add background shade
   gDrawing
@@ -116,11 +117,6 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     .attr("width", iwidth)
     .attr("height", iheight)
     .attr("fill", "#eee");
-
-  // Display the chart title.
-  gDrawing
-    .select(".chartHeader")
-    .text(`Regional ${sel_vaccine} Vaccination - ${yFieldD}`);
 
   // Add a group element for each series to separately control series level interactions
   const serie = gDrawing
@@ -143,34 +139,24 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
         .y((d) => y(d[yField]))(d[1])
     );
 
-  // Draw two outer circles to highlight just the story points.
-  serie
+  // Draw circles to highlight just the story points.
+  const story_points = serie
     .append("g")
     .attr("class", (d) => `storypoints_${d[0]}`)
-    .selectAll(".point")
-    .data((d) => d[1])
+    .selectAll(".storypoint")
+    .data((d) => d[1].filter((row) => highlights.has(toHighlightKey(row))))
     .join("circle")
     .attr("class", (d) => `storypoint strorypoint_${d.region_code}`)
     .attr("cx", (d) => x(d.Year))
     .attr("cy", (d) => y(d[yField]))
-    .attr("r", (d) => (highlights.has(toHighlightKey(d)) ? 3 : 0))
+    .attr("r", 3)
     .attr("fill", (d) => color(d.region_code))
-    .style("stroke-width", (d) => (highlights.has(toHighlightKey(d)) ? 10 : 0))
+    .style("stroke-width", 10)
     .style("stroke", (d) => color(d.region_code))
     .style("stroke-opacity", 0.5);
-  serie
-    .append("g")
-    .attr("class", (d) => `storypoints_${d[0]}`)
-    .selectAll(".point")
-    .data((d) => d[1])
-    .join("circle")
-    .attr("class", (d) => `storypoint strorypoint_${d.region_code}`)
-    .attr("cx", (d) => x(d.Year))
-    .attr("cy", (d) => y(d[yField]))
-    .attr("r", (d) => (highlights.has(toHighlightKey(d)) ? 3 : 0))
-    .style("stroke-width", (d) => (highlights.has(toHighlightKey(d)) ? 20 : 0))
-    .style("stroke", (d) => color(d.region_code))
-    .style("stroke-opacity", 0.2);
+
+  // Setup pulsing of the story points
+  pulsate(story_points);
 
   // Draw circles for all data points.
   const points = serie
@@ -183,29 +169,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     .attr("cx", (d) => x(d.Year))
     .attr("cy", (d) => y(d[yField]))
     .attr("r", 3)
-    .attr("fill", (d) => color(d.region_code))
-    .call((d) => {
-      // if (spotlight) {
-      //   const story = highlights.get(spotlight)[0];
-      //   narrate(gDrawing, tooltip, story, true, true);
-      // }
-      // if (enable_initial_story && narrative_by_vaccine.has(sel_vaccine)) {
-      //   tooltip.call((v) => {
-      //     narrate(
-      //       gDrawing,
-      //       tooltip,
-      //       narrative_by_vaccine.get(sel_vaccine)[0],
-      //       true,
-      //       false
-      //     );
-      //   });
-      // }
-    });
-
-  // Add interaction.
-  // const points = gDrawing.selectAll(".point");
-  // const lines = gDrawing.selectAll(".line");
-  const story_points = gDrawing.selectAll(".storypoint");
+    .attr("fill", (d) => color(d.region_code));
 
   // Show tooltip on mouse move.
   points.on("touchmove mousemove", function (event, d) {
@@ -213,14 +177,8 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     showTooltip(gDrawing, tooltip, x, y, d);
   });
 
-  story_points.on("touchmove mousemove", function (event, d) {
-    const [x, y] = d3.pointer(event);
-    showTooltip(gDrawing, tooltip, x, y, d);
-  });
-
   // Hide tool tip on mouse out
   points.on("touchend mouseleave", () => hideTooltip(tooltip));
-  story_points.on("touchend mouseleave", () => hideTooltip(tooltip));
 
   // Highlight series data on mouseover on the points as well as the trend line
   story_points.on("mouseover.highlight", (event, d) =>
@@ -248,8 +206,64 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
         tickFormat: (v) => regions.get(v)
       })
     );
+  // const infoIcon = gDrawing
+  //   .append("svg:foreignObject")
+  //   .attr(
+  //     "transform",
+  //     // `translate(${title_x + title_w + 20}, ${title_y + title_y})`
+  //     // `translate(${iwidth - legendWidth - 50}, ${iheight + 35})`
+  //     `translate(${iwidth / 2}, ${0 - margin.top / 2})`
+  //   )
+  //   .attr("width", 24)
+  //   .attr("height", 24)
+  //   .attr("rx", iwidth / 2)
+  //   .attr("rx", 0 - margin.top / 2)
+  //   .html(
+  //     '<i class="fa-solid fa-circle-info fa-lg fa-fade" style="color: #2b8cbe;"></i>'
+  //   );
+
+  // infoIcon.on("touchmove mousemove", function (event, d) {
+  //   const self = d3.select(this);
+  //   const [x, y] = d3.pointer(event);
+  //   showGuide(gDrawing, tooltip, iwidth - x, 0 - margin.top / 2 + y);
+  // });
+
+  // Hide tool tip on mouse out
+  // infoIcon.on("touchend mouseleave", () => hideTooltip(tooltip));
 
   return target;
+}
+)}
+
+function _showGuide(callout){return(
+(gDrawing, tooltip, x, y) => {
+  tooltip.raise();
+  tooltip
+    .attr("transform", `translate(${x},${y + 10})`)
+    .call(
+      callout,
+      "<tspan>How to Use</tspan><tspan>Select a specific vaccine or Overall for more generic information.\nThe Metric dropdown allows you to select % values or actual numbers.</tspan>",
+      true
+    );
+}
+)}
+
+function _pulsate(d3){return(
+(selections) => {
+  recursive_transitions();
+
+  function recursive_transitions() {
+    selections
+      .transition()
+      .ease(d3.easeSinOut)
+      .duration(500)
+      .attr("r", 7)
+      .transition()
+      .duration(100)
+      .ease(d3.easeSinIn)
+      .attr("r", 2)
+      .on("end", recursive_transitions);
+  }
 }
 )}
 
@@ -266,7 +280,6 @@ function _autoHighlight(enableAutoHighlights,d3,layout,showHighlights)
 
 function _showHighlights(highlightsByVaccine,sel_vaccine,d3,layout,showOneHighlight){return(
 () => {
-  
   if (highlightsByVaccine.has(sel_vaccine)) {
     const gDrawing = d3.select(layout).select(".gDrawing");
     const tooltip = d3.select(".ttip");
@@ -327,6 +340,7 @@ function showOneHighlight(
 
 function _hideTooltip(callout){return(
 (tooltip) => {
+  tooltip.lower();
   tooltip.call(callout, null);
 }
 )}
@@ -430,7 +444,7 @@ function _tooltipText(toHighlightKey,formatters,yField,highlights){return(
 )}
 
 function _callout(){return(
-(g, value) => {
+(g, value, isHtml = false) => {
   if (!value) {
     return g.style("visibility", "hidden");
   }
@@ -446,8 +460,9 @@ function _callout(){return(
     .join("path")
     .attr("fill", "white")
     .attr("stroke", "black");
-
-  const text = g
+  var text;
+  // if (!isHtml) {
+  text = g
     .selectAll("text")
     .data([null])
     .join("text")
@@ -469,18 +484,25 @@ function _callout(){return(
 
       // place the text
       text.attr("transform", `translate(${-w / 2},${15 - y})`);
+      path.attr(
+        "d",
+        `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`
+      );
     });
+  // } else {
 
-  const { x, y, width: w, height: h } = text.node().getBBox(); // the box that our text is in
+  // }
 
-  // place the text
-  text.attr("transform", `translate(${-w / 2},${15 - y})`);
+  // const { x, y, width: w, height: h } = text.node().getBBox(); // the box that our text is in
 
-  // Create the box around the text
-  path.attr(
-    "d",
-    `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`
-  );
+  // // place the text
+  // text.attr("transform", `translate(${-w / 2},${15 - y})`);
+
+  // // Create the box around the text
+  // path.attr(
+  //   "d",
+  //   `M${-w / 2 - 10},5H-5l5,-5l5,5H${w / 2 + 10}v${h + 20}h-${w + 20}z`
+  // );
   return g;
 }
 )}
@@ -545,7 +567,7 @@ function _yField(metricNamesMap,yFieldD){return(
 metricNamesMap[yFieldD]
 )}
 
-function _30(md){return(
+function _32(md){return(
 md`## Scrubber`
 )}
 
@@ -634,11 +656,11 @@ function Scrubber(
 }
 )}
 
-function _32(md){return(
+function _34(md){return(
 md`## Data`
 )}
 
-function _33(md){return(
+function _35(md){return(
 md`### Preprocessing`
 )}
 
@@ -691,7 +713,7 @@ function _highlights(d3,storyMaster)
 }
 
 
-function _41(md){return(
+function _43(md){return(
 md`### Load Data`
 )}
 
@@ -750,8 +772,12 @@ function _fmt(d3){return(
 d3.timeParse("%Y")
 )}
 
-function _48(md){return(
+function _50(md){return(
 md`## Imports`
+)}
+
+function _fontawesome_style(html){return(
+html`<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>`
 )}
 
 function _d3(require){return(
@@ -779,7 +805,9 @@ export default function define(runtime, observer) {
   main.variable(observer("yFieldD")).define("yFieldD", ["Generators", "viewof yFieldD"], (G, _) => G.input(_));
   main.variable(observer("layout")).define("layout", ["plotty"], _layout);
   main.variable(observer("vaxInfo")).define("vaxInfo", ["vaccinesMaster","sel_vaccine"], _vaxInfo);
-  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","yFieldD","sel_vaccine","seriesData","color","yField","highlights","toHighlightKey","showTooltip","hideTooltip","focusOnSeries","defocusSeries","Legend","regions"], _plotty);
+  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","yFieldD","sel_vaccine","seriesData","color","yField","highlights","toHighlightKey","pulsate","showTooltip","hideTooltip","focusOnSeries","defocusSeries","Legend","regions"], _plotty);
+  main.variable(observer("showGuide")).define("showGuide", ["callout"], _showGuide);
+  main.variable(observer("pulsate")).define("pulsate", ["d3"], _pulsate);
   main.variable(observer("autoHighlight")).define("autoHighlight", ["enableAutoHighlights","d3","layout","showHighlights"], _autoHighlight);
   main.variable(observer("showHighlights")).define("showHighlights", ["highlightsByVaccine","sel_vaccine","d3","layout","showOneHighlight"], _showHighlights);
   main.variable(observer("showOneHighlight")).define("showOneHighlight", ["hideTooltip","showTooltip","x","y","yField"], _showOneHighlight);
@@ -800,10 +828,10 @@ export default function define(runtime, observer) {
   main.variable(observer("y")).define("y", ["d3","chartData","yField","height","margin"], _y);
   main.variable(observer("height")).define("height", ["width"], _height);
   main.variable(observer("yField")).define("yField", ["metricNamesMap","yFieldD"], _yField);
-  main.variable(observer()).define(["md"], _30);
-  main.variable(observer("Scrubber")).define("Scrubber", ["html","Inputs"], _Scrubber);
   main.variable(observer()).define(["md"], _32);
-  main.variable(observer()).define(["md"], _33);
+  main.variable(observer("Scrubber")).define("Scrubber", ["html","Inputs"], _Scrubber);
+  main.variable(observer()).define(["md"], _34);
+  main.variable(observer()).define(["md"], _35);
   main.variable(observer("seriesData")).define("seriesData", ["d3","chartData"], _seriesData);
   main.variable(observer("chartData")).define("chartData", ["regionalVaxNumbers","sel_vaccine"], _chartData);
   main.variable(observer("vaccines")).define("vaccines", ["regionalVaxNumbers"], _vaccines);
@@ -811,13 +839,14 @@ export default function define(runtime, observer) {
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
   main.variable(observer("highlightsByVaccine")).define("highlightsByVaccine", ["d3","storyMaster"], _highlightsByVaccine);
   main.variable(observer("highlights")).define("highlights", ["d3","storyMaster"], _highlights);
-  main.variable(observer()).define(["md"], _41);
+  main.variable(observer()).define(["md"], _43);
   main.variable(observer("storyMaster")).define("storyMaster", ["FileAttachment","d3","regionalVaxNumbers","toHighlightKey"], _storyMaster);
   main.variable(observer("vaccinesMaster")).define("vaccinesMaster", ["FileAttachment"], _vaccinesMaster);
   main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
   main.variable(observer("regionalVaxNumbers")).define("regionalVaxNumbers", ["FileAttachment","fmt"], _regionalVaxNumbers);
   main.variable(observer("fmt")).define("fmt", ["d3"], _fmt);
-  main.variable(observer()).define(["md"], _48);
+  main.variable(observer()).define(["md"], _50);
+  main.variable(observer("fontawesome_style")).define("fontawesome_style", ["html"], _fontawesome_style);
   const child1 = runtime.module(define1);
   main.import("Legend", child1);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
