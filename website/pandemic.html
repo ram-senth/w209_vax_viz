@@ -21,7 +21,7 @@
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            background-color: #fff;
+            background-color: #f3f3f3;
             padding: 1rem;
           }
 
@@ -29,25 +29,30 @@
             -webkit-box-flex: 1;
             -ms-flex: 1;
             flex: 1;
+            width: 10%;
           }
 
           article {
             position: relative;
             padding: 0 1rem;
-            max-width: 30rem;
+            max-width: 2.3rem;
           }
 
           .sticky-thing {
+            /* position: absolute; */
+            top: 0;
+            left: 0;
+            bottom: auto;
+            width: 70%;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
             position: -webkit-sticky;
             position: sticky;
-            width: 30%;
-            margin: 0;
-            background-color: #ffffff;
             z-index: 0;
             top: 12.5vh;
             height: 75vh;
-            /* Center everything inside */
-            /* display: flex; */
             align-items: center;
             justify-content: center;
           }
@@ -61,8 +66,9 @@
 
           .step {
             margin: 0 auto 2rem auto;
-            background-color: #fff;
-            color: #3b3b3b;
+            /* background-color: #fff; */
+            color: steelblue;
+            background-color: steelblue;
           }
 
           .step:last-child {
@@ -70,16 +76,48 @@
           }
 
           .step.is-active {
-            background-color: #f3f3f3;
+            /* background-color: #f3f3f3; */
+            background-color: goldenrod;
             color: #3b3b3b;
           }
 
           .step p {
             text-align: center;
-
-            min-height: 50vh;
+            min-height: 80vh;
             padding: 1rem;
             font-size: 1.5rem;
+          }
+
+          .keypoint {
+            display: -webkit-flex;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            height: 80vh;
+            width:100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+          }
+
+          p.primary {
+            padding: 1rem;
+            font-size: 3rem;
+            font-weight: 20;
+            width:100%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
+          }
+
+          p.secondary {
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: 10;
+            width:80%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
           }
 
           #vis.div {
@@ -182,56 +220,74 @@
     </header>
 
     <main>
-        <div class="container py-4">
-            <!-- Jumobotron -->
-            <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+        <!-- <div class="container py-4">
+            <div class="p-5 mb-5 rounded-3">
                 <div class="container-fluid py-5">
-                    <h1 class="display-5 fw-bold">Impact of Covid on Vaccination</h1>
+                    <p>
+                      <h1 class="display-5 fw-bold">Impact of Covid on Vaccination</h1>
                     </p>
-                    <p class="col-md-8 fs-4">
-                      The Covid pandemic had a widespread impact on multiple aspects of our lives. We saw major shifts in how we work, eat, socialize. Extreme poverty went up for first time after twenty years of continuous drop as Covid pushed millions of people into extreme poverty. Many businesses shuttered down. Then comes the excess death. WHO has estimated that 2020 alone saw 3 million excess deaths attributed to Covid. For many of us who survived Covid the lingering side effects are still a problem.
-                      <br />
-                      <br />
-                      Covid also had a big impact on the vaccination rates across the globe. Initial studies show that the number of children who are never reached by essential immunization increased sharply during the pandemic in each of two years.
-                      In this section, we want to take a closer look at the numbers across the world. We will use DTP3 vaccine coverage as a proxy for the overall vaccination coverage as it is considered as the best measure to assess how well countries are doing in providing routine immunization services to children. Feel free to explore other vaccines as well.
-                      <br/>
-                      <br/>
-                    </p>
-                    </div>
+                </div>
             </div>
-        </div>
+        </div> -->
         <!-- Scrolly -->
         <section id="scrolly">
             <article>
-              <div class="step" data-step="1">
-                <p>
-                  About 25 million children were un-vaccinated or under-vaccinated in 2021, 2 million more compared to 2020, and 6 million compared to 2019. This increase is attributed to the pandemic.
-                  <br />
-                  <br />
-                  In this section, we look at the vaccination rates and numbers for each of the 6 WHO regions.
-                  <br />
-                  <br/>
-
-                  <br/>
+              <div class="step" data-step="0">
+                <!-- Title  -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="1.1">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="1.2">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="2">
+                <!-- First chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="3">
+                <!-- First chart -->
+                <p class="d-flex align-items-center">
                   <span id="chart1_notes"></span>
                 </p>
               </div>
-              <div class="step" data-step="2">
-                <p class="d-flex align-items-center">South East Asia region saw the highest increase, both in terms of % as well as number of unvaccinated children. Africa saw an increase of 2 million. However, since it already had higher base number of unvaccinated children, the overall numbers are much higher.</p>
-              </div>
-              <div class="step" data-step="3">
-                <p class="d-flex align-items-center">Next we will look at country level numbers for a finer grain understanding of the impact. Its interesting to see that some countries like Sudan, Nigeria, Ukraine actually managed to increase coverage numbers. It turns out that these countries included other vaccines in their push for Covid vaccination.</p>
-              </div>
               <div class="step" data-step="4">
-                <p class="d-flex align-items-center">Next we will look at country level numbers for a finer grain understanding of the impact. Its interesting to see that some countries like Sudan, Nigeria, Ukraine actually managed to increase coverage numbers. It turns out that these countries included other vaccines in their push for Covid vaccination.</p>
+                <!-- Second chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="5">
+                <!-- Second chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="6">
+                <!-- Third chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="7">
+                <!-- Third chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="8">
+                <!-- Fourth chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="9">
+                <!-- Fourth chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="10">
+                <!-- Wrap up -->
+                <p class="d-flex align-items-center"></p>
               </div>
             </article>
 
-          <!-- <div id="dummy"></div> -->
           <div class="sticky-thing">
             <div id="visControlsTop"></div>
             <div id="visChartHeader" class="chartHeader"></div>
-            <div id="vis"></div>
+            <div id="vis" class="align-items-center"></div>
             <div id="visControlsBottom"></div>
           </div>
           </section>
@@ -248,7 +304,7 @@
             <div class="row align-items-md-stretch">
               <div class="col-md-6 mb-4">
                 <div class="h-100 p-5 text-bg-dark rounded-3">
-                    <h2>Vaccination Rates</h2>
+                    <h2>Vaccination Rates</a></h2>
                     <p>Look at how different countries have adopted vaccines.</p>
                     <a href="./vaccination.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
                 </div>
@@ -289,15 +345,18 @@
       // initialize the scrollama
       const scroller = scrollama();
 
-      const chartTargetRef = "#vis";
-      const topControlsTargetRef = "#visControlsTop";
-      const bottomControlsTargetRef = "#visControlsBottom";
+      const mainContentDiv = document.querySelector("#vis");
+      const topControlsDiv = document.querySelector("#visControlsTop");
+      const bottomControlsDiv = document.querySelector("#visControlsBottom");
+      const headerDiv = document.querySelector("#visChartHeader");
+
 
       function clearAll() {
-        clearView(document.querySelector(chartTargetRef));
-        clearView(document.querySelector(topControlsTargetRef));
-        clearView(document.querySelector(bottomControlsTargetRef));
-        clearView(document.querySelector("#visChartHeader"))
+        mainContentDiv.innerHTML = "";
+        topControlsDiv.innerHTML = "";
+        bottomControlsDiv.innerHTML = "";
+        headerDiv.innerHTML = "";
+        document.querySelector("#chart1_notes").innerHTML = "";
       }
 
       // scrollama event handlers
@@ -312,8 +371,15 @@
         clearAll();
 
         // update graphic based on step
-        if(el.dataset.step=='1') {
-          createStep1();
+
+        if(el.dataset.step=='0') {
+          mainContentDiv.innerHTML = generateTextDiv([["Impact of Covid on Vaccination", true]]);
+        }
+        else if(el.dataset.step=='1.1') {
+          createStep11();
+        }
+        else if (el.dataset.step=='1.2'){
+          createStep12();
         }
         else if (el.dataset.step=='2'){
           createStep2();
@@ -323,6 +389,24 @@
         }
         else if (el.dataset.step=='4'){
           createStep4();
+        }
+        else if (el.dataset.step=='5'){
+          createStep5();
+        }
+        else if (el.dataset.step=='6'){
+          createStep6();
+        }
+        else if (el.dataset.step=='7'){
+          createStep7();
+        }
+        else if (el.dataset.step=='8'){
+          createStep8();
+        }
+        else if (el.dataset.step=='9'){
+          createStep9();
+        }
+        else if (el.dataset.step=='10'){
+          createStep10();
         }
       }
 
@@ -357,37 +441,63 @@
       import define_04 from "./resources/pandemic_04/index.js";
       import {Runtime as Runtime_04, Inspector as Inspector_04} from "./resources/pandemic_04/runtime.js";
 
-      function clearView(targetDiv) {
-        targetDiv.innerHTML = "";
+      function generateTextDiv(lines) {
 
-        document.querySelector("#chart1_notes").innerHTML = "";
-        // document.querySelector("#chart1_sel2").innerHTML = "";
+        const merged = lines.map(param => {
+          const [line, primary] = param;
+          const className = primary?"primary":"secondary";
+          return `<p class="${className}">${line}</p>`;
+        }).join("\n");
+        return `<div class="keypoint">${merged}</div>`;
       }
 
-      function createStep1() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
+      function createStep11() {
+        //narrative
+        const lines = [
+          ["Per WHO, about 6 million excess children missed out on vaccination between 2019 and 2020 due to Covid.", true]
+        ];
+
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
+
+      function createStep12() {
+        //narrative
+        const lines = [
+          ["Let us take a closer look at Covid's impact across the six WHO regions in this section.", true]
+        ];
+
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
+      function createStep2() {
+        const lines = [
+          ["Our first plot shows number of children who did not get their third dose of vaccine against Diphtheria, Tetanus and Pertussis (DTP3) over the past 7 years.", true],
+          ["DTP3 vaccine coverage is considered to be the best measure for assessing effectiveness child immunization programs. Other vaccines and metrics are available for exploration.", false]
+        ];
+
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
+
+      function createStep3() {
+        // First chart
 
         const divSel1 = document.createElement('div');
-        divSel1.style.flexBasis = "33%";
+        divSel1.style.flexBasis = "10%";
+        divSel1.style.width = "10%";
+        divSel1.style.float = "left";
 
         const divSel2 = document.createElement('div');
-        divSel2.style.flexBasis = "33%";
+        divSel1.style.flexBasis = "10%";
+        divSel1.style.width = "20%";
+        divSel1.style.float = "inline-flex";
 
         const divSel3 = document.createElement('div');
-        divSel2.style.flexBasis = "33%";
+        divSel1.style.flexBasis = "10%";
+        divSel1.style.width = "20%";
+        divSel1.style.float = "inline-flex";
 
-        const divSel4 = document.createElement('div');
-        divSel2.style.flexBasis = "1%";
-
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-        topControlsTargetDiv.appendChild(divSel3);
-        topControlsTargetDiv.appendChild(divSel4);
-        // bottomControlsTargetDiv.appendChild(divSel2);
-        // bottomControlsTargetDiv.appendChild(divSel3);
-        // bottomControlsTargetDiv.appendChild(divSel4);
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
+        topControlsDiv.appendChild(divSel3);
 
         function displayVaxinfo(info) {
           document.querySelector("#chart1_notes").innerHTML = info;
@@ -399,16 +509,21 @@
           if (name === "viewof sel_vaccine") return new Inspector_01(divSel2);
           if (name === "viewof yFieldD") return new Inspector_01(divSel3);
           // if (name === "vaxInfo") return {fulfilled(value) { displayVaxinfo(value); }};
-          if (name === "layout") return new Inspector_01(chartTargetDiv);
+          if (name === "layout") return new Inspector_01(mainContentDiv);
             return ["plotty","showHighlights","chartData","autoHighlight","x","y","seriesData","showOneHighlight","line2","yField","tooltipText","showTooltip"].includes(name);
         });
       }
 
-      function createStep2() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
+      function createStep4() {
+        const lines = [
+          ["The number of unvaccinated children was trending down each year until 2019. This trend reversed and went up during 2019 and 2020 across all regions.", true],
+          ["The next chart makes this increase more obvious.", false]
+        ];
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
 
+      function createStep5() {
+        // Second chart.
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
 
@@ -421,10 +536,10 @@
         const divSel4 = document.createElement('div');
         divSel2.style.flexBasis = "25%";
 
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-        topControlsTargetDiv.appendChild(divSel3);
-        topControlsTargetDiv.appendChild(divSel4);
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
+        topControlsDiv.appendChild(divSel3);
+        topControlsDiv.appendChild(divSel4);
 
         // Load the chart
         const rt = (new Runtime_02()).module(define_02, name => {
@@ -432,17 +547,25 @@
           if (name === "viewof yFieldD") return new Inspector_02(divSel2);
           if (name === "viewof leftYear") return new Inspector_02(divSel3);
           if (name === "viewof rightYear") return new Inspector_02(divSel4);
-          if (name === "layout") return new Inspector_02(chartTargetDiv);
-          if (name === "chartTitle") return {fulfilled(value) { document.querySelector("#visChartHeader").innerHTML = value; }};
+          if (name === "layout") return new Inspector_02(mainContentDiv);
+          if (name === "chartTitle") return {fulfilled(value) { headerDiv.innerHTML = value; }};
           return ["chart_data","yField"].includes(name);
         });
       }
 
-      function createStep3() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
+      function createStep6() {
+        const lines = [
+          ["South East Asia had the biggest increase in number of unvaccinated children both in terms of percentage as well as just raw numbers.", true],
+          ["The next plot lets us go a little deeper and look countries that saw biggest drop as well biggest increase within each region.", false]
+        ];
 
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
+
+      function createStep7() {
+        // Third chart
+        const divParent = document.createElement('div');
+        divParent.style.flexBasis = "80%";
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
 
@@ -455,10 +578,11 @@
         const divSel4 = document.createElement('div');
         divSel2.style.flexBasis = "25%";
 
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-        topControlsTargetDiv.appendChild(divSel3);
-        topControlsTargetDiv.appendChild(divSel4);
+        divParent.appendChild(divSel1);
+        divParent.appendChild(divSel2);
+        divParent.appendChild(divSel3);
+        divParent.appendChild(divSel4);
+        topControlsDiv.appendChild(divParent);
 
         new Runtime_03().module(define_03, name => {
           if (name === "viewof sel_vaccine") return new Inspector_03(divSel1);
@@ -466,16 +590,22 @@
           if (name === "viewof leftYear") return new Inspector_03(divSel3);
           if (name === "viewof rightYear") return new Inspector_03(divSel4);
 
-          if (name === "chart") return new Inspector_03(chartTargetDiv);
+          if (name === "chart") return new Inspector_03(mainContentDiv);
           return ["data"].includes(name);
         });
       }
 
-      function createStep4() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(bottomControlsTargetRef);
+      function createStep8() {
+        const lines = [
+          ["Within SE Asia, India's had a much lower 6% drop compared to North Korea at 56%, Myanmar at 53% and Indonesia at 18%). However, that 6% translated to the 1.3 million children due to India's population.", true],
+          ["Next is another view of the same regional and national level details.", false]
+        ];
 
+        mainContentDiv.innerHTML = generateTextDiv(lines);
+      }
+
+      function createStep9() {
+        // Chart 4
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
 
@@ -488,10 +618,10 @@
         const divSel4 = document.createElement('div');
         divSel2.style.flexBasis = "25%";
 
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-        topControlsTargetDiv.appendChild(divSel3);
-        topControlsTargetDiv.appendChild(divSel4);
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
+        topControlsDiv.appendChild(divSel3);
+        topControlsDiv.appendChild(divSel4);
 
         new Runtime_04().module(define_04, name => {
           if (name === "viewof sel_vaccine") return new Inspector_04(divSel1);
@@ -500,9 +630,21 @@
           if (name === "viewof leftYear") return new Inspector_04(divSel3);
           if (name === "viewof rightYear") return new Inspector_04(divSel4);
 
-          if (name === "map3") return new Inspector_04(chartTargetDiv);
+          if (name === "map3") return new Inspector_04(mainContentDiv);
           return ["tooltipText","geoWorld","showTooltip","colorScale","geoLand","geoBorders","geoCountries","colorCountry","valueFor","countField"].includes(name);
         });
+      }
+
+      function createStep10() {
+        const lines = [
+          ["It's also interesting that some countries actually managed to increase the coverage during Covid.", true],
+          ["Turns out that many factors factors played a role.", true],
+          ["Not all countries had the same level of Covid infections. Also, not all countries had the same level of shutdowns.", true],
+          ["Lastly some countries included other vaccines as part of the Covid vaccination drive, increasing overall coverage.", true],
+          ["Due to lack of time we are not exploring these aspects yet.", true]
+        ];
+
+        mainContentDiv.innerHTML = generateTextDiv(lines);
       }
 
       // kick things off

@@ -43,7 +43,7 @@ function _yFieldD(select,metricDispNames){return(
 select({
   options: metricDispNames,
   title: "Metric to plot:  ",
-  value: "Not Vaccinated(#)"
+  value: "Not Vaccinated(Millions)"
   // description:
   //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
 })
@@ -60,7 +60,7 @@ function _vaxInfo(vaccinesMaster,sel_vaccine)
 }
 
 
-function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vaccine,seriesData,color,yField,highlights,toHighlightKey,pulsate,showTooltip,hideTooltip,focusOnSeries,defocusSeries,Legend,regions){return(
+function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,formatters,yField,yFieldD,sel_vaccine,seriesData,color,highlights,toHighlightKey,pulsate,showTooltip,hideTooltip,focusOnSeries,defocusSeries,Legend,regions){return(
 (spotlight) => {
   const target = html`<div id="myviz">`;
 
@@ -95,7 +95,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     .append("g")
     .attr("class", "yAxis")
     .style("font-size", "12px")
-    .call(d3.axisLeft(y))
+    .call(d3.axisLeft(y).tickFormat((v) => formatters[yField](v)))
     .append("text")
     .attr("class", "axisLabel")
     .text(yFieldD)
@@ -116,7 +116,7 @@ function _plotty(html,d3,width,height,margin,x,iheight,iwidth,y,yFieldD,sel_vacc
     .append("rect")
     .attr("width", iwidth)
     .attr("height", iheight)
-    .attr("fill", "#eee");
+    .attr("fill", "#f3f3f3");
 
   // Add a group element for each series to separately control series level interactions
   const serie = gDrawing
@@ -415,7 +415,7 @@ function _formatters()
     `${Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
       minimumFractionDigits: 0
-    }).format(number)}`;
+    }).format(number)} M`;
 
   return {
     Coverage: percent_formatter,
@@ -426,7 +426,7 @@ function _formatters()
 }
 
 
-function _tooltipText(toHighlightKey,formatters,yField,highlights){return(
+function _tooltipText(toHighlightKey,formatters,yField,highlights,yFieldD){return(
 (data) => {
   const story_key = toHighlightKey(data);
   const formatted_val = formatters[yField](data[yField]);
@@ -436,9 +436,11 @@ function _tooltipText(toHighlightKey,formatters,yField,highlights){return(
     const highlight = highlights.get(story_key)[0].highlight;
     return `${
       data.region_name
-    }, ${data.Year.getFullYear()}\n${formatted_val}\n\n${highlight}`;
+    }, ${data.Year.getFullYear()}\n${yFieldD}: ${formatted_val}\n\n${highlight}`;
   } else {
-    return `${data.region_name}, ${data.Year.getFullYear()}\n${formatted_val}`;
+    return `${
+      data.region_name
+    }, ${data.Year.getFullYear()}\n${yFieldD}: ${formatted_val}`;
   }
 }
 )}
@@ -681,8 +683,8 @@ function _metricNamesMap()
   const map = new Map();
   map["Vaccinated(%)"] = "Coverage";
   map["Not Vaccinated(%)"] = "Not Covered";
-  map["Vaccinated(#)"] = "Vaccinated";
-  map["Not Vaccinated(#)"] = "Unvaccinated";
+  map["Vaccinated(Millions)"] = "Vaccinated";
+  map["Not Vaccinated(Millions)"] = "Unvaccinated";
   return map;
 }
 
@@ -691,8 +693,8 @@ function _metricDispNames(){return(
 [
   "Vaccinated(%)",
   "Not Vaccinated(%)",
-  "Vaccinated(#)",
-  "Not Vaccinated(#)"
+  "Vaccinated(Millions)",
+  "Not Vaccinated(Millions)"
 ]
 )}
 
@@ -759,8 +761,8 @@ FileAttachment("unicef_regional_coverage_2015_2021.csv")
     data.map((row) => {
       row.Year = fmt(row.Year);
       row.Coverage = +row.Coverage;
-      row.Vaccinated = +row.Vaccinated;
-      row.Unvaccinated = +row.Unvaccinated;
+      row.Vaccinated = +row.Vaccinated / 1000000;
+      row.Unvaccinated = +row.Unvaccinated / 1000000;
       row.Target = +row.Target;
       row["Not Covered"] = +row["Not Covered"];
     });
@@ -805,7 +807,7 @@ export default function define(runtime, observer) {
   main.variable(observer("yFieldD")).define("yFieldD", ["Generators", "viewof yFieldD"], (G, _) => G.input(_));
   main.variable(observer("layout")).define("layout", ["plotty"], _layout);
   main.variable(observer("vaxInfo")).define("vaxInfo", ["vaccinesMaster","sel_vaccine"], _vaxInfo);
-  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","yFieldD","sel_vaccine","seriesData","color","yField","highlights","toHighlightKey","pulsate","showTooltip","hideTooltip","focusOnSeries","defocusSeries","Legend","regions"], _plotty);
+  main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","formatters","yField","yFieldD","sel_vaccine","seriesData","color","highlights","toHighlightKey","pulsate","showTooltip","hideTooltip","focusOnSeries","defocusSeries","Legend","regions"], _plotty);
   main.variable(observer("showGuide")).define("showGuide", ["callout"], _showGuide);
   main.variable(observer("pulsate")).define("pulsate", ["d3"], _pulsate);
   main.variable(observer("autoHighlight")).define("autoHighlight", ["enableAutoHighlights","d3","layout","showHighlights"], _autoHighlight);
@@ -817,7 +819,7 @@ export default function define(runtime, observer) {
   main.variable(observer("defocusSeries")).define("defocusSeries", _defocusSeries);
   main.variable(observer("focusOnSeries")).define("focusOnSeries", ["color"], _focusOnSeries);
   main.variable(observer("formatters")).define("formatters", _formatters);
-  main.variable(observer("tooltipText")).define("tooltipText", ["toHighlightKey","formatters","yField","highlights"], _tooltipText);
+  main.variable(observer("tooltipText")).define("tooltipText", ["toHighlightKey","formatters","yField","highlights","yFieldD"], _tooltipText);
   main.variable(observer("callout")).define("callout", _callout);
   main.variable(observer("line2")).define("line2", ["d3","x","y"], _line2);
   main.variable(observer("iwidth")).define("iwidth", ["width","margin"], _iwidth);

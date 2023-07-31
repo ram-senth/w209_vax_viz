@@ -3,7 +3,7 @@ import define2 from "./e93997d5089d7165@2303.js";
 import define3 from "./a33468b95d0b15b0@808.js";
 
 function _1(md){return(
-md`# VaxViz-Pandemic-03`
+md`# VaxViz-Pandemic-04`
 )}
 
 function _2(md){return(
@@ -44,7 +44,19 @@ select({
 })
 )}
 
-function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear,defaultProjection,geoCountries,addCountryLegend,addRegionalLegend,hideTooltip,hideLegend,showLegend,d3Map,colorCountry,showTooltip,geoOutline,geoGraticule,geoLand,geoBorders,regionCoords,regionFeatures)
+function _regionCoords(){return(
+new Map([
+  ["AFR", [[0, 0], 2]],
+  ["AMR", [[100, 0], 1.2]],
+  ["SEAR", [[280, 30], 1.2]],
+  ["EUR", [[300, 10], 2]],
+  ["EMR", [[300, 20], 2]],
+  ["WPR", [[270, 20], 1.6]],
+  ["REG_GLOBAL", [[0, 0], 0]]
+])
+)}
+
+function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear,defaultProjection,geoCountries,hideLegend,showLegend,hideTooltip,d3Map,geoGraticule,colorCountry,geoOutline,geoLand,geoBorders,showTooltip,regionCoords,regionFeatures,addCountryLegend,addRegionalLegend)
 {
   var isZoomed = false;
 
@@ -54,7 +66,8 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
     .select(target)
     .append("svg")
     .attr("viewBox", [0, 0, width, height])
-    .style("display", "block")
+    .attr("width", "80%")
+    // .style("display", "block")
     .on("click", clicked);
 
   const g = svg
@@ -62,7 +75,15 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
     .attr("class", "gDrawing")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-  const tooltip = g.append("g").attr("class", "ttip");
+  // Add legend
+  const gLegendCountry = g
+    .append("g")
+    .attr("class", "gLegend")
+    .style("font-size", "12px");
+  const gLegendRegion = g
+    .append("g")
+    .attr("class", "gLegend")
+    .style("font-size", "12px");
 
   // Add the title of the plot.
   g.append("text")
@@ -74,22 +95,9 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
     );
 
   const gCountries = g.append("g");
-  const zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
-
   addCountries(gCountries, defaultProjection, geoCountries);
-
-  // Place holder for legend
-  const gLegendCountry = g
-    .append("g")
-    .attr("class", "gLegend")
-    .style("font-size", "12px");
-  const gLegendRegion = g
-    .append("g")
-    .attr("class", "gLegend")
-    .style("font-size", "12px");
-  // Add legend
-  addCountryLegend(gLegendCountry);
-  addRegionalLegend(gLegendRegion);
+  const tooltip = gCountries.append("g").attr("class", "ttip");
+  const zoom = d3.zoom().scaleExtent([1, 10]).on("zoom", zoomed);
 
   function zoomed(event) {
     const { transform } = event;
@@ -112,6 +120,8 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
   }
 
   function reset(delay, duration) {
+    hideLegend(gLegendCountry);
+    showLegend(gLegendRegion);
     svg
       .call(() => hideTooltip(tooltip))
       .transition()
@@ -133,13 +143,16 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
         gCountries.selectAll(".borders").remove();
         addCountries(gCountries, defaultProjection, geoCountries);
       });
-
-    hideLegend(gLegendCountry);
-    showLegend(gLegendRegion);
   }
 
   function addCountries(g, projection, geoCountries) {
     const path = d3Map.geoPath(projection);
+    const gGraticule = g
+      .append("path")
+      .style("stroke", "#DEDEDE")
+      .attr("class", "borders")
+      .style("fill", "none")
+      .attr("d", `${path(geoGraticule)}`);
     const countriesInMap = g
       .selectAll(".country")
       .data(geoCountries.features)
@@ -148,23 +161,17 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
       .attr("class", "country")
       .attr("d", path)
       .style("fill", (d) => colorCountry(d, isZoomed))
+      .style("cursor", "pointer")
       .on("click", clicked);
-    countriesInMap.on("touchmove mousemove", function (event, d) {
-      const [x, y] = d3.pointer(event, g.node());
-      showTooltip(g, tooltip, x, y, d, isZoomed);
-    });
+
     g.append("path")
       .attr("id", "outline")
       .attr("class", "borders")
       .style("stroke", "#ccc")
       .style("fill", "none")
       .attr("d", `${path(geoOutline)}`);
-    g.append("path")
-      .style("stroke", "#ccc")
-      .attr("class", "borders")
-      .style("fill", "none")
-      .attr("d", `${path(geoGraticule)}`);
-    g.append("path")
+    const gLand = g
+      .append("path")
       .attr("class", "borders")
       .style("fill", "none")
       .style("stroke", "black")
@@ -174,13 +181,22 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
       .style("stroke", "gray")
       .style("fill", "none")
       .attr("d", path(geoBorders));
-    countriesInMap.on("touchend mouseleave", () => hideTooltip(tooltip));
+
+    // Add event handlers to manage tooltip display
+    countriesInMap.on("touchmove mousemove", function (event, d) {
+      const [x, y] = d3.pointer(event, g.node());
+      showTooltip(gCountries, tooltip, x, y, d, isZoomed);
+    });
+    // countriesInMap.on("touchend mouseleave", () => hideTooltip(tooltip));
+    // gLand.on("touchmove mousemove", () => hideTooltip(tooltip));
+    gGraticule.on("touchmove mousemove", () => hideTooltip(tooltip));
+
     return countriesInMap;
   }
 
   function zoomToRegion(event, region_code, transition_duration, auto_zoom) {
     //Globe rotating
-    const newLocation = regionCoords.get(region_code);
+    const [newLocation, zoomFactor] = regionCoords.get(region_code);
     const rotatedProjection = () =>
       d3Map.geoNaturalEarth1().rotate(newLocation);
 
@@ -193,14 +209,14 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
     // const [lat, long] = projection.invert(d3.pointer(event, gCountries.node()));
     svg
       .call(() => hideTooltip(tooltip))
-      .transition()
-      .duration(transition_duration / 2)
-      .tween("rotate", function () {
-        const r = d3.interpolate([0, 0], newLocation);
-        return function (t) {
-          d3Map.geoNaturalEarth1().rotate(r(t));
-        };
-      })
+      // .transition()
+      // .duration(transition_duration / 2)
+      // .tween("rotate", function () {
+      //   const r = d3.interpolate([0, 0], newLocation);
+      //   return function (t) {
+      //     d3Map.geoNaturalEarth1().rotate(r(t));
+      //   };
+      // })
       // .tween("rotate", function () {
       //   const r = d3.interpolate(rotatedProjection);
       //   return function (t) {
@@ -212,23 +228,26 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
       //     projection.rotate(d3.interpolate(rotatedProjection));
       //   };
       // })
-      // .transition()
-      // .duration(transition_duration / 2)
-      // .call(
-      //   zoom.transform,
-      //   d3.zoomIdentity
-      //     .translate(width / 2, height / 2)
-      //     .scale(
-      //       Math.min(5, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height))
-      //     )
-      //     .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-      //   d3.pointer(event, svg.node())
-      // )
+      .transition()
+      .duration(transition_duration / 2)
+      .call(
+        zoom.transform,
+        d3.zoomIdentity
+          .translate(width / 2, height / 2)
+          .scale(
+            Math.min(
+              zoomFactor,
+              0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height)
+            )
+            // Math.min(5, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height))
+          )
+          .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
+        d3.pointer(event, gCountries.node())
+      )
       .transition()
       .call(() => {
         gCountries.selectAll(".country").remove();
         gCountries.selectAll(".borders").remove();
-        // addCountries(gCountries, projection, regionGeo);
         addCountries(gCountries, rotatedProjection(), regionGeo);
       });
     hideLegend(gLegendRegion);
@@ -236,6 +255,10 @@ function _map3(html,d3,width,height,margin,iwidth,sel_vaccine,leftYear,rightYear
 
     isZoomed = true;
   }
+
+  addCountryLegend(gLegendCountry);
+  addRegionalLegend(gLegendRegion);
+  showLegend(gLegendRegion);
 
   return target;
 }
@@ -284,6 +307,7 @@ function _addRegionalLegend(width,margin,iheight,legend,regionColors,regions){re
       "transform",
       `translate(${width - margin.left - legendWidth - 100}, ${iheight})`
     )
+    .style("visibility", "hidden")
     .append(() =>
       legend({
         color: regionColors,
@@ -455,7 +479,7 @@ function _colorCountry(countField,colorScale,countriesMaster,regionColors){retur
 }
 )}
 
-function _22(geoWorld,countField){return(
+function _23(geoWorld,countField){return(
 geoWorld.objects.countries.geometries.map(countField)
 )}
 
@@ -465,8 +489,8 @@ function _colorScale(d3,geoWorld,countField)
     geoWorld.objects.countries.geometries.map((v) => countField(v))
   );
 
-  return d3
-    .scaleDiverging()
+  return d3 // .scaleDiverging()
+    .scaleDivergingSymlog()
     .domain([extent[1], 0, extent[0]])
     .interpolator(d3.interpolatePuOr)
     .nice();
@@ -543,7 +567,7 @@ function _regionColors(d3)
 }
 
 
-function _31(md){return(
+function _32(md){return(
 md`## Data`
 )}
 
@@ -622,18 +646,6 @@ function _geoWorld(world_50m,countryVaxData,sel_vaccine)
   return world_50m;
 }
 
-
-function _regionCoords(){return(
-new Map([
-  ["AFR", [0, 0]],
-  ["AMR", [30, 0]],
-  ["SEAR", [250, 0]],
-  ["EUR", [300, 0]],
-  ["EMR", [300, 0]],
-  ["WPR", [270, 15]],
-  ["REG_GLOBAL", [0, 0]]
-])
-)}
 
 function _regionFeatures(d3,geoCountries)
 {
@@ -754,7 +766,8 @@ export default function define(runtime, observer) {
   main.variable(observer("leftYear")).define("leftYear", ["Generators", "viewof leftYear"], (G, _) => G.input(_));
   main.variable(observer("viewof rightYear")).define("viewof rightYear", ["select","availYears"], _rightYear);
   main.variable(observer("rightYear")).define("rightYear", ["Generators", "viewof rightYear"], (G, _) => G.input(_));
-  main.variable(observer("map3")).define("map3", ["html","d3","width","height","margin","iwidth","sel_vaccine","leftYear","rightYear","defaultProjection","geoCountries","addCountryLegend","addRegionalLegend","hideTooltip","hideLegend","showLegend","d3Map","colorCountry","showTooltip","geoOutline","geoGraticule","geoLand","geoBorders","regionCoords","regionFeatures"], _map3);
+  main.variable(observer("regionCoords")).define("regionCoords", _regionCoords);
+  main.variable(observer("map3")).define("map3", ["html","d3","width","height","margin","iwidth","sel_vaccine","leftYear","rightYear","defaultProjection","geoCountries","hideLegend","showLegend","hideTooltip","d3Map","geoGraticule","colorCountry","geoOutline","geoLand","geoBorders","showTooltip","regionCoords","regionFeatures","addCountryLegend","addRegionalLegend"], _map3);
   main.variable(observer("showLegend")).define("showLegend", _showLegend);
   main.variable(observer("hideLegend")).define("hideLegend", _hideLegend);
   main.variable(observer("addCountryLegend")).define("addCountryLegend", ["width","margin","iheight","legend","colorScale","useActualNumbers","number_formatter","percent_formatter"], _addCountryLegend);
@@ -768,7 +781,7 @@ export default function define(runtime, observer) {
   main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("callout")).define("callout", _callout);
   main.variable(observer("colorCountry")).define("colorCountry", ["countField","colorScale","countriesMaster","regionColors"], _colorCountry);
-  main.variable(observer()).define(["geoWorld","countField"], _22);
+  main.variable(observer()).define(["geoWorld","countField"], _23);
   main.variable(observer("colorScale")).define("colorScale", ["d3","geoWorld","countField"], _colorScale);
   main.variable(observer("valueFor")).define("valueFor", ["rightYear","leftYear"], _valueFor);
   main.variable(observer("defaultProjection")).define("defaultProjection", ["d3Map"], _defaultProjection);
@@ -777,13 +790,12 @@ export default function define(runtime, observer) {
   main.variable(observer("iwidth")).define("iwidth", ["width","margin"], _iwidth);
   main.variable(observer("margin")).define("margin", _margin);
   main.variable(observer("regionColors")).define("regionColors", ["d3"], _regionColors);
-  main.variable(observer()).define(["md"], _31);
+  main.variable(observer()).define(["md"], _32);
   main.variable(observer("geoOutline")).define("geoOutline", _geoOutline);
   main.variable(observer("geoGraticule")).define("geoGraticule", ["d3"], _geoGraticule);
   main.variable(observer("geoLand")).define("geoLand", ["topojson","geoWorld"], _geoLand);
   main.variable(observer("geoBorders")).define("geoBorders", ["topojson","geoWorld"], _geoBorders);
   main.variable(observer("geoWorld")).define("geoWorld", ["world_50m","countryVaxData","sel_vaccine"], _geoWorld);
-  main.variable(observer("regionCoords")).define("regionCoords", _regionCoords);
   main.variable(observer("regionFeatures")).define("regionFeatures", ["d3","geoCountries"], _regionFeatures);
   main.variable(observer("geoCountries")).define("geoCountries", ["topojson","geoWorld"], _geoCountries);
   main.variable(observer("world_50m")).define("world_50m", ["FileAttachment"], _world_50m);
@@ -801,6 +813,7 @@ export default function define(runtime, observer) {
   main.import("select", child2);
   const child3 = runtime.module(define3);
   main.import("legend", child3);
+  main.import("swatches", child3);
   main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
   return main;
 }

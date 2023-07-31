@@ -1,6 +1,12 @@
 import define1 from "./e93997d5089d7165@2303.js";
 import define2 from "./a33468b95d0b15b0@808.js";
 
+function _1(md){return(
+md`# VaxViz-Pandemic-03
+
+Click to zoom in or out. Global -> WHO region -> Country`
+)}
+
 function _sel_vaccine(select,vaccines){return(
 select({
   options: vaccines,
@@ -14,7 +20,7 @@ select({
 function _leftYear(select,availYears){return(
 select({
   options: availYears,
-  title: "Left side year:  ",
+  title: "Beginning year:  ",
   value: "2019"
   // description:
   //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
@@ -24,7 +30,7 @@ select({
 function _rightYear(select,availYears){return(
 select({
   options: availYears,
-  title: "Right side year:  ",
+  title: "Ending year:  ",
   value: "2021"
   // description:
   //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
@@ -41,23 +47,17 @@ select({
 })
 )}
 
-function _5(md){return(
-md`# VaxViz-Pandemic-04
-
-Click to zoom in or out. Global -> WHO region -> Country`
-)}
-
-function _chart(d3,iWidth,iHeight,data)
+function _chart(d3,cWidth,cHeight,data,iWidth,iHeight,margin)
 {
   // Create the color scale.
   const color = d3
     .scaleLinear()
-    .domain([0, 5])
-    .range(["white", "#b3cde3", "#fed9a6"]);
+    .domain([0, 2])
+    .range(["#f3f3f3", "#b3cde3", "#fed9a6"]);
 
   // Compute the layout.
   const pack = (data) =>
-    d3.pack().size([iWidth, iHeight]).padding(1)(
+    d3.pack().size([cWidth, cHeight]).padding(5)(
       d3
         .hierarchy(data)
         .sum((d) => d.value)
@@ -69,21 +69,25 @@ function _chart(d3,iWidth,iHeight,data)
   const svg = d3
     .create("svg")
     .attr("viewBox", `-${iWidth / 2} -${iHeight / 2} ${iWidth} ${iHeight}`)
-    .attr("width", iWidth)
+    .attr("width", "100%")
     .attr("height", iHeight)
-    .attr(
-      "style",
-      `max-width: 100%; height: auto; display: block; margin: 0 -14px; background: ${color(
-        0
-      )}; cursor: pointer;`
-    );
+    .attr("style", `background: ${color(0)}; cursor: pointer;`);
+  //max-width: 100%; height: auto; display: block; margin: 0 -14px;
+
+  const gDrawing = svg
+    .append("g")
+    .attr("class", "gDrawing")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+    .attr("width", cWidth)
+    .attr("height", cHeight)
+    .attr("style", `background: ${color(0)}; cursor: pointer;`);
 
   const innerColorScale = d3.scaleOrdinal(
     [false, true],
     ["#fbb4ae", "#ccebc5"]
   );
   // Append the nodes.
-  const node = svg
+  const node = gDrawing
     .append("g")
     .selectAll("circle")
     .data(root.descendants().slice(1))
@@ -104,7 +108,7 @@ function _chart(d3,iWidth,iHeight,data)
     );
 
   // Append the text labels.
-  const label = svg
+  const label = gDrawing
     .append("g")
     .style("font", "12px sans-serif")
     .attr("pointer-events", "none")
@@ -123,7 +127,7 @@ function _chart(d3,iWidth,iHeight,data)
   zoomTo([focus.x, focus.y, focus.r * 2]);
 
   function zoomTo(v) {
-    const k = iWidth / v[2];
+    const k = cWidth / v[2];
 
     view = v;
 
@@ -143,7 +147,7 @@ function _chart(d3,iWidth,iHeight,data)
 
     focus = d;
 
-    const transition = svg
+    const transition = gDrawing
       .transition()
       .duration(event.altKey ? 7500 : 750)
       .tween("zoom", (d) => {
@@ -169,26 +173,38 @@ function _chart(d3,iWidth,iHeight,data)
 }
 
 
-function _iWidth(width,margin){return(
-width * 0.4 - margin.left - margin.right
+function _cWidth(iWidth,margin){return(
+iWidth - margin.left - margin.right
 )}
 
-function _iHeight(iWidth,margin){return(
-iWidth - margin.top - margin.bottom
+function _cHeight(iHeight,margin){return(
+iHeight - margin.top - margin.bottom
+)}
+
+function _iWidth(width){return(
+width * 0.4
+)}
+
+function _iHeight(height){return(
+height * 0.4
+)}
+
+function _height(width){return(
+width
 )}
 
 function _margin(){return(
 { left: 0, top: 0, right: 0, bottom: 0 }
 )}
 
-function _10(md){return(
+function _13(md){return(
 md`# Data`
 )}
 
 function _number_formatter(){return(
 (number) =>
   `${Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
     minimumFractionDigits: 0
   }).format(number)}`
 )}
@@ -251,17 +267,19 @@ function _data(metrics,sel_metric,rightYear,leftYear,regionalGrouped,sel_vaccine
             );
             return n == null ? [] : [n];
           });
-
-        const topTen = countriesInRegion
-          .sort((a, b) => b.signedVal - a.signedVal)
-          .slice(0, numToShow);
-        const picked = new Set([...topTen.map((v) => v.id)]);
-        const bottomTen = countriesInRegion
-          .sort((a, b) => a.signedVal - b.signedVal)
-          .slice(0, numToShow)
-          .filter((v) => !(v in picked));
-
-        node.children = [...topTen, ...bottomTen];
+        var finalList;
+        if (countriesInRegion.length <= 2 * numToShow) {
+          finalList = countriesInRegion;
+        } else {
+          const topTen = countriesInRegion
+            .sort((a, b) => b.signedVal - a.signedVal)
+            .slice(0, numToShow);
+          const bottomTen = countriesInRegion
+            .sort((a, b) => a.signedVal - b.signedVal)
+            .slice(0, numToShow);
+          finalList = [...topTen, ...bottomTen];
+        }
+        node.children = finalList;
         regions.push(node);
       }
     }
@@ -298,12 +316,6 @@ function _countries(FileAttachment){return(
 FileAttachment("countries_master.csv").csv()
 )}
 
-function _19(regionalGrouped,sel_vaccine,metrics,sel_metric,rightYear){return(
-regionalGrouped.get("REG_GLOBAL").get(sel_vaccine)[0][
-  `${metrics.get(sel_metric)}_${rightYear}`
-]
-)}
-
 function _regionalGrouped(d3,regionalData){return(
 d3.group(
   regionalData,
@@ -329,21 +341,12 @@ function _countryGrouped(d3,countryData)
 
 
 function _countryData(FileAttachment){return(
-FileAttachment("unicef_national_coverage_2015_2021_pivot.csv")
-  .csv()
-  .then((data) => {
-    data.map((row) => {
-      row.Coverage = +row.Coverage;
-      row.Vaccinated = +row.Vaccinated;
-      row.Target = +row.Target;
-      row.Unvaccinated = row.Target - row.Vaccinated;
-      row["Not Covered"] = 100 - row.Coverage;
-    });
-    return data;
-  })
+FileAttachment(
+  "unicef_national_coverage_2015_2021_pivot.csv"
+).csv()
 )}
 
-function _25(md){return(
+function _26(md){return(
 md`# Imports`
 )}
 
@@ -361,6 +364,7 @@ export default function define(runtime, observer) {
     ["unicef_regional_coverage_2015_2021_pivot@1.csv", {url: new URL("./files/e83a1668f06b1953cfdc23981ee1096c87127a324373210422bf5bd90d1ded50098dd455e04614710a16a9dd9fc9a043705314fdd33a85d37b1d888357577ca8.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
+  main.variable(observer()).define(["md"], _1);
   main.variable(observer("viewof sel_vaccine")).define("viewof sel_vaccine", ["select","vaccines"], _sel_vaccine);
   main.variable(observer("sel_vaccine")).define("sel_vaccine", ["Generators", "viewof sel_vaccine"], (G, _) => G.input(_));
   main.variable(observer("viewof leftYear")).define("viewof leftYear", ["select","availYears"], _leftYear);
@@ -369,12 +373,14 @@ export default function define(runtime, observer) {
   main.variable(observer("rightYear")).define("rightYear", ["Generators", "viewof rightYear"], (G, _) => G.input(_));
   main.variable(observer("viewof sel_metric")).define("viewof sel_metric", ["select","metrics"], _sel_metric);
   main.variable(observer("sel_metric")).define("sel_metric", ["Generators", "viewof sel_metric"], (G, _) => G.input(_));
-  main.variable(observer()).define(["md"], _5);
-  main.variable(observer("chart")).define("chart", ["d3","iWidth","iHeight","data"], _chart);
-  main.variable(observer("iWidth")).define("iWidth", ["width","margin"], _iWidth);
-  main.variable(observer("iHeight")).define("iHeight", ["iWidth","margin"], _iHeight);
+  main.variable(observer("chart")).define("chart", ["d3","cWidth","cHeight","data","iWidth","iHeight","margin"], _chart);
+  main.variable(observer("cWidth")).define("cWidth", ["iWidth","margin"], _cWidth);
+  main.variable(observer("cHeight")).define("cHeight", ["iHeight","margin"], _cHeight);
+  main.variable(observer("iWidth")).define("iWidth", ["width"], _iWidth);
+  main.variable(observer("iHeight")).define("iHeight", ["height"], _iHeight);
+  main.variable(observer("height")).define("height", ["width"], _height);
   main.variable(observer("margin")).define("margin", _margin);
-  main.variable(observer()).define(["md"], _10);
+  main.variable(observer()).define(["md"], _13);
   main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("percent_formatter")).define("percent_formatter", _percent_formatter);
   main.variable(observer("data")).define("data", ["metrics","sel_metric","rightYear","leftYear","regionalGrouped","sel_vaccine","countryGrouped"], _data);
@@ -383,12 +389,11 @@ export default function define(runtime, observer) {
   main.variable(observer("vaccines")).define("vaccines", ["regionalGrouped"], _vaccines);
   main.variable(observer("regions")).define("regions", ["FileAttachment"], _regions);
   main.variable(observer("countries")).define("countries", ["FileAttachment"], _countries);
-  main.variable(observer()).define(["regionalGrouped","sel_vaccine","metrics","sel_metric","rightYear"], _19);
   main.variable(observer("regionalGrouped")).define("regionalGrouped", ["d3","regionalData"], _regionalGrouped);
   main.variable(observer("regionalData")).define("regionalData", ["FileAttachment"], _regionalData);
   main.variable(observer("countryGrouped")).define("countryGrouped", ["d3","countryData"], _countryGrouped);
   main.variable(observer("countryData")).define("countryData", ["FileAttachment"], _countryData);
-  main.variable(observer()).define(["md"], _25);
+  main.variable(observer()).define(["md"], _26);
   const child1 = runtime.module(define1);
   main.import("slider", child1);
   main.import("select", child1);

@@ -23,16 +23,15 @@ function _yFieldD(select,metricDispNames){return(
 select({
   options: metricDispNames,
   title: "Metric to plot:  ",
-  value: "Not Vaccinated(#)"
   // description:
-  //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
-})
+  //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers.",
+  value: "Not Vaccinated(Millions)"})
 )}
 
 function _leftYear(select,availYears){return(
 select({
   options: availYears,
-  title: "Left side year:  ",
+  title: "Beginning year:  ",
   value: "2019"
   // description:
   //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
@@ -42,7 +41,7 @@ select({
 function _rightYear(select,availYears){return(
 select({
   options: availYears,
-  title: "Left side year:  ",
+  title: "Ending year:  ",
   value: "2021"
   // description:
   //   "Select vaccinated vs unvaccinated metrics. You can also look at % values or the actual numbers."
@@ -71,7 +70,7 @@ Plot.plot({
     range: ["red", "orange", "brown", "steelblue"]
   },
   style: {
-    backgroundColor: "#eee",
+    backgroundColor: "#f3f3f3",
     fontSize: 14
   },
   marks: [
@@ -211,8 +210,8 @@ function _metricNamesMap()
   const map = new Map();
   map["Vaccinated(%)"] = "Coverage";
   map["Not Vaccinated(%)"] = "Not Covered";
-  map["Vaccinated(#)"] = "Vaccinated";
-  map["Not Vaccinated(#)"] = "Unvaccinated";
+  map["Vaccinated(Millions)"] = "Vaccinated";
+  map["Not Vaccinated(Millions)"] = "Unvaccinated";
   return map;
 }
 
@@ -232,8 +231,8 @@ function _metricDispNames(){return(
 [
   "Vaccinated(%)",
   "Not Vaccinated(%)",
-  "Vaccinated(#)",
-  "Not Vaccinated(#)"
+  "Vaccinated(Millions)",
+  "Not Vaccinated(Millions)"
 ]
 )}
 

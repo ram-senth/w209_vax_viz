@@ -188,7 +188,7 @@ div#vis.vega-embed.has-actions {
 }
 
 .nav-item.active a {
-  color: lightsalmon !important;
+  color: goldenrod !important;
   font-weight: bold !important;
 
 }
