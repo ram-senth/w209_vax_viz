@@ -112,8 +112,8 @@
 
           p.secondary {
             padding: 1rem;
-            font-size: 1.5rem;
-            font-weight: 10;
+            font-size: 1.8rem;
+            font-weight: 14;
             width:80%;
             color: #000;
             flexBasis: "90%";
@@ -220,22 +220,17 @@
     </header>
 
     <main>
-        <!-- <div class="container py-4">
-            <div class="p-5 mb-5 rounded-3">
-                <div class="container-fluid py-5">
-                    <p>
-                      <h1 class="display-5 fw-bold">Impact of Covid on Vaccination</h1>
-                    </p>
-                </div>
+        <div class="container py-4">
+            <!-- Jumobotron -->
+          <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">Impact of Covid on Vaccination</h1>
             </div>
-        </div> -->
+          </div>
+        </div>
         <!-- Scrolly -->
         <section id="scrolly">
             <article>
-              <div class="step" data-step="0">
-                <!-- Title  -->
-                <p class="d-flex align-items-center"></p>
-              </div>
               <div class="step" data-step="1.1">
                 <!-- Main Intro -->
                 <p class="d-flex align-items-center"></p>
@@ -372,10 +367,7 @@
 
         // update graphic based on step
 
-        if(el.dataset.step=='0') {
-          mainContentDiv.innerHTML = generateTextDiv([["Impact of Covid on Vaccination", true]]);
-        }
-        else if(el.dataset.step=='1.1') {
+        if(el.dataset.step=='1.1') {
           createStep11();
         }
         else if (el.dataset.step=='1.2'){
@@ -454,7 +446,7 @@
       function createStep11() {
         //narrative
         const lines = [
-          ["Per WHO, about 6 million excess children missed out on vaccination between 2019 and 2020 due to Covid.", true]
+          ["As with many other aspects of our life, Covid pandemic had a big impact on vaccination rates as well. Per WHO and UNICEF, about <text style=\"color:red\">6 million</text> additional children missed out on vaccination due to Covid.", true]
         ];
 
         mainContentDiv.innerHTML = generateTextDiv(lines);
@@ -463,14 +455,14 @@
       function createStep12() {
         //narrative
         const lines = [
-          ["Let us take a closer look at Covid's impact across the six WHO regions in this section.", true]
+          ["In this section we are going to take a closer look at vaccination rates across the six WHO regions during the pandemic years of <text style=\"color:red\">2019</text> and <text style=\"color:red\">2020</text>.", true]
         ];
 
         mainContentDiv.innerHTML = generateTextDiv(lines);
       }
       function createStep2() {
         const lines = [
-          ["Our first plot shows number of children who did not get their third dose of vaccine against Diphtheria, Tetanus and Pertussis (DTP3) over the past 7 years.", true],
+          ["Our first plot shows number of children who did not get their third dose of vaccine against <font color=\"red\">Diphtheria, Tetanus and Pertussis (DTP3)</font> over the past 7 years.", true],
           ["DTP3 vaccine coverage is considered to be the best measure for assessing effectiveness child immunization programs. Other vaccines and metrics are available for exploration.", false]
         ];
 
@@ -597,7 +589,7 @@
 
       function createStep8() {
         const lines = [
-          ["Within SE Asia, India's had a much lower 6% drop compared to North Korea at 56%, Myanmar at 53% and Indonesia at 18%). However, that 6% translated to the 1.3 million children due to India's population.", true],
+          ["Within SE Asia, India's had a much lower 6% drop compared to North Korea at 56%, Myanmar at 53% and Indonesia at 18%). However, that 6% translated to the <text style=\"color:red\">1.3 million children</text> due to India's population.", true],
           ["Next is another view of the same regional and national level details.", false]
         ];
 
