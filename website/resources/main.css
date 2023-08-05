@@ -11,6 +11,15 @@ footer {
   padding: 1rem
 }
 
+.lead {
+  font-size: 1.5rem !important;
+}
+
+.highlight {
+  font-size: 1.8rem !important;
+  color:brown;
+}
+
 /* CUSTOMIZE THE CAROUSEL
   -------------------------------------------------- */
 
@@ -240,28 +249,6 @@ article {
   position: relative;
   padding: 0 1rem;
   max-width: 30rem;
-}
-
-.sticky-thing {
-  /* position: -webkit-sticky;
-  position: sticky;
-  width: 30%;
-  margin: 0;
-  background-color: #ffffff;
-  z-index: 0;
-  top: 12.5vh;
-  height: 75vh; */
-  /* Center everything inside */
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-}
-
-.sticky-thing p {
-  /* padding: 1rem;
-  font-size: 8rem;
-  font-weight: 900;
-  color: #fff; */
 }
 
 .step {

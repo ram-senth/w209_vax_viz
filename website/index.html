@@ -112,7 +112,6 @@
           <li class="nav-item px-4"><a class="nav-link" href="./vaccination.html"><h3>Vaccination Coverage</h3></a></li>
           <li class="nav-item px-4"><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
           <li class="nav-item px-4"><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
-          <li class="nav-item px-4"><a class="nav-link" href="./about.html"><h3>More Info</h3></a></li>
         </ul>
         </div>
       </div>
@@ -183,33 +182,22 @@
             Immunization is saving millions of lives every year across the
             world. Vaccines play a key role in increasing immunity and reducing
             infection risks by working with the human body’s natural defenses.
-            According to WHO, we now have vaccines to prevent more than 20
-            life-threatening diseases, helping people of all ages live longer
-            and healthier lives. It is estimated that vaccination prevents about
-            3.5 to 5 million deaths every year. Further, as evidenced by the
-            recent Covid pandemic, vaccines play a very critical role in
-            prevention and control of infectious disease outbreaks, thereby
-            improving global health security. Overall, they have become an
-            indispensable tool in improving the wellness of humankind. Though we
-            have come a long way, there is still work to be done. Vaccination is
+            According to WHO, we now have vaccines to prevent more than <font class="highlight">20
+            life-threatening diseases</font>, helping people of all ages live longer
+            and healthier lives. It is estimated that vaccination <font class="highlight">prevents about
+            3.5 to 5 million deaths</font> every year.
+            </p>
+            <p class="lead text-center">
+               Recent COVID pandemic also highlighted the critical role that vaccines play in
+            prevention and control of infectious disease outbreaks. Vaccines have become an
+            indispensable tool for improving the wellness of humankind. Despite the progress, there is still work to be done. Vaccination is
             still a privilege and not a basic right for a vast majority of the
-            human population. According to UNICEF 2021 immunization coverage
-            estimates, developing countries with large populations of children
-            contribute significantly to the number of unvaccinated children
-            despite achieving relatively high rates of immunization coverage.
-            For example, India has achieved 85 per cent coverage of DTP3. Still,
-            about 3.3 million children were un or under-vaccinated in 2021
-            because of its large cohort of 23 million surviving infants. Efforts
-            to raise global immunization levels will require a strong focus on
-            the countries where the highest numbers of unvaccinated children
-            live – while also ensuring that smaller countries with a subset of
-            hard-to-reach children are not neglected.
+            population.
           </p>
           <p class="lead text-center">
-            The goal of our project is to explore the global vaccination trends
-            and understand the hindrances in achieving higher vaccination rates.
-            We also want to identify interesting insights that can help
-            governments and NGOs in improving the effectiveness of vaccination
+            We aim to explore the global trends in children vaccination,
+            understand the challenges in achieving higher vaccination rates and identify insights that can help
+            governments and NGOs in improving the effectiveness of future vaccination
             drives.
           </p>
         </div>
@@ -257,10 +245,27 @@
     <hr class="featurette-divider">
 
     <!-- /END THE FEATURETTES -->
+    <h2 class="featurette-heading fw-normal lh-1 text-center">Vaccines<span class="text-body-secondary"> Covered</span></h2>
+    <p class="lead text-center">
+      We are limiting the scope of this project to <font class="highlight">children vaccines</font> as there is more uniformity and focus on them across the world. We also have better data on Children vaccine compared to adult vaccines. More specifically, we will be looking the following children vaccines.
+      <div id="vaxListDiv"></div>
+      <script type="module">
+        import define from "./resources/about_01/index.js";
+        import {Runtime, Inspector} from "./resources/about_01/runtime.js";
+        new Runtime().module(define, name => {
+          if (name === "vaxTable") return new Inspector(document.querySelector("#vaxListDiv"));
+        });
+      </script>
+    </p>
+    <hr class="featurette-divider">
+    <h2 class="featurette-heading fw-normal lh-1 text-center">Data <span class="text-body-secondary">Sources</span></h2>
+    <p class="lead text-center">
+      <a href="https://data.unicef.org/resources/data_explorer/unicef_f/?ag=UNICEF&df=GLOBAL_DATAFLOW&ver=1.0&dq=AFG+ALB+DZA+ASM+AND+AGO+AIA+ATG+ARG+ARM+ABW+AUS+AUT+AZE+BHS+BHR+BGD+BRB+BLR+BEL+BLZ+BEN+BMU+BTN+BOL+BES+BIH+BWA+BRA+VGB+BRN+BGR+BFA+BDI+CPV+KHM+CMR+CAN+CYM+CAF+TCD+CHI+CHL+HKG+CHN+COL+COM+COG+COK+CRI+CIV+HRV+CUB+CUW+CYP+CZE+PRK+COD+DNK+DJI+DMA+DOM+ECU+EGY+SLV+GNQ+ERI+EST+SWZ+ETH+FLK+FRO+FJI+FIN+FRA+GUF+PYF+GAB+GMB+GEO+DEU+GHA+GIB+GRC+GRL+GRD+GLP+GUM+GTM+GNB+GIN+GUY+HTI+VAT+HND+HUN+ISL+IND+IDN+IRN+IRQ+IRL+IMN+ISR+ITA+JAM+JPN+JOR+KAZ+KEN+KIR+XKX+KWT+KGZ+LAO+LVA+LBN+LSO+LBR+LBY+LIE+LTU+LUX+MAC+MDG+MWI+MYS+MDV+MLI+MLT+MHL+MTQ+MRT+MUS+MYT+MEX+FSM+MCO+MNG+MNE+MSR+MAR+MOZ+MMR+NAM+NRU+NPL+NLD+NCL+NZL+NIC+NER+NGA+MKD+NIU+MNP+NOR+OMN+TWN+PAK+PLW+PAN+PNG+PRY+PER+PHL+POL+PRT+PRI+QAT+KOR+MDA+REU+ROU+RUS+RWA+BLM+SHN+KNA+LCA+SXM+MAF+SPM+VCT+WSM+SMR+STP+SAU+SEN+SRB+SYC+SLE+SGP+SVK+SVN+SLB+SOM+ZAF+SSD+ESP+LKA+PSE+SDN+SUR+SWE+CHE+SYR+TJK+THA+TLS+TGO+TKL+TON+TTO+TUN+TUR+TKM+TCA+TUV+UGA+UKR+ARE+GBR+TZA+USA+URY+UZB+VUT+VEN+VNM+VIR+WLF+YEM+ZMB+ZWE+WHO_REG_GLOBAL+WHO_AFRO+WHO_AMRO+WHO_EMRO+WHO_EURO+WHO_SEARO+WHO_WPRO.IMMUNISATION+IM_DTP1..&startPeriod=1980&endPeriod=2020">UNICEF Data Warehouse</a>
+    </p>
 
     <!-- AUTHORS -->
     <div class="container text-center">
-      <h2 class="featurette-heading fw-normal mb-5 ">Site <span class="text-body-secondary">Authors.</span></h2>
+      <h2 class="featurette-heading fw-normal mb-5 ">Site <span class="text-body-secondary">Authors</span></h2>
       <div class="row pt-5 pb-5">
         <div class="col-lg">
           <img src="./resources/ram.jpeg" alt="" class="profile-pics rounded-circle featurette-image img-fluid mx-auto">

@@ -3,7 +3,7 @@ md`# VaxViz-General-01`
 )}
 
 function _vaxTable(html,sparkline,globalVaxData){return(
-html`<div style="margin: auto;"><table width="80%" style="border-collapse: collapse; border: 2px solid black;"><thead><tr><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Vaccine</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Description</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Disease</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Global Coverage<br/>2015 to 2021</th></tr></thead><tbody><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG refers to one dose of Bacillus Calmette Guerin vaccine, given within 24 hours of birth</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Tuberculosis</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
+html`<table class="vaxlist" style="width: 98%; max-width: 1200px; border-collapse: collapse; border: 2px solid black;"><thead><tr><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Vaccine</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Description</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Disease</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Global Coverage<br/>2015 to 2021</th></tr></thead><tbody><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG refers to one dose of Bacillus Calmette Guerin vaccine, given within 24 hours of birth</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Tuberculosis</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "BCG")
 )}</td></tr><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">DTP1</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">DTP1 refers to the first dose of diphtheria and tetanus toxoid with pertussis containing vaccine</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Diphtheria, Tetanus and Pertussis (aka whooping cough)</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "DTP1")
@@ -31,7 +31,8 @@ html`<div style="margin: auto;"><table width="80%" style="border-collapse: colla
   globalVaxData.filter((d) => d.Vaccine === "Rotac")
 )}</td></tr><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">YFV</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">YFV refers to one dose of yellow fever vaccine in countries where YFV is part of the national immunization schedule for children or is recommended in at risk areas</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Yellow fever</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "YFV")
-)}</td></tr></tbody></table></div>`
+)}</td></tr></tbody></table>
+`
 )}
 
 function _vaxTableHtml(availYears,d3,sparklineData,sparkline)
@@ -44,16 +45,12 @@ function _vaxTableHtml(availYears,d3,sparklineData,sparkline)
       availYears[availYears.length - 1]
     }`
   ];
-  const body = d3.select("body").append("p");
-  const div = body
-    // .attr("width", 500)
-    // .attr("height", 500)
-    // .append("xhtml:table")
-    .append("div")
-    .style("margin", "auto");
-  const table = div
+  const para = d3.select("body").append("p");
+  const table = para
     .append("table")
-    .attr("width", "80%")
+    .attr("class", "vaxlist")
+    .style("width", "98%")
+    .style("max-width", "1200px")
     .style("border-collapse", "collapse")
     .style("border", "2px black solid");
   // headers
@@ -104,7 +101,7 @@ function _vaxTableHtml(availYears,d3,sparklineData,sparkline)
       }
     })
     .style("font-size", "12px");
-  return body.html();
+  return para.html();
 }
 
 
