@@ -213,6 +213,7 @@
             <li class="nav-item px-4"><a class="nav-link" href="./vaccination.html"><h3>Vaccination Coverage</h3></a></li>
             <li class="nav-item px-4"><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
             <li class="nav-item active px-4"><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="./about.html"><h3>More Info</h3></a></li>
           </ul>
           </div>
         </div>
@@ -320,8 +321,10 @@
               </div>
               <div class="col-md-6">
                   <div class="h-100 p-5 text-bg-dark border rounded-3">
-                    &nbsp;
-                  </div>
+                    <h2>More Info</h2>
+                    <p>About us, Glossary and more.</p>
+                    <a href="./about.html"><button class="btn btn-outline-secondary" type="button">View</button></a>
+                </div>
               </div>
             </div>
         </div>
@@ -508,7 +511,7 @@
 
       function createStep4() {
         const lines = [
-          ["The number of unvaccinated children was trending down each year until 2019. This trend reversed and went up during 2019 and 2020 across all regions.", true],
+          ["The number of unvaccinated children was <text style=\"color:darkgreen\">trending down each year until 2019</text>. This trend <text style=\"color:red\">reversed across all regions</text> during 2019 and 2020.", true],
           ["The next chart makes this increase more obvious.", false]
         ];
         mainContentDiv.innerHTML = generateTextDiv(lines);
@@ -547,7 +550,7 @@
 
       function createStep6() {
         const lines = [
-          ["South East Asia had the biggest increase in number of unvaccinated children both in terms of percentage as well as just raw numbers.", true],
+          ["South East Asia had the <text style=\"color:red\">biggest increase</text> in number of unvaccinated children both in terms of percentage as well as just raw numbers.", true],
           ["The next plot lets us go a little deeper and look countries that saw biggest drop as well biggest increase within each region.", false]
         ];
 

@@ -11,11 +11,11 @@ md`## Chart`
 
 function _sel_vaccine(select,vaccines){return(
 select({
-  options: vaccines,
+  options: [...vaccines.keys()],
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP3 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP3"
+  value: "Overall"
 })
 )}
 
@@ -216,16 +216,23 @@ function _metricNamesMap()
 }
 
 
-function _chart_data(regional_vax_number,sel_vaccine,leftYear,rightYear){return(
+function _chart_data(regional_vax_number,vaccines,sel_vaccine,leftYear,rightYear){return(
 regional_vax_number.filter(
   (v) =>
-    v.Vaccine == sel_vaccine && (v.Year === leftYear || v.Year === rightYear)
+    v.Vaccine == vaccines.get(sel_vaccine) &&
+    (v.Year === leftYear || v.Year === rightYear)
 )
 )}
 
-function _vaccines(regional_vax_number){return(
-Array.from(new Set(regional_vax_number.map((v) => v.Vaccine)))
-)}
+function _vaccines(regional_vax_number)
+{
+  const list = Array.from(
+    new Set(regional_vax_number.map((v) => v.Vaccine))
+  ).map((v) => [v, v]);
+  list.push(["Overall", "DTP3"]);
+  return new Map(list);
+}
+
 
 function _metricDispNames(){return(
 [
@@ -292,7 +299,7 @@ export default function define(runtime, observer) {
   main.variable(observer("height")).define("height", ["width"], _height);
   main.variable(observer()).define(["md"], _16);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
-  main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","sel_vaccine","leftYear","rightYear"], _chart_data);
+  main.variable(observer("chart_data")).define("chart_data", ["regional_vax_number","vaccines","sel_vaccine","leftYear","rightYear"], _chart_data);
   main.variable(observer("vaccines")).define("vaccines", ["regional_vax_number"], _vaccines);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
   main.variable(observer("availYears")).define("availYears", ["regional_vax_number"], _availYears);

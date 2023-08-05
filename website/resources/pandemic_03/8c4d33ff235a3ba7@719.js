@@ -9,11 +9,11 @@ Click to zoom in or out. Global -> WHO region -> Country`
 
 function _sel_vaccine(select,vaccines){return(
 select({
-  options: vaccines,
+  options: Array.from(vaccines.keys()),
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP3 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP3"
+  value: "Overall"
 })
 )}
 
@@ -218,7 +218,7 @@ function _percent_formatter(){return(
   }).format(number)}%`
 )}
 
-function _data(metrics,sel_metric,rightYear,leftYear,regionalGrouped,sel_vaccine,countryGrouped)
+function _data(metrics,sel_metric,rightYear,leftYear,regionalGrouped,vaccines,sel_vaccine,countryGrouped)
 {
   const numToShow = 5;
   const [metricPrefix, formatter] = metrics.get(sel_metric);
@@ -245,42 +245,44 @@ function _data(metrics,sel_metric,rightYear,leftYear,regionalGrouped,sel_vaccine
   var root;
   const regions = [];
   for (let [regionCode, regionData] of regionalGrouped) {
-    const data = regionData.get(sel_vaccine)[0];
-    const node = toNode(
-      data,
-      (d) => d.region_code,
-      (d) => d.region_name
-    );
-    if (node != null) {
-      if (regionCode === "REG_GLOBAL") {
-        root = node;
-      } else {
-        // Build countries
-        const countriesInRegion = countryGrouped
-          .get(regionCode)
-          .get(sel_vaccine)
-          .flatMap((country) => {
-            const n = toNode(
-              country,
-              (d) => d.alpha_3_code,
-              (d) => d.Name
-            );
-            return n == null ? [] : [n];
-          });
-        var finalList;
-        if (countriesInRegion.length <= 2 * numToShow) {
-          finalList = countriesInRegion;
+    if (regionData.has(vaccines.get(sel_vaccine))) {
+      const data = regionData.get(vaccines.get(sel_vaccine))[0];
+      const node = toNode(
+        data,
+        (d) => d.region_code,
+        (d) => d.region_name
+      );
+      if (node != null) {
+        if (regionCode === "REG_GLOBAL") {
+          root = node;
         } else {
-          const topTen = countriesInRegion
-            .sort((a, b) => b.signedVal - a.signedVal)
-            .slice(0, numToShow);
-          const bottomTen = countriesInRegion
-            .sort((a, b) => a.signedVal - b.signedVal)
-            .slice(0, numToShow);
-          finalList = [...topTen, ...bottomTen];
+          // Build countries
+          const countriesInRegion = countryGrouped
+            .get(regionCode)
+            .get(vaccines.get(sel_vaccine))
+            .flatMap((country) => {
+              const n = toNode(
+                country,
+                (d) => d.alpha_3_code,
+                (d) => d.Name
+              );
+              return n == null ? [] : [n];
+            });
+          var finalList;
+          if (countriesInRegion.length <= 2 * numToShow) {
+            finalList = countriesInRegion;
+          } else {
+            const topTen = countriesInRegion
+              .sort((a, b) => b.signedVal - a.signedVal)
+              .slice(0, numToShow);
+            const bottomTen = countriesInRegion
+              .sort((a, b) => a.signedVal - b.signedVal)
+              .slice(0, numToShow);
+            finalList = [...topTen, ...bottomTen];
+          }
+          node.children = finalList;
+          regions.push(node);
         }
-        node.children = finalList;
-        regions.push(node);
       }
     }
   }
@@ -304,9 +306,13 @@ function _availYears(){return(
 ["2015", "2016", "2017", "2018", "2019", "2020", "2021"]
 )}
 
-function _vaccines(regionalGrouped){return(
-[...regionalGrouped.get("REG_GLOBAL").keys()]
-)}
+function _vaccines(regionalGrouped)
+{
+  const list = [...regionalGrouped.get("REG_GLOBAL").keys()].map((v) => [v, v]);
+  list.push(["Overall", "DTP3"]);
+  return new Map(list);
+}
+
 
 function _regions(FileAttachment){return(
 FileAttachment("regions_master.csv").csv()
@@ -383,7 +389,7 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["md"], _13);
   main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("percent_formatter")).define("percent_formatter", _percent_formatter);
-  main.variable(observer("data")).define("data", ["metrics","sel_metric","rightYear","leftYear","regionalGrouped","sel_vaccine","countryGrouped"], _data);
+  main.variable(observer("data")).define("data", ["metrics","sel_metric","rightYear","leftYear","regionalGrouped","vaccines","sel_vaccine","countryGrouped"], _data);
   main.variable(observer("metrics")).define("metrics", ["percent_formatter","number_formatter"], _metrics);
   main.variable(observer("availYears")).define("availYears", _availYears);
   main.variable(observer("vaccines")).define("vaccines", ["regionalGrouped"], _vaccines);

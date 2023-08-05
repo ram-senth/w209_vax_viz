@@ -16,11 +16,11 @@ md`## Second Option`
 
 function _sel_vaccine(select,countryVaxData){return(
 select({
-  options: countryVaxData.vaccines,
+  options: Array.from(countryVaxData.vaccines.keys()),
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP3"
+  value: "Overall"
 })
 )}
 
@@ -347,7 +347,7 @@ function _hideTooltip(callout){return(
 }
 )}
 
-function _tooltipText(valueFor,percent_formatter,number_formatter,regionalVaxNumbers,sel_vaccine){return(
+function _tooltipText(valueFor,percent_formatter,number_formatter,regionalVaxNumbers,countryVaxData,sel_vaccine){return(
 (data, isZoomed) => {
   if (isZoomed) {
     var covChange = valueFor(data, "Coverage");
@@ -367,14 +367,15 @@ function _tooltipText(valueFor,percent_formatter,number_formatter,regionalVaxNum
       return ``;
     }
     // const regionName = regions.get(data.properties.region_code).name;
+    const vaxId = countryVaxData.vaccines.get(sel_vaccine);
     const data2019 = regionalVaxNumbers
       .get(data.properties.region_code)
       .get("2019")
-      .get(sel_vaccine)[0];
+      .get(vaxId)[0];
     const data2021 = regionalVaxNumbers
       .get(data.properties.region_code)
       .get("2021")
-      .get(sel_vaccine)[0];
+      .get(vaxId)[0];
     return `${data2019.region_name}\nCount change: ${number_formatter(
       data2021.Vaccinated - data2019.Vaccinated
     )}\nCoverage change: ${percent_formatter(
@@ -608,11 +609,9 @@ function _geoWorld(world_50m,countryVaxData,sel_vaccine)
         if (!geo.properties) {
           geo.properties = {};
         }
-
-        if (countryVaxData.countryData.get(geo.id).has(sel_vaccine)) {
-          const vaxData = countryVaxData.countryData
-            .get(geo.id)
-            .get(sel_vaccine)[0];
+        const vaxId = countryVaxData.vaccines.get(sel_vaccine);
+        if (countryVaxData.countryData.get(geo.id).has(vaxId)) {
+          const vaxData = countryVaxData.countryData.get(geo.id).get(vaxId)[0];
           geo.properties.region_code = vaxData.region_code;
           geo.properties.Coverage_2021 = vaxData.Coverage_2021;
           geo.properties.Coverage_2020 = vaxData.Coverage_2020;
@@ -685,13 +684,16 @@ FileAttachment(
 )
   .csv()
   .then((data) => {
-    const vaccines = Array.from(new Set(data.map((d) => d.Vaccine)));
+    const vaccines = Array.from(
+      new Set(data.map((d) => [d.Vaccine, d.Vaccine]))
+    );
+    vaccines.push(["Overall", "DTP3"]);
     const grouped = d3.group(
       data,
       (d) => d.numeric_code.padStart(3, "0"),
       (d) => d.Vaccine
     );
-    return { vaccines: vaccines, countryData: grouped };
+    return { vaccines: new Map(vaccines), countryData: grouped };
   })
 )}
 
@@ -725,7 +727,25 @@ FileAttachment("unicef_regional_coverage_2015_2021@1.csv")
   })
 )}
 
-function _45(md){return(
+function _globalVaxData(FileAttachment){return(
+FileAttachment("unicef_regional_coverage_2015_2021@1.csv")
+  .csv()
+  .then((data) => {
+    return data
+      .filter((d) => d.region_code === "REG_GLOBAL")
+      .map((row) => {
+        // row.Year = fmt(row.Year);
+        row.Coverage = +row.Coverage;
+        row.Vaccinated = +row.Vaccinated;
+        row.Unvaccinated = +row.Unvaccinated;
+        row.Target = +row.Target;
+        row["Not Covered"] = +row["Not Covered"];
+        return row;
+      });
+  })
+)}
+
+function _46(md){return(
 md`# Imports`
 )}
 
@@ -776,7 +796,7 @@ export default function define(runtime, observer) {
   main.variable(observer("countField")).define("countField", ["useActualNumbers","valueFor"], _countField);
   main.variable(observer("showTooltip")).define("showTooltip", ["callout","tooltipText"], _showTooltip);
   main.variable(observer("hideTooltip")).define("hideTooltip", ["callout"], _hideTooltip);
-  main.variable(observer("tooltipText")).define("tooltipText", ["valueFor","percent_formatter","number_formatter","regionalVaxNumbers","sel_vaccine"], _tooltipText);
+  main.variable(observer("tooltipText")).define("tooltipText", ["valueFor","percent_formatter","number_formatter","regionalVaxNumbers","countryVaxData","sel_vaccine"], _tooltipText);
   main.variable(observer("percent_formatter")).define("percent_formatter", _percent_formatter);
   main.variable(observer("number_formatter")).define("number_formatter", _number_formatter);
   main.variable(observer("callout")).define("callout", _callout);
@@ -803,7 +823,8 @@ export default function define(runtime, observer) {
   main.variable(observer("countryVaxData")).define("countryVaxData", ["FileAttachment","d3"], _countryVaxData);
   main.variable(observer("regionalVaxNumbers")).define("regionalVaxNumbers", ["FileAttachment","d3"], _regionalVaxNumbers);
   main.variable(observer("availYears")).define("availYears", ["FileAttachment"], _availYears);
-  main.variable(observer()).define(["md"], _45);
+  main.variable(observer("globalVaxData")).define("globalVaxData", ["FileAttachment"], _globalVaxData);
+  main.variable(observer()).define(["md"], _46);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   const child1 = runtime.module(define1).derive(["projection"], main);
   main.import("d3", "d3Map", child1);

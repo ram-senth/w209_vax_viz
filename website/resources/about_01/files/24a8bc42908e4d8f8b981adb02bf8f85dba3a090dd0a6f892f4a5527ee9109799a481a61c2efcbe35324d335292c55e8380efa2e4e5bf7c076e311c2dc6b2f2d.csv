@@ -1,0 +1,15 @@
+vaccine_code,description,disease
+bcg,"BCG refers to one dose of Bacillus Calmette Guerin vaccine, given within 24 hours of birth","Tuberculosis"
+dtp1,"DTP1 refers to the first dose of diphtheria and tetanus toxoid with pertussis containing vaccine","Diphtheria, Tetanus and Pertussis (aka whooping cough)"
+dtp3,"DTP3 refers to the third dose of diphtheria and tetanus toxoid with pertussis containing vaccine. DTP3 is often used to assess how well countries are doing in providing routine immunization services to children","Diphtheria, Tetanus and Pertussis (aka whooping cough)"
+pol3,"Pol3 refers to the third dose of polio containing vaccine. May be either oral (OPV) or inactivated polio vaccine (IPV)",Polio
+ipv1,"IPV1 refers to at least one dose of inactivated polio vaccine",Polio
+mcv1,"MCV1 refers to the first dose of measles containing vaccine typically given 12 months or later",Measles
+mcv2,"MCV2 refers to the second dose of measles containing vaccine according to the nationally recommended schedule",Measles
+rcv1,"RCV1 refers to the first dose of rubella containing vaccine",Rubella
+hepbb,"HepBB refers to one dose of Hepatitis B vaccine within 24 hours of delivery",Hepatitis B
+hepb3,"HepB3 refers to the third dose of hepatitis B containing vaccine following the birth dose",Hepatitis B
+hib3,"Hib3 refers to the third dose of Haemophilus influenzae type b containing vaccine","Haemophilus influenzae, type b"
+rotac,"RotaC refers to the final recommended dose of rotavirus vaccine, which can be either the 2nd or the 3rd dose depending on the vaccine",Rotavirus
+pcv3,"PcV3 refers to the third dose of pneumococcal conjugate vaccine",Pneumococcal Diseases
+yfv,"YFV refers to one dose of yellow fever vaccine in countries where YFV is part of the national immunization schedule for children or is recommended in at risk areas","Yellow fever"

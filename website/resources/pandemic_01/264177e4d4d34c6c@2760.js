@@ -15,9 +15,9 @@ function _enableAutoHighlights(){return(
 false
 )}
 
-function _replay_button(highlightsByVaccine,sel_vaccine,Button,showHighlights)
+function _replay_button(highlightsByVaccine,vaccines,sel_vaccine,Button,showHighlights)
 {
-  const hasNarrative = highlightsByVaccine.has(sel_vaccine);
+  const hasNarrative = highlightsByVaccine.has(vaccines.get(sel_vaccine));
   return Button(hasNarrative ? "Show Highlights" : "No Highlights To Show", {
     disabled: !hasNarrative,
     value: null,
@@ -31,11 +31,11 @@ function _replay_button(highlightsByVaccine,sel_vaccine,Button,showHighlights)
 
 function _sel_vaccine(select,vaccines){return(
 select({
-  options: vaccines,
+  options: [...vaccines.keys()],
   title: "Vaccine:  ",
   // description:
   //   "Select the vaccine to focus on. DTP1 is considered the standard to measure overall vaccine coverage.",
-  value: "DTP3"
+  value: "Overall"
 })
 )}
 
@@ -53,9 +53,9 @@ function _layout(plotty){return(
 plotty()
 )}
 
-function _vaxInfo(vaccinesMaster,sel_vaccine)
+function _vaxInfo(vaccinesMaster,vaccines,sel_vaccine)
 {
-  const vaxInfo = vaccinesMaster.get(sel_vaccine.toLowerCase());
+  const vaxInfo = vaccinesMaster.get(vaccines.get(sel_vaccine).toLowerCase());
   return `${vaxInfo.description}. It provides protection against ${vaxInfo.disease}.`;
 }
 
@@ -278,15 +278,16 @@ function _autoHighlight(enableAutoHighlights,d3,layout,showHighlights)
 }
 
 
-function _showHighlights(highlightsByVaccine,sel_vaccine,d3,layout,showOneHighlight){return(
+function _showHighlights(vaccines,sel_vaccine,highlightsByVaccine,d3,layout,showOneHighlight){return(
 () => {
-  if (highlightsByVaccine.has(sel_vaccine)) {
+  const vaxid = vaccines.get(sel_vaccine);
+  if (highlightsByVaccine.has(vaxid)) {
     const gDrawing = d3.select(layout).select(".gDrawing");
     const tooltip = d3.select(".ttip");
     showOneHighlight(
       gDrawing,
       tooltip,
-      highlightsByVaccine.get(sel_vaccine)[0],
+      highlightsByVaccine.get(vaxid)[0],
       true,
       false
     );
@@ -670,13 +671,21 @@ function _seriesData(d3,chartData){return(
 d3.groups(chartData, (d) => d.region_code)
 )}
 
-function _chartData(regionalVaxNumbers,sel_vaccine){return(
-regionalVaxNumbers.filter((v) => v.Vaccine == sel_vaccine)
+function _chartData(regionalVaxNumbers,vaccines,sel_vaccine){return(
+regionalVaxNumbers.filter(
+  (v) => v.Vaccine == vaccines.get(sel_vaccine)
+)
 )}
 
-function _vaccines(regionalVaxNumbers){return(
-Array.from(new Set(regionalVaxNumbers.map((v) => v.Vaccine)))
-)}
+function _vaccines(regionalVaxNumbers)
+{
+  const list = Array.from(
+    new Set(regionalVaxNumbers.map((v) => v.Vaccine))
+  ).map((v) => [v, v]);
+  list.push(["Overall", "DTP3"]);
+  return new Map(list);
+}
+
 
 function _metricNamesMap()
 {
@@ -799,19 +808,19 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["md"], _1);
   main.variable(observer()).define(["md"], _2);
   main.variable(observer("enableAutoHighlights")).define("enableAutoHighlights", _enableAutoHighlights);
-  main.variable(observer("viewof replay_button")).define("viewof replay_button", ["highlightsByVaccine","sel_vaccine","Button","showHighlights"], _replay_button);
+  main.variable(observer("viewof replay_button")).define("viewof replay_button", ["highlightsByVaccine","vaccines","sel_vaccine","Button","showHighlights"], _replay_button);
   main.variable(observer("replay_button")).define("replay_button", ["Generators", "viewof replay_button"], (G, _) => G.input(_));
   main.variable(observer("viewof sel_vaccine")).define("viewof sel_vaccine", ["select","vaccines"], _sel_vaccine);
   main.variable(observer("sel_vaccine")).define("sel_vaccine", ["Generators", "viewof sel_vaccine"], (G, _) => G.input(_));
   main.variable(observer("viewof yFieldD")).define("viewof yFieldD", ["select","metricDispNames"], _yFieldD);
   main.variable(observer("yFieldD")).define("yFieldD", ["Generators", "viewof yFieldD"], (G, _) => G.input(_));
   main.variable(observer("layout")).define("layout", ["plotty"], _layout);
-  main.variable(observer("vaxInfo")).define("vaxInfo", ["vaccinesMaster","sel_vaccine"], _vaxInfo);
+  main.variable(observer("vaxInfo")).define("vaxInfo", ["vaccinesMaster","vaccines","sel_vaccine"], _vaxInfo);
   main.variable(observer("plotty")).define("plotty", ["html","d3","width","height","margin","x","iheight","iwidth","y","formatters","yField","yFieldD","sel_vaccine","seriesData","color","highlights","toHighlightKey","pulsate","showTooltip","hideTooltip","focusOnSeries","defocusSeries","Legend","regions"], _plotty);
   main.variable(observer("showGuide")).define("showGuide", ["callout"], _showGuide);
   main.variable(observer("pulsate")).define("pulsate", ["d3"], _pulsate);
   main.variable(observer("autoHighlight")).define("autoHighlight", ["enableAutoHighlights","d3","layout","showHighlights"], _autoHighlight);
-  main.variable(observer("showHighlights")).define("showHighlights", ["highlightsByVaccine","sel_vaccine","d3","layout","showOneHighlight"], _showHighlights);
+  main.variable(observer("showHighlights")).define("showHighlights", ["vaccines","sel_vaccine","highlightsByVaccine","d3","layout","showOneHighlight"], _showHighlights);
   main.variable(observer("showOneHighlight")).define("showOneHighlight", ["hideTooltip","showTooltip","x","y","yField"], _showOneHighlight);
   main.variable(observer("hideTooltip")).define("hideTooltip", ["callout"], _hideTooltip);
   main.variable(observer("showTooltip")).define("showTooltip", ["callout","tooltipText"], _showTooltip);
@@ -835,7 +844,7 @@ export default function define(runtime, observer) {
   main.variable(observer()).define(["md"], _34);
   main.variable(observer()).define(["md"], _35);
   main.variable(observer("seriesData")).define("seriesData", ["d3","chartData"], _seriesData);
-  main.variable(observer("chartData")).define("chartData", ["regionalVaxNumbers","sel_vaccine"], _chartData);
+  main.variable(observer("chartData")).define("chartData", ["regionalVaxNumbers","vaccines","sel_vaccine"], _chartData);
   main.variable(observer("vaccines")).define("vaccines", ["regionalVaxNumbers"], _vaccines);
   main.variable(observer("metricNamesMap")).define("metricNamesMap", _metricNamesMap);
   main.variable(observer("metricDispNames")).define("metricDispNames", _metricDispNames);
