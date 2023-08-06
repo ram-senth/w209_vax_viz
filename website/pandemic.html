@@ -149,6 +149,15 @@
             font-size: 14px;
           }
 
+          .barChartHeader1 {
+            font-size: 18px !important;
+            text-align: center;
+          }
+          .barChartHeader2 {
+            font-size: 16px !important;
+            text-align: center;
+          }
+
           #chartHeader {
             font-size: 1.2em !important;
           }
@@ -270,10 +279,17 @@
                 <p class="d-flex align-items-center"></p>
               </div>
               <div class="step" data-step="9">
-                <!-- Fourth chart -->
+                <!-- Fourth chart intro -->
                 <p class="d-flex align-items-center"></p>
               </div>
               <div class="step" data-step="10">
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="11">
+                <!-- Fourth chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="12">
                 <!-- Wrap up -->
                 <p class="d-flex align-items-center"></p>
               </div>
@@ -369,37 +385,76 @@
         // update graphic based on step
 
         if(el.dataset.step=='1.1') {
-          createStep11();
+          const lines = [
+            ["As with many other aspects of our life, Covid pandemic had a big impact on vaccination rates as well. Per WHO and UNICEF, about <text style=\"color:red\">6 million</text> additional children missed out on vaccination due to Covid.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='1.2'){
-          createStep12();
+          //narrative
+          const lines = [
+            ["In this section we are going to take a closer look at vaccination rates across the six WHO regions during the pandemic years of <text style=\"color:red\">2019</text> and <text style=\"color:red\">2020</text>.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='2'){
-          createStep2();
+          const lines = [
+            ["Our first plot shows number of children who did not get their third dose of vaccine against <font color=\"red\">Diphtheria, Tetanus and Pertussis (DTP3)</font> over the past 7 years.", true],
+            ["DTP3 vaccine coverage is considered to be the best measure for assessing effectiveness child immunization programs. Other vaccines and metrics are available for exploration.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='3'){
-          createStep3();
+          createLine1Chart();
         }
         else if (el.dataset.step=='4'){
-          createStep4();
+            const lines = [
+            ["The number of unvaccinated children was <text style=\"color:darkgreen\">trending down each year until 2019</text>. This trend <text style=\"color:red\">reversed across all regions</text> during 2019 and 2020.", true],
+            ["The next chart makes this increase more obvious.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='5'){
-          createStep5();
+          createLine2();
         }
         else if (el.dataset.step=='6'){
-          createStep6();
+          const lines = [
+            ["South East Asia had the <text style=\"color:red\">biggest increase</text> in number of unvaccinated children both in terms of percentage as well as just raw numbers.", true],
+            ["The next plot lets us go a little deeper and look countries that saw biggest drop as well biggest increase within each region.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='7'){
-          createStep7();
+          createCircleChart();
         }
         else if (el.dataset.step=='8'){
-          createStep8();
+          const lines = [
+            ["Within SE Asia, India's had a much lower 6% drop compared to North Korea at 56%, Myanmar at 53% and Indonesia at 18%). However, that 6% translated to the <text style=\"color:red\">1.3 million children</text> due to India's population.", true],
+            ["Next is another view of the same regional and national level details.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='9'){
-          createStep9();
+          createGeoChart();
         }
         else if (el.dataset.step=='10'){
-          createStep10();
+          const lines = [
+            ["Finally, let us look at how each country contributed to the increase in the number of unvaccinated children. ", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='11'){
+          createBarChart();
+        }
+        else if (el.dataset.step=='12'){
+          const lines = [
+            ["It's also interesting that some countries actually managed to increase the coverage during Covid.", true],
+            ["Turns out that many factors factors played a role.", true],
+            ["Not all countries had the same level of Covid infections. Also, not all countries had the same level of shutdowns.", true],
+            ["Lastly some countries included other vaccines as part of the Covid vaccination drive, increasing overall coverage.", true],
+            ["Due to lack of time we are not exploring these aspects yet.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
       }
 
@@ -418,21 +473,25 @@
       }
 
       // Observable related scripts
-      // Import runtime and other Observable objects for first chart
-      import define_01 from "./resources/pandemic_01/index.js";
-      import {Runtime as Runtime_01, Inspector as Inspector_01} from "./resources/pandemic_01/runtime.js";
+      // Import runtime and other Observable objects for first line chart
+      import define_line1 from "./resources/pandemic_line1/index.js";
+      import {Runtime as Runtime_line1, Inspector as Inspector_line1} from "./resources/pandemic_line1/runtime.js";
 
-      // Import runtime and other Observable objects for second chart
-      import define_02 from "./resources/pandemic_02/index.js";
-      import {Runtime as Runtime_02, Inspector as Inspector_02} from "./resources/pandemic_02/runtime.js";
+      // Import runtime and other Observable objects for second line chart
+      import define_line2 from "./resources/pandemic_line2/index.js";
+      import {Runtime as Runtime_line2, Inspector as Inspector_line2} from "./resources/pandemic_line2/runtime.js";
 
-      // Import runtime and other Observable objects for third chart
-      import define_03 from "./resources/pandemic_03/index.js";
-      import {Runtime as Runtime_03, Inspector as Inspector_03} from "./resources/pandemic_03/runtime.js";
+      // Import runtime and other Observable objects for packed circle chart
+      import define_circle from "./resources/pandemic_circle/index.js";
+      import {Runtime as Runtime_circle, Inspector as Inspector_circle} from "./resources/pandemic_circle/runtime.js";
 
-      // Import runtime and other Observable objects for third chart
-      import define_04 from "./resources/pandemic_04/index.js";
-      import {Runtime as Runtime_04, Inspector as Inspector_04} from "./resources/pandemic_04/runtime.js";
+      // Import runtime and other Observable objects for geo chart
+      import define_geo from "./resources/pandemic_geo/index.js";
+      import {Runtime as Runtime_geo, Inspector as Inspector_geo} from "./resources/pandemic_geo/runtime.js";
+
+      // Import runtime and other Observable objects for bar chart
+      import define_bar from "./resources/pandemic_bar/index.js";
+      import {Runtime as Runtime_bar, Inspector as Inspector_bar} from "./resources/pandemic_bar/runtime.js";
 
       function generateTextDiv(lines) {
 
@@ -444,33 +503,7 @@
         return `<div class="keypoint">${merged}</div>`;
       }
 
-      function createStep11() {
-        //narrative
-        const lines = [
-          ["As with many other aspects of our life, Covid pandemic had a big impact on vaccination rates as well. Per WHO and UNICEF, about <text style=\"color:red\">6 million</text> additional children missed out on vaccination due to Covid.", true]
-        ];
-
-        mainContentDiv.innerHTML = generateTextDiv(lines);
-      }
-
-      function createStep12() {
-        //narrative
-        const lines = [
-          ["In this section we are going to take a closer look at vaccination rates across the six WHO regions during the pandemic years of <text style=\"color:red\">2019</text> and <text style=\"color:red\">2020</text>.", true]
-        ];
-
-        mainContentDiv.innerHTML = generateTextDiv(lines);
-      }
-      function createStep2() {
-        const lines = [
-          ["Our first plot shows number of children who did not get their third dose of vaccine against <font color=\"red\">Diphtheria, Tetanus and Pertussis (DTP3)</font> over the past 7 years.", true],
-          ["DTP3 vaccine coverage is considered to be the best measure for assessing effectiveness child immunization programs. Other vaccines and metrics are available for exploration.", false]
-        ];
-
-        mainContentDiv.innerHTML = generateTextDiv(lines);
-      }
-
-      function createStep3() {
+      function createLine1Chart() {
         // First chart
 
         const divSel1 = document.createElement('div');
@@ -497,25 +530,17 @@
         }
 
         // Load the chart
-        const rt = (new Runtime_01()).module(define_01, name => {
-          if (name === "viewof replay_button") return new Inspector_01(divSel1);
-          if (name === "viewof sel_vaccine") return new Inspector_01(divSel2);
-          if (name === "viewof yFieldD") return new Inspector_01(divSel3);
+        const rt = (new Runtime_line1()).module(define_line1, name => {
+          if (name === "viewof replay_button") return new Inspector_line1(divSel1);
+          if (name === "viewof sel_vaccine") return new Inspector_line1(divSel2);
+          if (name === "viewof yFieldD") return new Inspector_line1(divSel3);
           // if (name === "vaxInfo") return {fulfilled(value) { displayVaxinfo(value); }};
-          if (name === "layout") return new Inspector_01(mainContentDiv);
+          if (name === "layout") return new Inspector_line1(mainContentDiv);
             return ["plotty","showHighlights","chartData","autoHighlight","x","y","seriesData","showOneHighlight","line2","yField","tooltipText","showTooltip"].includes(name);
         });
       }
 
-      function createStep4() {
-        const lines = [
-          ["The number of unvaccinated children was <text style=\"color:darkgreen\">trending down each year until 2019</text>. This trend <text style=\"color:red\">reversed across all regions</text> during 2019 and 2020.", true],
-          ["The next chart makes this increase more obvious.", false]
-        ];
-        mainContentDiv.innerHTML = generateTextDiv(lines);
-      }
-
-      function createStep5() {
+      function createLine2() {
         // Second chart.
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
@@ -535,27 +560,18 @@
         topControlsDiv.appendChild(divSel4);
 
         // Load the chart
-        const rt = (new Runtime_02()).module(define_02, name => {
-          if (name === "viewof sel_vaccine") return new Inspector_02(divSel1);
-          if (name === "viewof yFieldD") return new Inspector_02(divSel2);
-          if (name === "viewof leftYear") return new Inspector_02(divSel3);
-          if (name === "viewof rightYear") return new Inspector_02(divSel4);
-          if (name === "layout") return new Inspector_02(mainContentDiv);
+        const rt = (new Runtime_line2()).module(define_line2, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_line2(divSel1);
+          if (name === "viewof yFieldD") return new Inspector_line2(divSel2);
+          if (name === "viewof leftYear") return new Inspector_line2(divSel3);
+          if (name === "viewof rightYear") return new Inspector_line2(divSel4);
+          if (name === "layout") return new Inspector_line2(mainContentDiv);
           if (name === "chartTitle") return {fulfilled(value) { headerDiv.innerHTML = value; }};
           return ["chart_data","yField"].includes(name);
         });
       }
 
-      function createStep6() {
-        const lines = [
-          ["South East Asia had the <text style=\"color:red\">biggest increase</text> in number of unvaccinated children both in terms of percentage as well as just raw numbers.", true],
-          ["The next plot lets us go a little deeper and look countries that saw biggest drop as well biggest increase within each region.", false]
-        ];
-
-        mainContentDiv.innerHTML = generateTextDiv(lines);
-      }
-
-      function createStep7() {
+      function createCircleChart() {
         // Third chart
         const divParent = document.createElement('div');
         divParent.style.flexBasis = "80%";
@@ -577,28 +593,29 @@
         divParent.appendChild(divSel4);
         topControlsDiv.appendChild(divParent);
 
-        new Runtime_03().module(define_03, name => {
-          if (name === "viewof sel_vaccine") return new Inspector_03(divSel1);
-          if (name === "viewof sel_metric") return new Inspector_03(divSel2);
-          if (name === "viewof leftYear") return new Inspector_03(divSel3);
-          if (name === "viewof rightYear") return new Inspector_03(divSel4);
+        new Runtime_circle().module(define_circle, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_circle(divSel1);
+          if (name === "viewof sel_metric") return new Inspector_circle(divSel2);
+          if (name === "viewof leftYear") return new Inspector_circle(divSel3);
+          if (name === "viewof rightYear") return new Inspector_circle(divSel4);
 
-          if (name === "chart") return new Inspector_03(mainContentDiv);
+          if (name === "chart") return new Inspector_circle(mainContentDiv);
           return ["data"].includes(name);
         });
       }
 
-      function createStep8() {
-        const lines = [
-          ["Within SE Asia, India's had a much lower 6% drop compared to North Korea at 56%, Myanmar at 53% and Indonesia at 18%). However, that 6% translated to the <text style=\"color:red\">1.3 million children</text> due to India's population.", true],
-          ["Next is another view of the same regional and national level details.", false]
-        ];
+      function createBarChart() {
+        const divSel1 = document.createElement('div');
+        topControlsDiv.appendChild(divSel1);
+        new Runtime_bar().module(define_bar, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_bar(divSel1);
+          if (name === "chart") return new Inspector_bar(mainContentDiv);
+          return ["countryVaxData","globalVaxData"].includes(name);
+        });
 
-        mainContentDiv.innerHTML = generateTextDiv(lines);
       }
-
-      function createStep9() {
-        // Chart 4
+      function createGeoChart() {
+        // Geo chart
         const divSel1 = document.createElement('div');
         divSel1.style.flexBasis = "25%";
 
@@ -616,28 +633,16 @@
         topControlsDiv.appendChild(divSel3);
         topControlsDiv.appendChild(divSel4);
 
-        new Runtime_04().module(define_04, name => {
-          if (name === "viewof sel_vaccine") return new Inspector_04(divSel1);
+        new Runtime_geo().module(define_geo, name => {
+          if (name === "viewof sel_vaccine") return new Inspector_geo(divSel1);
 
-          if (name === "viewof detailLevel") return new Inspector_04(divSel2);
-          if (name === "viewof leftYear") return new Inspector_04(divSel3);
-          if (name === "viewof rightYear") return new Inspector_04(divSel4);
+          if (name === "viewof detailLevel") return new Inspector_geo(divSel2);
+          if (name === "viewof leftYear") return new Inspector_geo(divSel3);
+          if (name === "viewof rightYear") return new Inspector_geo(divSel4);
 
-          if (name === "map3") return new Inspector_04(mainContentDiv);
+          if (name === "map3") return new Inspector_geo(mainContentDiv);
           return ["tooltipText","geoWorld","showTooltip","colorScale","geoLand","geoBorders","geoCountries","colorCountry","valueFor","countField"].includes(name);
         });
-      }
-
-      function createStep10() {
-        const lines = [
-          ["It's also interesting that some countries actually managed to increase the coverage during Covid.", true],
-          ["Turns out that many factors factors played a role.", true],
-          ["Not all countries had the same level of Covid infections. Also, not all countries had the same level of shutdowns.", true],
-          ["Lastly some countries included other vaccines as part of the Covid vaccination drive, increasing overall coverage.", true],
-          ["Due to lack of time we are not exploring these aspects yet.", true]
-        ];
-
-        mainContentDiv.innerHTML = generateTextDiv(lines);
       }
 
       // kick things off
