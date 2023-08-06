@@ -3,7 +3,7 @@ md`# VaxViz-General-01`
 )}
 
 function _vaxTable(html,sparkline,globalVaxData){return(
-html`<table class="vaxlist" style="width: 98%; max-width: 1200px; border-collapse: collapse; border: 2px solid black;"><thead><tr><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Vaccine</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Description</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Disease</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Global Coverage<br/>2015 to 2021</th></tr></thead><tbody><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG refers to one dose of Bacillus Calmette Guerin vaccine, given within 24 hours of birth</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Tuberculosis</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
+html`<table class="vaxlist" style="width: 98%; max-width: 1200px; border-collapse: collapse; border: 2px solid black;"><thead><tr><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Vaccine</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Description</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Protects From</th><th style="text-align: center; border: 1px solid black; padding: 5px; background-color: lightgray; font-weight: bold; text-transform: uppercase;">Global Coverage<br>2015 to 2021</th></tr></thead><tbody><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">BCG refers to one dose of Bacillus Calmette Guerin vaccine, given within 24 hours of birth</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Tuberculosis</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "BCG")
 )}</td></tr><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">DTP1</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">DTP1 refers to the first dose of diphtheria and tetanus toxoid with pertussis containing vaccine</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Diphtheria, Tetanus and Pertussis (aka whooping cough)</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "DTP1")
@@ -31,8 +31,14 @@ html`<table class="vaxlist" style="width: 98%; max-width: 1200px; border-collaps
   globalVaxData.filter((d) => d.Vaccine === "Rotac")
 )}</td></tr><tr><td style="border: 1px solid black; padding: 5px; font-size: 12px;">YFV</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">YFV refers to one dose of yellow fever vaccine in countries where YFV is part of the national immunization schedule for children or is recommended in at risk areas</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">Yellow fever</td><td style="border: 1px solid black; padding: 5px; font-size: 12px;">${sparkline(
   globalVaxData.filter((d) => d.Vaccine === "YFV")
-)}</td></tr></tbody></table>
-`
+)}</td></tr></tbody></table>`
+)}
+
+function _3(md){return(
+md`>> Remember to fix the output table html for following:
+* Replace all \\$ with $
+* Replace all \& gt; with >
+* Replace all \& lt; with <`
 )}
 
 function _vaxTableHtml(availYears,d3,sparklineData,sparkline)
@@ -40,7 +46,7 @@ function _vaxTableHtml(availYears,d3,sparklineData,sparkline)
   const headers = [
     "Vaccine",
     "Description",
-    "Disease",
+    "Protects From",
     `Global Coverage<br\>${availYears[0]} to ${
       availYears[availYears.length - 1]
     }`
@@ -207,11 +213,11 @@ function _percent_formatter(){return(
   }).format(number)}%`
 )}
 
-function _6(sparkline,globalVaxData){return(
+function _7(sparkline,globalVaxData){return(
 sparkline(globalVaxData.filter((d) => d.Vaccine === "Rotac"))
 )}
 
-function _7(sparkline,globalVaxData){return(
+function _8(sparkline,globalVaxData){return(
 sparkline(globalVaxData.filter((d) => d.Vaccine === "DTP3"))
 )}
 
@@ -291,7 +297,7 @@ function _sparkline_style(){return(
 }
 )}
 
-function _10(md){return(
+function _11(md){return(
 md`## Data`
 )}
 
@@ -354,7 +360,7 @@ FileAttachment("unicef_regional_coverage_2015_2021@1.csv")
   })
 )}
 
-function _15(md){return(
+function _16(md){return(
 md`# Imports`
 )}
 
@@ -372,19 +378,20 @@ export default function define(runtime, observer) {
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["md"], _1);
   main.variable(observer("vaxTable")).define("vaxTable", ["html","sparkline","globalVaxData"], _vaxTable);
+  main.variable(observer()).define(["md"], _3);
   main.variable(observer("vaxTableHtml")).define("vaxTableHtml", ["availYears","d3","sparklineData","sparkline"], _vaxTableHtml);
   main.variable(observer("sparkline_v3")).define("sparkline_v3", ["d3"], _sparkline_v3);
   main.variable(observer("percent_formatter")).define("percent_formatter", _percent_formatter);
-  main.variable(observer()).define(["sparkline","globalVaxData"], _6);
   main.variable(observer()).define(["sparkline","globalVaxData"], _7);
+  main.variable(observer()).define(["sparkline","globalVaxData"], _8);
   main.variable(observer("sparkline")).define("sparkline", ["sparkline_style","d3","percent_formatter","DOM"], _sparkline);
   main.variable(observer("sparkline_style")).define("sparkline_style", _sparkline_style);
-  main.variable(observer()).define(["md"], _10);
+  main.variable(observer()).define(["md"], _11);
   main.variable(observer("vaccines")).define("vaccines", ["FileAttachment","d3"], _vaccines);
   main.variable(observer("availYears")).define("availYears", ["FileAttachment"], _availYears);
   main.variable(observer("sparklineData")).define("sparklineData", ["FileAttachment","d3","vaccines"], _sparklineData);
   main.variable(observer("globalVaxData")).define("globalVaxData", ["FileAttachment"], _globalVaxData);
-  main.variable(observer()).define(["md"], _15);
+  main.variable(observer()).define(["md"], _16);
   main.variable(observer("d3")).define("d3", ["require"], _d3);
   return main;
 }
