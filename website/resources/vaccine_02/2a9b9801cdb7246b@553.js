@@ -9,9 +9,10 @@ md`# Absolute Number of Vaccinated Children`
 function _year2(Scrubber,years){return(
 Scrubber(years, {
   initial: years + 1,
-  autoplay: true,
-  delay: 2000,
-  default: 1997
+  autoplay: false,
+  loop: false,
+  delay: 1000,
+  initial: 1997
 })
 )}
 
@@ -237,6 +238,10 @@ d3
   .slice(0, 1)
 )}
 
+function _8(valuemap1){return(
+valuemap1.delete("C�te d'Ivoire")
+)}
+
 function _valuemap1(year_filtered_data){return(
 new Map(
   year_filtered_data.map((d) => [d.Country, d.ChildrenVaccinated])
@@ -300,7 +305,9 @@ function _callout(){return(
 )}
 
 function _year_filtered_data(newdata,year2){return(
-newdata.filter((d) => d.Year == year2)
+newdata.filter(
+  (d) => (d.Year == year2) & (d.Country != "C�te d'Ivoire")
+)
 )}
 
 function _newdata(cov_data,selected_vaccine2){return(
@@ -335,8 +342,12 @@ new Map(
 )
 )}
 
-function _features(countrymap,largest){return(
-countrymap.get(largest[0].Country)
+function _24(countrymap){return(
+countrymap.get("C�te d'Ivoire")
+)}
+
+function _features(countrymap,largest1){return(
+countrymap.get(largest1[0].Country)
 )}
 
 function _width(){return(
@@ -385,6 +396,7 @@ export default function define(runtime, observer) {
   main.variable(observer("data")).define("data", ["year_filtered_data","countrymap"], _data);
   main.variable(observer("largest1")).define("largest1", ["d3","year_filtered_data"], _largest1);
   main.variable(observer("smallest1")).define("smallest1", ["d3","year_filtered_data"], _smallest1);
+  main.variable(observer()).define(["valuemap1"], _8);
   main.variable(observer("valuemap1")).define("valuemap1", ["year_filtered_data"], _valuemap1);
   main.variable(observer("tooltip_string1")).define("tooltip_string1", ["valuemap1"], _tooltip_string1);
   main.variable(observer("format")).define("format", _format);
@@ -404,7 +416,8 @@ export default function define(runtime, observer) {
   main.import("slider", child3);
   main.import("select", child3);
   main.variable(observer("countrymap")).define("countrymap", ["topojson","world"], _countrymap);
-  main.variable(observer("features")).define("features", ["countrymap","largest"], _features);
+  main.variable(observer()).define(["countrymap"], _24);
+  main.variable(observer("features")).define("features", ["countrymap","largest1"], _features);
   main.variable(observer("width")).define("width", _width);
   main.variable(observer("marginTop")).define("marginTop", _marginTop);
   main.variable(observer("height")).define("height", ["marginTop"], _height);
