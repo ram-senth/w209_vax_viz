@@ -1,179 +1,210 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap links -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-    />
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Bootstrap links -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="   https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
     <!-- style link -->
-    <link rel="stylesheet" href="./resources/main.css" />
-    <link rel="stylesheet" href="./resources/bootstrap.min.css" />
-    <link rel="stylesheet" href="./resources/inspector.css" />
-    <style>
-      #scrolly {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        background-color: #fff;
-        padding: 1rem;
-      }
+      <link rel="stylesheet" href="./resources/main.css">
+      <link rel="stylesheet" href="./resources/bootstrap.min.css">
+      <link rel="stylesheet" href="./resources/inspector.css">
+      <link rel="stylesheet" href="./resources/main.css">
+      <style>
+          #scrolly {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            background-color: #f3f3f3;
+            padding: 1rem;
+          }
 
-      #scrolly > * {
-        -webkit-box-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-      }
+          #scrolly > * {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            width: 10%;
+          }
 
-      article {
-        position: relative;
-        padding: 0 1rem;
-        max-width: 30rem;
-      }
+          article {
+            position: relative;
+            padding: 0 1rem;
+            max-width: 2.3rem;
+          }
 
-      .sticky-thing {
-        position: -webkit-sticky;
-        position: sticky;
-        width: 20%;
-        margin-right: 30;
-        background-color: #ffffff;
-        z-index: 0;
-        top: 12.5vh;
-        height: 75vh;
-        /* Center everything inside */
-        /* display: flex; */
-        align-items: center;
-        justify-content: center;
-      }
+          .sticky-thing {
+            /* position: absolute; */
+            top: 0;
+            left: 0;
+            bottom: auto;
+            width: 70%;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
 
-      .sticky-thing p {
-        padding: 1rem;
-        font-size: 8rem;
-        font-weight: 900;
-        color: #fff;
-      }
+            position: -webkit-sticky;
+            position: sticky;
+            z-index: 0;
+            top: 12.5vh;
+            height: 75vh;
+            align-items: center;
+            justify-content: center;
+          }
 
-      .step {
-        align-items: center;
-        margin: 0 auto 2rem auto;
-        background-color: #fff;
-        color: #3b3b3b;
-      }
+          .sticky-thing p {
+            padding: 1rem;
+            font-size: 8rem;
+            font-weight: 900;
+            color: #fff;
+          }
 
-      .step:last-child {
-        margin-bottom: 0;
-      }
+          .step {
+            margin: 0 auto 2rem auto;
+            /* background-color: #fff; */
+            color: steelblue;
+            background-color: steelblue;
+          }
 
-      .step.is-active {
-        background-color: #f3f3f3;
-        color: #3b3b3b;
-      }
+          .step:last-child {
+            margin-bottom: 0;
+          }
 
-      .step p {
-        text-align: justify;
-        min-height: 50vh;
-        font-size: 1.5rem;
-      }
-      .step ol {
-        text-align: justify;
-        min-height: 50vh;
-        font-size: 1.5rem;
-      }
+          .step.is-active {
+            /* background-color: #f3f3f3; */
+            background-color: goldenrod;
+            color: #3b3b3b;
+          }
 
-      #vis.div {
-        margin-top: 5px;
-        font-size: 21px;
-        text-align: center;
-        animation: fadein 2s;
-        -moz-animation: fadein 2s; /* Firefox */
-        -webkit-animation: fadein 2s; /* Safari and Chrome */
-        -o-animation: fadein 2s; /* Opera */
-      }
+          .step p {
+            text-align: center;
+            min-height: 80vh;
+            padding: 1rem;
+            font-size: 1.5rem;
+          }
 
-      #visControlsTop.div #visControlsBottom.div {
-        display: flex;
-        /* justify-content: center;
+          .keypoint {
+            display: -webkit-flex;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            height: 80vh;
+            width:100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+          }
+
+          p.primary {
+            padding: 1rem;
+            font-size: 3rem;
+            font-weight: 20;
+            width:100%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
+          }
+
+          p.secondary {
+            padding: 1rem;
+            font-size: 1.8rem;
+            font-weight: 14;
+            width:80%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
+          }
+
+          #vis.div {
+              margin-top: 5px;
+              font-size: 21px;
+              text-align: center;
+              animation: fadein 2s;
+              -moz-animation: fadein 2s; /* Firefox */
+              -webkit-animation: fadein 2s; /* Safari and Chrome */
+              -o-animation: fadein 2s; /* Opera */
+          }
+
+          #visControlsTop.div #visControlsBottom.div {
+              display: flex;
+              /* justify-content: center;
               align-items: center; */
-        height: 20px;
-        margin-left: 20px;
-        margin-top: 4px;
-        font-size: 12px;
-        /* text-align: center; */
-        animation: fadein 2s;
-        -moz-animation: fadein 2s; /* Firefox */
-        -webkit-animation: fadein 2s; /* Safari and Chrome */
-        -o-animation: fadein 2s; /* Opera */
-      }
+              height: 20px;
+              margin-left: 20px;
+              margin-top: 4px;
+              font-size: 12px;
+              /* text-align: center; */
+              animation: fadein 2s;
+              -moz-animation: fadein 2s; /* Firefox */
+              -webkit-animation: fadein 2s; /* Safari and Chrome */
+              -o-animation: fadein 2s; /* Opera */
+          }
 
-      .tick,
-      text.axisLabel {
-        font-size: 14px;
-      }
+          .tick, text.axisLabel {
+            font-size: 14px;
+          }
 
-      #chartHeader {
-        font-size: 1.2em !important;
-      }
-      #visChartHeader {
-        font-size: 18px !important;
-        text-align: center;
-      }
+          .barChartHeader1 {
+            font-size: 18px !important;
+            text-align: center;
+          }
+          .barChartHeader2 {
+            font-size: 16px !important;
+            text-align: center;
+          }
 
-      g.ttip {
-        font-size: 14px !important;
-      }
+          #chartHeader {
+            font-size: 1.2em !important;
+          }
+          #visChartHeader {
+            font-size: 18px !important;
+            text-align: center;
+          }
 
-      .text-justify {
-        text-align: justify;
-      }
+          g.ttip {
+            font-size: 14px !important;
+          }
 
-      @keyframes fadein {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-moz-keyframes fadein {
-        /* Firefox */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-webkit-keyframes fadein {
-        /* Safari and Chrome */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-      @-o-keyframes fadein {
-        /* Opera */
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-    </style>
-    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
-    <script src="https://unpkg.com/scrollama"></script>
+          @keyframes fadein {
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-moz-keyframes fadein { /* Firefox */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-webkit-keyframes fadein { /* Safari and Chrome */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity:1;
+              }
+          }
+          @-o-keyframes fadein { /* Opera */
+              from {
+                  opacity:0;
+              }
+              to {
+                  opacity: 1;
+              }
+          }
+      </style>
+      <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+      <script src="https://unpkg.com/scrollama"></script>
   </head>
 
   <body>
@@ -188,221 +219,115 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item px-4" ><a class="nav-link" href="./"><h3>Introduction</h3></a></li>
-            <li class="nav-item active px-4"><a class="nav-link" href="./vaccination.html"><h3>Vaccination Coverage</h3></a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="./vaccination.html"><h3>Vaccination Coverage</h3></a></li>
             <li class="nav-item px-4"><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
-            <li class="nav-item px-4"><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
+            <li class="nav-item active px-4"><a class="nav-link" href="./vaccination.html"><h3>Impact of Covid</h3></a></li>
           </ul>
           </div>
         </div>
       </nav>
     </header>
-    <!-- <header data-bs-theme="dark">
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="active">
-                <a class="nav-link" href="./"><h3>Home</h3></a>
-              </li>
-              <li class="">
-                <a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a>
-              </li>
-              <li class="">
-                <a class="nav-link" href="./polio.html"
-                  ><h3>The Story of Polio</h3></a
-                >
-              </li>
-              <li class="">
-                <a class="nav-link" href="./pandemic.html"
-                  ><h3>Impact of Covid</h3></a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header> -->
+
     <main>
-      <div class="container py-4">
-        <!-- Jumobotron -->
-        <div class="p-5 mb-5 bg-body-tertiary rounded-3">
-          <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">Vaccination Coverage</h1>
-            <p class="col-md-8 fs-4">
-              An exploration of the Vaccination Coverage across the world from
-              1997 to 2021 for a total of 14 different vaccines.
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- Scrolly -->
-      <section id="scrolly">
-        <article>
-          <div class="step" data-step="1">
-            <h3 class="fw-bold">Percentage Vaccination Coverage</h3>
-            <p class="text-justify">
-              In order to understand how vaccination has been able to tackle
-              various diseases, it is important to visualize reported coverage
-              data. Coverage data shows the percentage of people in a population
-              who have been vaccinated against a particular disease. The target
-              population can vary depending on the vaccine, but it is typically
-              children under the age of 1.
-              <br />
-              <br />
-              The visualization on your right provides an exploration of
-              reported vaccination coverage for:
-              <br />
-              <span>1. from 1997 to 2021</span>
-              <br />
-              <span>2. for 14 different antigens</span>
-              <br />
-              <span>3. across 195 countries</span>
-              <br />
-              <br />
-              The World Map Choropleth on your right can be utilized to study
-              the percentage coverage globally</span>
-              <br />
-              <br />
-              <span
-                >a. Select Year - slider to select any year between
-                1997-2021</span
-              >
-              <br />
-              <span>b. Select Vaccine - drop down to select a vaccine type</span>
-              <br />
-              <span
-                >c. The value All provides the average number of vaccinated children
-                for all vaccine types</span
-              >
-            </p>
-            <br />
-            <br />
-            <span id="chart1_notes"></span>
-          </div>
-          <div class="step" data-step="2">
-            <h3 class="text-justify fw-bold">Absolute Number of Vaccinated Children</h3>
-            <p class="text-justify">
-              Let us now explore the absolute number of vaccinated children. This exploration will be helpful in understanding how the coverage varies depending on the child population density for each country. For example, we might expect to see higher vaccination coverage in countries with low population density, as it is easier to reach a larger proportion of the population with vaccination programs in these countries. Efforts to raise global immunization levels will require a strong focus on the countries where the highest numbers of unvaccinated children live. However, it is also important to ensure that smaller countries with a subset of hard-to-reach children are not neglected
-
-              <br />
-              <br />
-              The visualization on your right provides an exploration of
-              reported vaccination coverage for:
-              <br />
-              <span>1. from 1997 to 2021</span>
-              <br />
-              <span>2. for 14 different antigens</span>
-              <br />
-              <span>3. across 195 countries</span>
-              <br />
-              <br />
-              The World Map Choropleth on your right can be utilized to study
-              the percentage coverage globally</span>
-              <br />
-              <br />
-              <span
-                >a. Select Year - slider to select any year between
-                1997-2021</span
-              >
-              <br />
-              <span>b. Select Vaccine - drop down to select a vaccine type</span>
-              <br />
-              <span
-                >c. The value All provides the average number of vaccinated children
-                for all vaccine types</span
-              >
-            </p>
-            <br />
-            <br />
-            <span id="chart1_notes"></span>
-          </div>
-          <div class="step" data-step="3">
-            <h3 class="fw-bold">
-              % Vaccination Coverage Vs # Vaccinated Children
-            </h3>
-            <p class="text-justify">
-              Developing countries with large populations of children contribute significantly to the number of unvaccinated children, even when they achieve relatively high rates of immunization coverage. For example, India has achieved 85% coverage of DTP3, a vaccine that protects against three serious childhood diseases. However, in 2021, there were still about 3.3 million unvaccinated or under-vaccinated children in India. This is because India has a large cohort of 23 million surviving infants, and even a small percentage of unvaccinated children can represent a significant number.
-              <br />
-              <br />
-              The Bar-Line on your right can be utilized to study
-              the percentage vaccination coverage vs absolute number of vaccinated children</span>
-              <br />
-              <br />
-              <span
-                >a. Select Country - drop down to select any country</span
-              >
-              <br />
-              <span>b. Select Vaccine - drop down to select a vaccine type</span>
-              <br />
-              <span
-                >c. The value All provides the average value
-                for all vaccine types</span
-              >
-            </p>
-            <br />
-            <br />
-            <span id="chart1_notes"></span>
-          </div>
-        </article>
-
-        <!-- <div id="dummy"></div> -->
-        <div class="sticky-thing">
-          <div id="visControlsTop"></div>
-          <div id="visChartHeader" class="chartHeader"></div>
-          <div id="vis"></div>
-          <div id="visControlsBottom"></div>
-        </div>
-      </section>
-
-      <section id="outro">
-        <div style="margin: 5rem">
-          <hr class="featurette-divider" />
-        </div>
-      </section>
-
-      <!-- Nav Cards -->
-      <div class="container py-4">
-        <div class="row align-items-md-stretch">
-          <div class="col-md-6 mb-4">
-            <div class="h-100 p-5 text-bg-dark rounded-3">
-                <h2>Vaccination Rates</h2>
-                <p>Look at how different countries have adopted vaccines.</p>
-                <a href="./vaccination.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
+        <div class="container py-4">
+            <!-- Jumobotron -->
+          <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">Vaccination Rates</h1>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
-              <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-                  <h2>The Story of Polio</h2>
-                  <p>A look at the progression of Polio and the role of vaccines in controlling it.</p>
-                  <a href="./polio.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-                  <h2>Impact of Covid</h2>
-                  <p>Explore impact of the pandemic on vaccination.</p>
-                  <a href="./pandemic.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
-              </div>
-          </div>
-          <div class="col-md-6">
-              <div class="h-100 p-5 text-bg-dark border rounded-3">
-                &nbsp;
-              </div>
-          </div>
         </div>
-    </div>
+        <!-- Scrolly -->
+        <section id="scrolly">
+            <article>
+              <div class="step" data-step="1.1">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="1.2">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="2">
+                <!-- First chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="3">
+                <!-- First chart -->
+                <p class="d-flex align-items-center">
+                  <span id="chart1_notes"></span>
+                </p>
+              </div>
+              <div class="step" data-step="4">
+                <!-- Second chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="5">
+                <!-- Second chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="6">
+                <!-- Third chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="7">
+                <!-- Third chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="8">
+                <!-- Wrap up -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+            </article>
+
+          <div class="sticky-thing">
+            <div id="visControlsTop"></div>
+            <div id="visChartHeader" class="chartHeader"></div>
+            <div id="vis" class="align-items-center"></div>
+            <div id="visControlsBottom"></div>
+          </div>
+          </section>
+
+          <section id="outro">
+            <div style="margin:5rem">
+                <hr class="featurette-divider">
+            </div>
+
+          </section>
+
+            <!-- Nav Cards -->
+        <div class="container py-4">
+            <div class="row align-items-md-stretch">
+              <div class="col-md-6 mb-4">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <h2>Home</a></h2>
+                    <p>Back to introduction page.</p>
+                    <a href="./index.html"><button class="btn btn-outline-light" type="button">Browse</button></a>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                    <h2>Vaccination Coverage</a></h2>
+                    <p>Look at how different countries have adopted vaccines.</p>
+                    <a href="./vaccination.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                    <h2>The Story of Polio</h2>
+                    <p>A look at the progression of Polio and the role of vaccines in controlling it.</p>
+                    <a href="./polio.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 text-bg-dark border rounded-3">
+                    <h2>Impact of Covid</h2>
+                      <p>Explore impact of the pandemic on vaccination.</p>
+                      <a href="./pandemic.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
+                </div>
+              </div>
+            </div>
+        </div>
     </main>
 
     <!-- Scrolly Script -->
@@ -417,15 +342,18 @@
       // initialize the scrollama
       const scroller = scrollama();
 
-      const chartTargetRef = "#vis";
-      const topControlsTargetRef = "#visControlsTop";
-      const bottomControlsTargetRef = "#visControlsBottom";
+      const mainContentDiv = document.querySelector("#vis");
+      const topControlsDiv = document.querySelector("#visControlsTop");
+      const bottomControlsDiv = document.querySelector("#visControlsBottom");
+      const headerDiv = document.querySelector("#visChartHeader");
+
 
       function clearAll() {
-        clearView(document.querySelector(chartTargetRef));
-        clearView(document.querySelector(topControlsTargetRef));
-        clearView(document.querySelector(bottomControlsTargetRef));
-        clearView(document.querySelector("#visChartHeader"));
+        mainContentDiv.innerHTML = "";
+        topControlsDiv.innerHTML = "";
+        bottomControlsDiv.innerHTML = "";
+        headerDiv.innerHTML = "";
+        document.querySelector("#chart1_notes").innerHTML = "";
       }
 
       // scrollama event handlers
@@ -434,18 +362,65 @@
 
         // remove is-active from all steps
         // then add is-active to this step
-        steps.forEach((step) => step.classList.remove("is-active"));
-        el.classList.add("is-active");
+        steps.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
 
         clearAll();
 
         // update graphic based on step
-        if (el.dataset.step == "1") {
-          createStep1();
-        } else if (el.dataset.step == "2") {
-          createStep2();
-        } else if (el.dataset.step == "3") {
-          createStep3();
+
+        if(el.dataset.step=='1.1') {
+          const lines = [
+          ["Here's an exploration of Vaccination Rates across the world from <text style=\"color:red\">1997 to 2021</text> for a total of <text style=\"color:blue\">14</text> different vaccines.",true],
+          ["We would be analyzing the Vaccination Rates using two scenarios:",true],
+          ["1. <text style=\"color:orange\">Percentage Vaccination Coverage</text>",true],
+          ["2. <text style=\"color:orange\">Absolute Number of Vaccinated Children</text>",true]          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='1.2'){
+          //narrative
+          const lines = [
+            ["In order to understand how vaccination has been able to tackle various diseases in different parts of the globe, it is important to visualize the percentage of reported vaccination coverage.",true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='2'){
+          const lines = [
+            ["Percentage Coverage is the <text style=\"color:orange\">percentage of children</text> in a population who have been vaccinated against a particular disease.", true],
+            ["The <text style=\"color:red\">DTP3</text> vaccine coverage is considered to be the best measure for assessing effectiveness of child immunization programs. Other vaccines and metrics are available for exploration.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='3'){
+          creategeo1Chart();
+        }
+        else if (el.dataset.step=='4'){
+            const lines = [
+            ["Let us now explore the <text style=\"color:red\">Absolute Number of Vaccinated Children</text>.",true],
+            ["This exploration provides the absolute number of vaccinated children out of the total child population of a country.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='5'){
+          creategeo2Chart();
+        }
+        else if (el.dataset.step=='6'){
+          const lines = [
+          ["Moving forward, let's view the next visualization which compares the <text style=\"color:red\"> Percentage of Vaccination Coverage</text> with <text style=\"color:red\">Absoulute Number of Vaccianted Children.</text>",true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='7'){
+          createBarLineChart();
+        }
+        else if (el.dataset.step=='8'){
+          const lines = [
+            ["Developing countries with large populations of children contribute significantly to the number of unvaccinated children, even when they achieve relatively high rates of immunization coverage.", true],
+            ["For example, India has achieved 85% coverage of DTP3.However, in 2021, there were still about 3.3 million unvaccinated or under-vaccinated children in India. This is because India has a large cohort of 23 million surviving infants, and even a small percentage of unvaccinated children can represent a significant number.", false],
+            ["Efforts to raise global immunization levels will require a strong focus on the countries where the highest numbers of unvaccinated children live.",true], 
+            ["However, it is also important to ensure that smaller countries with a subset of hard-to-reach children are not neglected",true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
       }
 
@@ -453,8 +428,9 @@
         scroller
           .setup({
             step: "#scrolly article .step",
-            offset: 0.6,
+            offset: .6,
             debug: false,
+            progress: true
           })
           .onStepEnter(handleStepEnter);
 
@@ -463,118 +439,82 @@
       }
 
       // Observable related scripts
-      // Import runtime and other Observable objects for first chart
-      import define_01 from "./resources/vaccine_01/index.js";
-      import {
-        Runtime as Runtime_01,
-        Inspector as Inspector_01,
-      } from "./resources/vaccine_01/runtime.js";
+      // Import runtime and other Observable objects for first line chart
+      import define_geo1 from "./resources/vaccine_01/index.js";
+      import {Runtime as Runtime_geo1, Inspector as Inspector_geo1} from "./resources/vaccine_01/runtime.js";
 
-      // Import runtime and other Observable objects for second chart
-      import define_02 from "./resources/vaccine_02/index.js";
-      import {
-        Runtime as Runtime_02,
-        Inspector as Inspector_02,
-      } from "./resources/vaccine_02/runtime.js";
+      // Import runtime and other Observable objects for second line chart
+      import define_geo2 from "./resources/vaccine_02/index.js";
+      import {Runtime as Runtime_geo2, Inspector as Inspector_geo2} from "./resources/vaccine_02/runtime.js";
 
-      // Import runtime and other Observable objects for third chart
-      import define_03 from "./resources/vaccine_03/index.js";
-      import {
-        Runtime as Runtime_03,
-        Inspector as Inspector_03,
-      } from "./resources/vaccine_03/runtime.js";
+      // Import runtime and other Observable objects for packed circle chart
+      import define_barline from "./resources/vaccine_03/index.js";
+      import {Runtime as Runtime_barline, Inspector as Inspector_barline} from "./resources/vaccine_03/runtime.js";
 
-      function clearView(targetDiv) {
-        targetDiv.innerHTML = "";
 
-        document.querySelector("#chart1_notes").innerHTML = "";
-        // document.querySelector("#chart1_sel2").innerHTML = "";
+      function generateTextDiv(lines) {
+
+        const merged = lines.map(param => {
+          const [line, primary] = param;
+          const className = primary?"primary":"secondary";
+          return `<p class="${className}">${line}</p>`;
+        }).join("\n");
+        return `<div class="keypoint">${merged}</div>`;
       }
 
-      function createStep1() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv =
-          document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(
-          bottomControlsTargetRef
-        );
+      function creategeo1Chart() {
+        // First chart
 
-        const divSel1 = document.createElement("div");
-        divSel1.style.flexBasis = "70%";
-        divSel1.style.width = "80%";
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "50%";
+        divSel1.style.width = "50%";
         divSel1.style.float = "left";
 
-        const divSel2 = document.createElement("div");
-        divSel2.style.flexBasis = "30%";
-        divSel2.style.width = "20%";
-        divSel2.style.float = "right";
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "50%";
+        divSel2.style.width = "100%";
+        divSel2.style.float = "left";
 
-        //const divSel3 = document.createElement("div");
-        //divSel2.style.flexBasis = "33%";
+        //const divSel3 = document.createElement('div');
+        //divSel1.style.flexBasis = "10%";
+        //divSel1.style.width = "20%";
+        //divSel1.style.float = "inline-flex";
 
-        //const divSel4 = document.createElement("div");
-        //divSel2.style.flexBasis = "1%";
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
+        //topControlsDiv.appendChild(divSel3);
 
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-        //topControlsTargetDiv.appendChild(divSel3);
-        //topControlsTargetDiv.appendChild(divSel4);
-        // bottomControlsTargetDiv.appendChild(divSel2);
-        // bottomControlsTargetDiv.appendChild(divSel3);
-        // bottomControlsTargetDiv.appendChild(divSel4);
-
-        function displayVaxinfo(info) {
-          document.querySelector("#chart1_notes").innerHTML = info;
-        }
         // Load the chart
-        const rt = new Runtime_01().module(define_01, (name) => {
-          if (name === "viewof year") return new Inspector_01(divSel1);
-          if (name === "viewof selected_vaccine")
-            return new Inspector_01(divSel2);
-          if (name === "chart") return new Inspector_01(chartTargetDiv);
-          return ["year_filtered_data1", "newdata1"].includes(name);
+        const rt = (new Runtime_geo1()).module(define_geo1, name => {
+          if (name === "viewof year") return new Inspector_geo1(divSel1);
+          if (name === "viewof selected_vaccine") return new Inspector_geo1(divSel2);
+          if (name === "chart") return new Inspector_geo1(mainContentDiv);
+          return ["year_filtered_data1","largest","smallest","callout","valuemap","tooltip_string","newdata1"].includes(name);
         });
       }
 
-      function createStep2() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv =
-          document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(
-          bottomControlsTargetRef
-        );
+      function creategeo2Chart() {
+        // Second chart.
+        const divSel1 = document.createElement('div');
+        divSel1.style.flexBasis = "25%";
 
-        const divSel1 = document.createElement("div");
-        divSel1.style.flexBasis = "70%";
-        divSel1.style.width = "80%";
-        divSel1.style.float = "left";
+        const divSel2 = document.createElement('div');
+        divSel2.style.flexBasis = "25%";
 
-        const divSel2 = document.createElement("div");
-        divSel2.style.flexBasis = "30%";
-        divSel2.style.width = "20%";
-        divSel2.style.float = "right";
-
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
 
         // Load the chart
-        const rt = new Runtime_02().module(define_02, (name) => {
-          if (name === "viewof year2") return new Inspector_02(divSel1);
-          if (name === "viewof selected_vaccine2")
-            return new Inspector_02(divSel2);
-          if (name === "chart2") return new Inspector_02(chartTargetDiv);
-          return ["year_filtered_data", "newdata"].includes(name);
+        const rt = (new Runtime_geo2()).module(define_geo2, name => {
+          if (name === "viewof year2") return new Inspector_geo2(divSel1);
+          if (name === "viewof selected_vaccine2") return new Inspector_geo2(divSel2);
+          if (name === "chart2") return new Inspector_geo2(mainContentDiv);
+          return ["year_filtered_data","data","largest1","smallest1","valuemap1","tooltip_string1","newdata"].includes(name);
         });
       }
 
-      function createStep3() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const topControlsTargetDiv =
-          document.querySelector(topControlsTargetRef);
-        const bottomControlsTargetDiv = document.querySelector(
-          bottomControlsTargetRef
-        );
-
+      function createBarLineChart() {
+        // Third chart
         const divSel1 = document.createElement("div");
         divSel1.style.flexBasis = "50%";
         divSel1.style.width = "50%";
@@ -585,27 +525,14 @@
         divSel2.style.width = "50%";
         divSel2.style.float = "right";
 
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
+        topControlsDiv.appendChild(divSel1);
+        topControlsDiv.appendChild(divSel2);
 
-        // Load the chart
-        const rt = new Runtime_03().module(define_03, (name) => {
-          if (name === "viewof selected_country")
-            return new Inspector_03(divSel1);
-          if (name === "viewof selected_vaccine3")
-            return new Inspector_03(divSel2);
-          if (name === "chart3") return new Inspector_03(chartTargetDiv);
-          return [
-            "filtered_by_country",
-            "filtered_by_vaccine",
-            "x",
-            "y1",
-            "y2",
-            "line",
-            "xAxis",
-            "y1Axis",
-            "y2Axis",
-          ].includes(name);
+        new Runtime_barline().module(define_barline, name => {
+          if (name === "viewof selected_country") return new Inspector_barline(divSel1);
+          if (name === "viewof selected_vaccine3") return new Inspector_barline(divSel2);
+          if (name === "chart3") return new Inspector_barline(mainContentDiv);
+          return ["filtered_by_country","filtered_by_vaccine","x","y1","y2","line","xAxis","y1Axis","y2Axis"].includes(name);
         });
       }
 
@@ -613,14 +540,12 @@
       init();
     </script>
 
-    <!-- FOOTER -->
+      <!-- FOOTER -->
     <footer class="footer bottom pt-4 bg-dark text-center" data-bs-theme="dark">
-      <div>
-        <span class="text-body-secondary"
-          >Thank you for viewing our visuals!</span
-        >
-        <p><a href="#">Back to top</a></p>
-      </div>
+        <div>
+          <span class="text-body-secondary">Thank you for viewing our visuals!</span>
+          <p><a href="#">Back to top</a></p>
+        </div>
     </footer>
   </body>
 </html>

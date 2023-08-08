@@ -1,4 +1,3 @@
-// https://observablehq.com/@d3/color-legend@808
 function _1(md){return(
 md`# Color Legend
 

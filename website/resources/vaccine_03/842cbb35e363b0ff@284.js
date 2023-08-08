@@ -16,7 +16,7 @@ select({
 function _selected_vaccine3(select){return(
 select({
   options: [
-    "All",
+    "Overall",
     "bcg",
     "dtp1",
     "dtp3",
@@ -38,12 +38,12 @@ select({
 
 function _chart3(d3,width,height,filtered_by_vaccine,x,y1,line,xAxis,y1Axis,y2Axis,margin)
 {
-  const svg = d3.create("svg").attr("viewBox", [0, 0, width, height]);
+  const svg = d3.create("svg").attr("viewBox", [-10, 0, width + 10, height]);
 
-  svg
+  var rect = svg
     .append("g")
     .attr("fill", "steelblue")
-    .attr("fill-opacity", 0.8)
+    .attr("fill-opacity", 0.7)
     .selectAll("rect")
     .data(filtered_by_vaccine)
     .join("rect")
@@ -52,7 +52,7 @@ function _chart3(d3,width,height,filtered_by_vaccine,x,y1,line,xAxis,y1Axis,y2Ax
     .attr("y", (d) => y1(d.ReportedCoverage))
     .attr("height", (d) => y1(0) - y1(d.ReportedCoverage));
 
-  svg
+  var path = svg
     .append("path")
     .attr("fill", "none")
     .attr("stroke", "orange")
@@ -93,6 +93,21 @@ ${d.ChildrenVaccinated.toLocaleString("en")} Absolute # Children Vaccinated`
     .style("text-decoration", "underline")
     .text("% Vaccination Coverage Vs # Vaccinated Children");
 
+  const length = path.node().getTotalLength();
+
+  // This function will animate the path over and over again
+  function repeat() {
+    // Animate the path by setting the initial offset and dasharray and then transition the offset to 0
+    path
+      .attr("stroke-dasharray", length + " " + length)
+      .attr("stroke-dashoffset", length)
+      .transition()
+      .ease(d3.easeLinear)
+      .attr("stroke-dashoffset", 0)
+      .duration(6000)
+      .on("end", null); // this will repeat the animation after waiting 1 second
+  }
+  repeat();
   return svg.node();
 }
 
@@ -107,12 +122,16 @@ function _filtered_by_country(data,selected_country){return(
 data.filter((d) => d.Country == selected_country)
 )}
 
+function _7(countries){return(
+countries[45] = "Côte d’Ivoire"
+)}
+
 function _countries(d3,data){return(
 Array.from(new Set(d3.map(data, (d) => d.Country)))
 )}
 
 function _data(FileAttachment){return(
-FileAttachment("viz3_final.csv").csv({ typed: true })
+FileAttachment("viz3_2022_final@1.csv").csv({ typed: true })
 )}
 
 function _line(d3,x,y2){return(
@@ -170,14 +189,15 @@ function _y2Axis(width,margin,d3,y2){return(
 (g) =>
   g
     .attr("transform", `translate(${width - margin.right},0)`)
-    .call(d3.axisRight(y2))
+    .style("color", "orange")
+    .call(d3.axisRight(y2).ticks(10, "~s"))
     .call((g) => g.select(".domain").remove())
     .call((g) =>
       g
         .append("text")
         .attr("x", margin.right)
         .attr("y", 10)
-        .attr("fill", "currentColor")
+        .attr("fill", "orange")
         .attr("text-anchor", "end")
         .text("↑ # Vaccinated Children")
     )
@@ -199,7 +219,7 @@ export default function define(runtime, observer) {
   const main = runtime.module();
   function toString() { return this.url; }
   const fileAttachments = new Map([
-    ["viz3_final.csv", {url: new URL("./files/c379bbe925b302e00702fec2782aefb9f047e973e1559cb372f79d01a37b9bec70188d6930cc41d16bfc457470b1f21d12b07b04ddced5cb747833e6b80b57be.csv", import.meta.url), mimeType: "text/csv", toString}]
+    ["viz3_2022_final@1.csv", {url: new URL("./files/ab498b7d44e2eeb79679cab5da6274185c806476e40e113bba3a2414c42c78365788febcd8960653d60c26aac32045d5b3b70feba1b0cc03eab25bd7be6baf9d.csv", import.meta.url), mimeType: "text/csv", toString}]
   ]);
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["md"], _1);
@@ -210,6 +230,7 @@ export default function define(runtime, observer) {
   main.variable(observer("chart3")).define("chart3", ["d3","width","height","filtered_by_vaccine","x","y1","line","xAxis","y1Axis","y2Axis","margin"], _chart3);
   main.variable(observer("filtered_by_vaccine")).define("filtered_by_vaccine", ["filtered_by_country","selected_vaccine3"], _filtered_by_vaccine);
   main.variable(observer("filtered_by_country")).define("filtered_by_country", ["data","selected_country"], _filtered_by_country);
+  main.variable(observer()).define(["countries"], _7);
   main.variable(observer("countries")).define("countries", ["d3","data"], _countries);
   main.variable(observer("data")).define("data", ["FileAttachment"], _data);
   main.variable(observer("line")).define("line", ["d3","x","y2"], _line);
