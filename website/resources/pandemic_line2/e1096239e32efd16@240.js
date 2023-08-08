@@ -186,7 +186,7 @@ metricNamesMap[yFieldD]
 )}
 
 function _margin(){return(
-{ left: 100, top: 50, right: 150, bottom: 50 }
+{ left: 300, top: 50, right: 100, bottom: 50 }
 )}
 
 function _iwidth(width,margin){return(

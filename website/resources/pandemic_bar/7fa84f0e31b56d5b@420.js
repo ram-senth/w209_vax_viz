@@ -22,9 +22,9 @@ function _chart(width,d3,countryVaxData,showTooltip,hideTooltip,numberFormatter)
   // const width = 928;
   const height = 0.35 * width;
   const marginTop = 70;
-  const marginRight = 40;
-  const marginBottom = 60;
-  const marginLeft = 70;
+  const marginRight = 200;
+  const marginBottom = 80;
+  const marginLeft = 200;
   const iheight = height - marginTop - marginBottom;
   const iwidth = width - marginLeft - marginRight;
 
@@ -111,7 +111,7 @@ function _chart(width,d3,countryVaxData,showTooltip,hideTooltip,numberFormatter)
     .call((g) =>
       g
         .append("text")
-        .attr("x", -marginLeft)
+        .attr("x", 0)
         .attr("y", -10)
         .attr("fill", "currentColor")
         .attr("text-anchor", "start")

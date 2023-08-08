@@ -526,7 +526,7 @@ height - margin.top - margin.bottom
 )}
 
 function _margin(){return(
-{ left: 100, top: 50, right: 100, bottom: 150 }
+{ left: 200, top: 50, right: 200, bottom: 150 }
 )}
 
 function _color(d3){return(
@@ -563,7 +563,7 @@ function _y(d3,chartData,yField,height,margin)
 
 
 function _height(width){return(
-0.35 * width
+0.4 * width
 )}
 
 function _yField(metricNamesMap,yFieldD){return(

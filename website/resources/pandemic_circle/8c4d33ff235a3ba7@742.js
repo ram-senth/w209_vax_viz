@@ -47,7 +47,7 @@ select({
 })
 )}
 
-function _chart(d3,cWidth,cHeight,data,iWidth,iHeight,margin)
+function _chart(d3,cWidth,cHeight,data,iWidth,iHeight)
 {
   // Create the color scale.
   const color = d3
@@ -77,7 +77,7 @@ function _chart(d3,cWidth,cHeight,data,iWidth,iHeight,margin)
   const gDrawing = svg
     .append("g")
     .attr("class", "gDrawing")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`)
+    // .attr("transform", `translate(${margin.left}, ${margin.top})`)
     .attr("width", cWidth)
     .attr("height", cHeight)
     .attr("style", `background: ${color(0)}; cursor: pointer;`);
@@ -182,11 +182,11 @@ iHeight - margin.top - margin.bottom
 )}
 
 function _iWidth(width){return(
-width * 0.4
+width * 0.35
 )}
 
 function _iHeight(height){return(
-height * 0.4
+height * 0.35
 )}
 
 function _height(width){return(
@@ -194,7 +194,7 @@ width
 )}
 
 function _margin(){return(
-{ left: 0, top: 0, right: 0, bottom: 0 }
+{ left: 10, top: 10, right: 10, bottom: 10 }
 )}
 
 function _13(md){return(
@@ -379,7 +379,7 @@ export default function define(runtime, observer) {
   main.variable(observer("rightYear")).define("rightYear", ["Generators", "viewof rightYear"], (G, _) => G.input(_));
   main.variable(observer("viewof sel_metric")).define("viewof sel_metric", ["select","metrics"], _sel_metric);
   main.variable(observer("sel_metric")).define("sel_metric", ["Generators", "viewof sel_metric"], (G, _) => G.input(_));
-  main.variable(observer("chart")).define("chart", ["d3","cWidth","cHeight","data","iWidth","iHeight","margin"], _chart);
+  main.variable(observer("chart")).define("chart", ["d3","cWidth","cHeight","data","iWidth","iHeight"], _chart);
   main.variable(observer("cWidth")).define("cWidth", ["iWidth","margin"], _cWidth);
   main.variable(observer("cHeight")).define("cHeight", ["iHeight","margin"], _cHeight);
   main.variable(observer("iWidth")).define("iWidth", ["width"], _iWidth);
