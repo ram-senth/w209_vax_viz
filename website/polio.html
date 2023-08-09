@@ -14,13 +14,14 @@
       <link rel="stylesheet" href="./resources/main.css">
       <link rel="stylesheet" href="./resources/bootstrap.min.css">
       <link rel="stylesheet" href="./resources/inspector.css">
+      <link rel="stylesheet" href="./resources/main.css">
       <style>
           #scrolly {
             position: relative;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            background-color: #fff;
+            background-color: #f3f3f3;
             padding: 1rem;
           }
 
@@ -28,25 +29,30 @@
             -webkit-box-flex: 1;
             -ms-flex: 1;
             flex: 1;
+            width: 10%;
           }
 
           article {
             position: relative;
             padding: 0 1rem;
-            max-width: 30rem;
+            max-width: 2.3rem;
           }
 
           .sticky-thing {
+            /* position: absolute; */
+            top: 0;
+            left: 0;
+            bottom: auto;
+            width: 70%;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+
             position: -webkit-sticky;
             position: sticky;
-            width: 30%;
-            margin: 0;
-            background-color: #ffffff;
             z-index: 0;
             top: 12.5vh;
             height: 75vh;
-            /* Center everything inside */
-            /* display: flex; */
             align-items: center;
             justify-content: center;
           }
@@ -60,8 +66,9 @@
 
           .step {
             margin: 0 auto 2rem auto;
-            background-color: #fff;
-            color: #3b3b3b;
+            /* background-color: #fff; */
+            color: steelblue;
+            background-color: steelblue;
           }
 
           .step:last-child {
@@ -69,16 +76,48 @@
           }
 
           .step.is-active {
-            background-color: #f3f3f3;
+            /* background-color: #f3f3f3; */
+            background-color: goldenrod;
             color: #3b3b3b;
           }
 
           .step p {
             text-align: center;
-
-            min-height: 50vh;
+            min-height: 80vh;
             padding: 1rem;
             font-size: 1.5rem;
+          }
+
+          .keypoint {
+            display: -webkit-flex;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            height: 80vh;
+            width:100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+          }
+
+          p.primary {
+            padding: 1rem;
+            font-size: 3rem;
+            font-weight: 20;
+            width:100%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
+          }
+
+          p.secondary {
+            padding: 1rem;
+            font-size: 1.8rem;
+            font-weight: 14;
+            width:80%;
+            color: #000;
+            flexBasis: "90%";
+            float: "center";
           }
 
           #vis.div {
@@ -108,6 +147,15 @@
 
           .tick, text.axisLabel {
             font-size: 14px;
+          }
+
+          .barChartHeader1 {
+            font-size: 18px !important;
+            text-align: center;
+          }
+          .barChartHeader2 {
+            font-size: 16px !important;
+            text-align: center;
           }
 
           #chartHeader {
@@ -180,65 +228,73 @@
       </nav>
     </header>
 
-    <!-- <header data-bs-theme="dark">
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="./"><h2>VaxViz</h2></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="active"><a class="nav-link" href="./"><h3>Home</h3></a></li>
-            <li class=""><a class="nav-link" href="./vaccination.html"><h3>Vaccination</h3></a></li>
-            <li class=""><a class="nav-link" href="./polio.html"><h3>The Story of Polio</h3></a></li>
-            <li class=""><a class="nav-link" href="./pandemic.html"><h3>Impact of Covid</h3></a></li>
-          </ul>
-          </div>
-        </div>
-      </nav>
-    </header> -->
     <main>
         <div class="container py-4">
             <!-- Jumobotron -->
-            <div class="p-5 mb-5 bg-body-tertiary rounded-3">
-                <div class="container-fluid py-5">
-                    <h1 class="display-5 fw-bold">The timeline of Polio</h1>
-                    <p class="col-md-8 fs-4">
-                      Dive into the history of Polio from being a deadly epidemic to largely eradicated.
-                    </p>
-                </div>
+          <div class="p-5 mb-5 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-5">
+              <h1 class="display-5 fw-bold">How did we beat Polio?</h1>
             </div>
+          </div>
         </div>
         <!-- Scrolly -->
         <section id="scrolly">
             <article>
-              <div class="step" data-step="1">
-                <p>
-                  In the early 1900s, polio was one of the most feared diseases in industrialized countries, paralysing thousands of children every year. The introduction of vaccines in the 1950s and 1960s however, led to a drastic reduction and finally eradication in these countries. Let's zoom in and explore the incidence of polio in the United States in 1900s.
-                  <br/>
-                  <br/>
+              <div class="step" data-step="1.1">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="1.2">
+                <!-- Main Intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="2">
+                <!-- First chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="3">
+                <!-- First chart -->
+                <p class="d-flex align-items-center">
                   <span id="chart1_notes"></span>
                 </p>
               </div>
-              <div class="step" data-step="2">
-                <p class="d-flex align-items-center">The US saw multiple outbreaks of the polio epidemic. The 'iron lung' ventilator, which was instrumental in preventing deaths from polio, was invented in 1928. Note the reduction in deaths after the mass production of iron lungs began in 1930s. Even though deaths reduced consistently with the advancements in technology, case numbers came under control only after the introduction of vaccines.
-
-                The Americas were declared polio free in 1994. Let's look at the eradication effectrs in the rest of the world.</p>
-              </div>
-              <div class="step" data-step="3">
-                <p class="d-flex align-items-center">Most countries had achieved eardication of Polio by 2000. It remains endemic only in Pakistan and Afghanistan in 2022. The visual highlights the decade in which a country achieved eradication of Polio. </p>
-              </div>
               <div class="step" data-step="4">
-                <p class="d-flex align-items-center">Wild poliovirus is the most commonly known form of the poliovirus. However, there is another form of polio that can spread within communities: circulating vaccine-derived poliovirus, or cVDPV. While cVDPVs are rare, they have been increasing in recent years due to low immunization rates within communities. In the visual on the right, we explore the correlation between vaccination rates and cVDPV cases as a function of time. The relationship between the spread od cVDPV and vaccination coverage is more complex, as expected. However, the top countries with highest number of cVDPV cases are also the countries with the lowest vaccination rates for Polio.</p>
+                <!-- Second chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="5">
+                <!-- Second chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="6">
+                <!-- Third chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="7">
+                <!-- Third chart -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="8">
+                <!-- Fourth chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="9">
+                <!-- Fourth chart intro -->
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="10">
+                <p class="d-flex align-items-center"></p>
+              </div>
+              <div class="step" data-step="11">
+                <!-- Fourth chart -->
+                <p class="d-flex align-items-center"></p>
               </div>
             </article>
 
-          <!-- <div id="dummy"></div> -->
           <div class="sticky-thing">
             <div id="visControlsTop"></div>
             <div id="visChartHeader" class="chartHeader"></div>
-            <div id="vis"></div>
+            <div id="vis" class="align-items-center"></div>
             <div id="visControlsBottom"></div>
           </div>
           </section>
@@ -251,37 +307,38 @@
           </section>
 
             <!-- Nav Cards -->
-            <div class="container py-4">
-              <div class="row align-items-md-stretch">
-                <div class="col-md-6 mb-4">
-                  <div class="h-100 p-5 text-bg-dark rounded-3">
-                      <h2>Vaccination Rates</h2>
-                      <p>Look at how different countries have adopted vaccines.</p>
-                      <a href="./vaccination.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-                        <h2>The Story of Polio</h2>
-                        <p>A look at the progression of Polio and the role of vaccines in controlling it.</p>
-                        <a href="./polio.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-                        <h2>Impact of Covid</h2>
-                        <p>Explore impact of the pandemic on vaccination.</p>
-                        <a href="./pandemic.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="h-100 p-5 text-bg-dark border rounded-3">
-                      &nbsp;
-                    </div>
+        <div class="container py-4">
+            <div class="row align-items-md-stretch">
+              <div class="col-md-6 mb-4">
+                <div class="h-100 p-5 text-bg-dark rounded-3">
+                    <h2>Home</a></h2>
+                    <p>Back to introduction page.</p>
+                    <a href="./index.html"><button class="btn btn-outline-light" type="button">Browse</button></a>
                 </div>
               </div>
-          </div>
-
+              <div class="col-md-6 mb-4">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                    <h2>Vaccination Rates</a></h2>
+                    <p>Look at how different countries have adopted vaccines.</p>
+                    <a href="./vaccination.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+                    <h2>The Story of Polio</h2>
+                    <p>A look at the progression of Polio and the role of vaccines in controlling it.</p>
+                    <a href="./polio.html"><button class="btn btn-outline-secondary" type="button">Browse Charts</button></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="h-100 p-5 text-bg-dark border rounded-3">
+                    <h2>Impact of Covid</h2>
+                      <p>Explore impact of the pandemic on vaccination.</p>
+                      <a href="./pandemic.html"><button class="btn btn-outline-light" type="button">Browse Charts</button></a>
+                </div>
+              </div>
+            </div>
+        </div>
     </main>
 
     <!-- Scrolly Script -->
@@ -296,10 +353,19 @@
       // initialize the scrollama
       const scroller = scrollama();
 
-      const chartTargetRef = "#vis";
-      const topControlsTargetRef = "#visControlsTop";
-      const bottomControlsTargetRef = "#visControlsBottom";
-      const chartHeaderTargetRef = "#visChartHeader";
+      const mainContentDiv = document.querySelector("#vis");
+      const topControlsDiv = document.querySelector("#visControlsTop");
+      const bottomControlsDiv = document.querySelector("#visControlsBottom");
+      const headerDiv = document.querySelector("#visChartHeader");
+
+
+      function clearAll() {
+        mainContentDiv.innerHTML = "";
+        topControlsDiv.innerHTML = "";
+        bottomControlsDiv.innerHTML = "";
+        headerDiv.innerHTML = "";
+        document.querySelector("#chart1_notes").innerHTML = "";
+      }
 
       // scrollama event handlers
       function handleStepEnter(response) {
@@ -310,27 +376,77 @@
         steps.forEach(step => step.classList.remove('is-active'));
         el.classList.add('is-active');
 
-        clearView(document.querySelector(chartTargetRef));
-        clearView(document.querySelector(topControlsTargetRef));
-        clearView(document.querySelector(bottomControlsTargetRef));
-        clearView(document.querySelector(chartHeaderTargetRef));
+        clearAll();
 
         // update graphic based on step
-        if(el.dataset.step=='1') {
-          createStep1();
+
+        if(el.dataset.step=='1.1') {
+          const lines = [
+            ["In the last century, we have seen Polio transition from a deadly epidemic to being largely eradicated.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='1.2'){
+          //narrative
+          const lines = [
+            ["How did we achieve this? Let's view a timeline of the major outbreaks, and the technological breakthroughs that brought us here.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='2'){
-          createStep2();
+          createPolioTimeline();
         }
-        else if (el.dataset.step=='3'){
-          createStep3();
+         else if (el.dataset.step=='3'){
+            const lines = [
+            ["The invention of the <text style=\"color:darkgreen\">‘iron lung’ ventilator</text> was instrumental in bringing down death rates in future outbreaks.", true],
+            ["Note how the pattern of <text style=\"color:darkgreen\">periodic outbreaks stopped</text> in the post vaccine era. <text style=\"color:red\">War torn countries</text> suffered due to <text style=\"color:red\">insufficient vaccination drives</text>.", true],
+            ["<text style=\"color:red\">Vaccine skepticism</text> has been an obstacle to Polio eradication (Nigeria, 2003.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='4'){
-          createStep4();
+            const lines = [
+            ["Let's zoom in and view how the infection rates changed in the US as a result of the outbreaks and the introduction of vaccines in mid 1900s.", true]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='5'){
+          createLineChart();
         }
-
+        else if (el.dataset.step=='6'){
+          const lines = [
+            ["Note how the <text style=\"color:darkgreen\">death rates were low</text> in the 1952 polio outbreak, as a result of the ‘iron lung’ ventilator.", true],
+            ["Even though the death rates continued to decline with technological advancements, the infection rates saw a steep decline only after vaccines were introduced.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='7'){
+          createChoropleth();
+        }
+        else if (el.dataset.step=='8'){
+          const lines = [
+            ["As of 2022, Pakistan and Afghanistan are the only countries where Polio is <text style=\"color:red\">Endemic</text>.", true],
+            ["However, the fight is not over yet. We are seeing a <text style=\"color:red\">rise in vaccine derived Polio cases</text> in some countries which have suffered from low Polio vaccination rates in the past.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+         else if (el.dataset.step=='9'){
+          const lines = [
+            ["In the table below, we observe that there is indeed a <text style=\"color:red\">large overlap</text> in the top countries with highest cVDPV cases and the top countries with lowest Polio vaccination rates.", true],
+            ["The countries common to both columns are highlighted in pink. While it is hard to find a clear correlation between cVDPV cases and vaccination rates, it is evident that low vaccination rates within communities make it easier for vaccine derived polioviruses to spread.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
+        else if (el.dataset.step=='10'){
+          createVaccineDerivedPolioTable();
+        }
+        else if (el.dataset.step=='11'){
+          const lines = [
+            ["To conclude, continued effort is needed to further increase vaccination rates all over the world.", true],
+            ["<text style=\"color:red\">Vaccine skepticism, conflict, and poor infrastructure</text> have led to poor vaccination rates in some parts of the world.", false]
+          ];
+          mainContentDiv.innerHTML = generateTextDiv(lines);
+        }
       }
 
       function init() {
@@ -338,96 +454,74 @@
           .setup({
             step: "#scrolly article .step",
             offset: .6,
-            debug: false
+            debug: false,
+            progress: true
           })
           .onStepEnter(handleStepEnter);
 
         // setup resize event
         window.addEventListener("resize", scroller.resize);
       }
-
       // Observable related scripts
-      // Import runtime and other Observable objects for first chart
-      import define_01 from "./resources/polio_01/index.js";
-      import {Runtime as Runtime_01, Inspector as Inspector_01} from "./resources/polio_01/runtime.js";
+      // Import runtime and other Observable objects for first line chart
+      import define_timeline from "./resources/polio_01/index.js";
+      import {Runtime as Runtime_timeline, Inspector as Inspector_timeline} from "./resources/polio_01/runtime.js";
 
-      // Import runtime and other Observable objects for second chart
-      import define_02 from "./resources/polio_02/index.js";
-      import {Runtime as Runtime_02, Inspector as Inspector_02} from "./resources/polio_02/runtime.js";
+      // Import runtime and other Observable objects for second line chart
+      import define_linechart from "./resources/polio_02/index.js";
+      import {Runtime as Runtime_lineChart, Inspector as Inspector_lineChart} from "./resources/polio_02/runtime.js";
 
-      // Import runtime and other Observable objects for third chart
-      import define_03 from "./resources/polio_03/index.js";
-      import {Runtime as Runtime_03, Inspector as Inspector_03} from "./resources/polio_03/runtime.js";
+      // Import runtime and other Observable objects for packed circle chart
+      import define_choropleth from "./resources/polio_03/index.js";
+      import {Runtime as Runtime_choropleth, Inspector as Inspector_choropleth} from "./resources/polio_03/runtime.js";
 
-      // Import runtime and other Observable objects for third chart
-      import define_04 from "./resources/polio_04/index.js";
-      import {Runtime as Runtime_04, Inspector as Inspector_04} from "./resources/polio_04/runtime.js";
+      // Import runtime and other Observable objects for geo chart
+      import define_table from "./resources/polio_04/index.js";
+      import {Runtime as Runtime_table, Inspector as Inspector_table} from "./resources/polio_04/runtime.js";
 
-      function clearView(targetDiv) {
-        targetDiv.innerHTML = "";
 
-        document.querySelector("#chart1_notes").innerHTML = "";
+      function generateTextDiv(lines) {
+        const merged = lines.map(param => {
+          const [line, primary] = param;
+          const className = primary?"primary":"secondary";
+          return `<p class="${className}">${line}</p>`;
+        }).join("\n");
+        return `<div class="keypoint">${merged}</div>`;
       }
 
-
-      function createStep1() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
-
-       new Runtime_01().module(define_01, name => {
-        if (name === "title") return new Inspector_01(chartHeaderTargetDiv);
-        if (name === "timeline") return new Inspector_01(chartTargetDiv);
+        function createPolioTimeline() {
+       new Runtime_timeline().module(define_timeline, name => {
+        if (name === "title") return new Inspector_timeline(headerDiv);
+        if (name === "timeline") return new Inspector_timeline(mainContentDiv);
       });
      }
 
-
-      function createStep2() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-
-        // Load the chart
-        (new Runtime_02()).module(define_02, name => {
-          if (name === "svg") return new Inspector_02(chartTargetDiv);});
+      function createLineChart() {
+        new Runtime_lineChart().module(define_linechart, name => {
+        if (name === "title") return new Inspector_lineChart(headerDiv);
+        if (name === "svg") return new Inspector_lineChart(mainContentDiv);
+      });
       }
 
 
-      function createStep3() {
-        const chartTargetDiv = document.querySelector(chartTargetRef);
-        const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
-
-        new Runtime_03().module(define_03, name => {
-          if (name === "title") return new Inspector_03(chartHeaderTargetDiv);
-          if (name === "callout") return true;
-          if (name === "tooltip_string") return true;
-          if (name === "valuemap") return true;
-          if (name === "titlemap") return true;
-          if (name === "chart") return new Inspector_03(chartTargetDiv);
-          return ["callout", "tooltip_string", "valuemap", 'titlemap'].includes(name);
+      function createChoropleth() {
+        new Runtime_choropleth().module(define_choropleth, name => {
+        if (name === "title") return new Inspector_choropleth(headerDiv);
+        if (name === "chart") return new Inspector_choropleth(mainContentDiv);
+        if (name === "callout") return true;
+        if (name === "tooltip_string") return true;
+        if (name === "valuemap") return true;
+        if (name === "titlemap") return true;
+        return ["callout", "tooltip_string", "valuemap", 'titlemap'].includes(name);
         });
       }
 
 
-      function createStep4() {
-       const chartTargetDiv = document.querySelector(chartTargetRef);
-       const chartHeaderTargetDiv = document.querySelector(chartHeaderTargetRef);
-        const topControlsTargetDiv = document.querySelector(topControlsTargetRef);
-
-        const divSel1 = document.createElement('div');
-        divSel1.style.flexBasis = "50%";
-
-        const divSel2 = document.createElement('div');
-        divSel2.style.flexBasis = "50%";
-
-        topControlsTargetDiv.appendChild(divSel1);
-        topControlsTargetDiv.appendChild(divSel2);
-
-        // Load the chart
-        const rt = (new Runtime_04()).module(define_04, name => {
-          if (name === "viewof country") return new Inspector_04(divSel1);
-          if (name === "viewof replay") return new Inspector_04(divSel2);
-          if (name === "title") return new Inspector_04(chartHeaderTargetDiv);
-          if (name === "chart") return new Inspector_04(chartTargetDiv);
-          return ["filtered_data"].includes(name);
-        });
+      function createVaccineDerivedPolioTable() {
+        new Runtime_table().module(define_table, name => {
+        if (name === "title") return new Inspector_table(headerDiv);
+        if (name === "chart") return new Inspector_table(mainContentDiv);
+      });
       }
 
       // kick things off
