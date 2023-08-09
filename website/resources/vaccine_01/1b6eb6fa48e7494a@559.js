@@ -9,9 +9,10 @@ md`# Vaccination Coverage`
 function _year(Scrubber,years){return(
 Scrubber(years, {
   initial: years + 1,
-  autoplay: true,
-  delay: 2000,
-  default: 1997
+  autoplay: false,
+  loop: false,
+  delay: 1000,
+  initial: 1997
 })
 )}
 
