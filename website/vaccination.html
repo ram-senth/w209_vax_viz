@@ -373,21 +373,24 @@
           const lines = [
           ["Here's an exploration of Vaccination Rates across the world from <text style=\"color:red\">1997 to 2021</text> for a total of <text style=\"color:blue\">14</text> different vaccines.",true],
           ["We would be analyzing the Vaccination Rates using two scenarios:",true],
-          ["1. <text style=\"color:orange\">Percentage Vaccination Coverage</text>",true],
-          ["2. <text style=\"color:orange\">Absolute Number of Vaccinated Children</text>",true]          ];
+          ["1. <text style=\"color:green\">Percentage Vaccination Coverage</text>",true],
+          ["2. <text style=\"color:green\">Absolute Number of Vaccinated Children</text>",true]          ];
           mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='1.2'){
           //narrative
           const lines = [
-            ["In order to understand how vaccination has been able to tackle various diseases in different parts of the globe, it is important to visualize the percentage of reported vaccination coverage.",true]
+            ["Do countries having a higher child population have a higher percentage of coverage or do we have a different story?",true],
+            ["Keep scrolling through to find out!",true]
           ];
           mainContentDiv.innerHTML = generateTextDiv(lines);
         }
         else if (el.dataset.step=='2'){
           const lines = [
-            ["Percentage Coverage is the <text style=\"color:orange\">percentage of children</text> in a population who have been vaccinated against a particular disease.", true],
-            ["The <text style=\"color:red\">DTP3</text> vaccine coverage is considered to be the best measure for assessing effectiveness of child immunization programs. Other vaccines and metrics are available for exploration.", false]
+          ["<text style=\"color:green\">Percentage Vaccination Coverage</text>",true],
+          ["In order to understand how vaccination has been able to tackle various diseases in different parts of the globe, it is important to visualize the percentage of reported vaccination coverage.",true]
+          ["Percentage Coverage is the <text style=\"color:green\">percentage of children</text> in a population who have been vaccinated against a particular disease.", true],
+          ["The <text style=\"color:red\">DTP3</text> vaccine coverage is considered to be the best measure for assessing effectiveness of child immunization programs. Other vaccines and metrics are available for exploration.", false]
           ];
           mainContentDiv.innerHTML = generateTextDiv(lines);
         }
@@ -406,7 +409,7 @@
         }
         else if (el.dataset.step=='6'){
           const lines = [
-          ["Moving forward, let's view the next visualization which compares the <text style=\"color:red\"> Percentage of Vaccination Coverage</text> with <text style=\"color:red\">Absolute Number of Vaccianted Children.</text>",true]
+          ["Moving forward, let's view the next visualization which compares the <text style=\"color:red\"> Percentage of Vaccination Coverage</text> with <text style=\"color:red\">Absolute Number of Vaccinated Children.</text>",true]
           ];
           mainContentDiv.innerHTML = generateTextDiv(lines);
         }
@@ -415,6 +418,7 @@
         }
         else if (el.dataset.step=='8'){
           const lines = [
+            ["<text style=\"color:red\">What do we conclude?</text>",true]
             ["Developing countries with large populations of children contribute significantly to the number of unvaccinated children, even when they achieve relatively high rates of immunization coverage.", true],
             ["For example, India has achieved 85% coverage of DTP3.However, in 2021, there were still about 3.3 million unvaccinated or under-vaccinated children in India. This is because India has a large cohort of 23 million surviving infants, and even a small percentage of unvaccinated children can represent a significant number.", false],
             ["Efforts to raise global immunization levels will require a strong focus on the countries where the highest numbers of unvaccinated children live.",true], 
