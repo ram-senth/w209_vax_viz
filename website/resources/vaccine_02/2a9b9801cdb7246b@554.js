@@ -306,7 +306,10 @@ function _callout(){return(
 
 function _year_filtered_data(newdata,year2){return(
 newdata.filter(
-  (d) => (d.Year == year2) & (d.Country != "C�te d'Ivoire")
+  (d) =>
+    (d.Year == year2) &
+    (d.Country != "C�te d'Ivoire") &
+    (d.ChildrenVaccinated != 0)
 )
 )}
 
