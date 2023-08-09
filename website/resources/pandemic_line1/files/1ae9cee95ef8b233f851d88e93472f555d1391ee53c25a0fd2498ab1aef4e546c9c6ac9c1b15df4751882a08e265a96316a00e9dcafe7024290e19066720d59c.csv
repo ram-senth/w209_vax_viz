@@ -1,6 +1,6 @@
 key,highlight,next_key
-2020::REG_GLOBAL::DTP3,"2020 saw an increase in\nnumber of children without DTP3\nby over 3 million worldwide.",2021::REG_GLOBAL::DTP3
-2021::REG_GLOBAL::DTP3,"2021 saw another\nincrease by over\n2 million worldwide",2019::AFR::DTP3
+2020::REG_GLOBAL::DTP3,"2020 saw an increase in number\nof children without DTP3 by over\n3 million worldwide.",2021::REG_GLOBAL::DTP3
+2021::REG_GLOBAL::DTP3,"2021 saw another increase by over\n2 million worldwide",2019::AFR::DTP3
 2019::AFR::DTP3,"Africa had much lower coverage % even before\nand it got worse during the pandemic.",2020::SEAR::DTP3
 2020::SEAR::DTP3,"Until 2019 South East Asia and E. Mediterranean region had\nsimilar number of unvaccinated children. However, S.E Asia\nhad a lower percentage due to its larger population. This\ntrend reversed during and after pandemic. Now, S.E Asia has\nhigher number as well as higher percentage.",2020::EMR::DTP3
 2020::EMR::DTP3,"E. Mediterranean region saw a slight impact in 2020\nfrom which it recovered by 2021.",

@@ -84,7 +84,7 @@ function _chart(d3,cWidth,cHeight,data,iWidth,iHeight)
 
   const innerColorScale = d3.scaleOrdinal(
     [false, true],
-    ["#fbb4ae", "#ccebc5"]
+    ["#fee0d2", "#41ab5d"]
   );
   // Append the nodes.
   const node = gDrawing
