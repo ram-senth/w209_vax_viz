@@ -47,10 +47,10 @@ function _chart(d3,width,height,common_countries)
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
-    .attr("style", "max-width: 100%; height: auto;");
+    .attr("style", "max-width: 100%; height: auto;margin: auto;");
 
   let thead = table.append("thead");
-  let tbody = table.append("tbody");
+  let tbody = table.append("tbody").style("font-size", "12px");
 
   thead
     .append("tr")
@@ -58,6 +58,8 @@ function _chart(d3,width,height,common_countries)
     .data(rowLabel)
     .enter()
     .append("th")
+    .style("font-size", "13px")
+    .style("text-align", "center")
     .text(function (d) {
       return d;
     })
@@ -79,6 +81,7 @@ function _chart(d3,width,height,common_countries)
         return "lightblue";
       }
     })
+    .style("padding-left", "8px")
     .text(function (d, i) {
       if (i === 1) {
         d = d / 100;
@@ -100,7 +103,7 @@ function _height(){return(
 )}
 
 function _width(){return(
-1275
+800
 )}
 
 export default function define(runtime, observer) {
