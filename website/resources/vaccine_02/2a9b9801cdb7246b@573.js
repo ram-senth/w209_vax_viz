@@ -39,12 +39,12 @@ select({
 })
 )}
 
-function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smallest1,centroid)
+function _chart2(year_filtered_data,countrymap,d3,marginTop,width,height,topojson,world,largest1,smallest1,centroid)
 {
   // Join the geographic shapes and the population data.
-  const width = 1200;
-  const marginTop = 46;
-  const height = 700 + marginTop;
+  // const width = 1100;
+  // const marginTop = 46;
+  // const height = 700 + marginTop;
 
   const data = year_filtered_data.map((d) => ({
     ...d,
@@ -94,7 +94,7 @@ function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smalle
 
   svg
     .append("g")
-    .attr("transform", "translate(350,40)")
+    .attr("transform", "translate(320,40)")
     .style("font", "20px sans-serif")
     .style("align", "centre")
     .style("fill", "black")
@@ -108,7 +108,7 @@ function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smalle
     .selectAll("rect")
     .data(largest1)
     .join("rect")
-    .attr("x", 295)
+    .attr("x", 225)
     .attr("y", 72)
     .attr("rx", 10)
     .attr("ry", 10)
@@ -119,7 +119,7 @@ function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smalle
 
   svg
     .append("g")
-    .attr("transform", "translate(300,90)")
+    .attr("transform", "translate(280,90)")
     .style("font", "16px sans-serif")
     .style("align", "centre")
     .style("fill", "black")
@@ -133,7 +133,7 @@ function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smalle
     .selectAll("rect")
     .data(smallest1)
     .join("rect")
-    .attr("x", 605)
+    .attr("x", 595)
     .attr("y", 72)
     .attr("rx", 10)
     .attr("ry", 10)
@@ -144,7 +144,7 @@ function _chart2(year_filtered_data,countrymap,d3,topojson,world,largest1,smalle
 
   svg
     .append("g")
-    .attr("transform", "translate(610,90)")
+    .attr("transform", "translate(665,90)")
     .style("font", "16px sans-serif")
     .style("fill", "black")
     .selectAll("text")
@@ -306,7 +306,10 @@ function _callout(){return(
 
 function _year_filtered_data(newdata,year2){return(
 newdata.filter(
-  (d) => (d.Year == year2) & (d.Country != "C�te d'Ivoire")
+  (d) =>
+    (d.Year == year2) &
+    (d.Country != "C�te d'Ivoire") &
+    (d.ChildrenVaccinated != 0)
 )
 )}
 
@@ -351,7 +354,7 @@ countrymap.get(largest1[0].Country)
 )}
 
 function _width(){return(
-1200
+1100
 )}
 
 function _marginTop(){return(
@@ -392,7 +395,7 @@ export default function define(runtime, observer) {
   main.variable(observer("year2")).define("year2", ["Generators", "viewof year2"], (G, _) => G.input(_));
   main.variable(observer("viewof selected_vaccine2")).define("viewof selected_vaccine2", ["select"], _selected_vaccine2);
   main.variable(observer("selected_vaccine2")).define("selected_vaccine2", ["Generators", "viewof selected_vaccine2"], (G, _) => G.input(_));
-  main.variable(observer("chart2")).define("chart2", ["year_filtered_data","countrymap","d3","topojson","world","largest1","smallest1","centroid"], _chart2);
+  main.variable(observer("chart2")).define("chart2", ["year_filtered_data","countrymap","d3","marginTop","width","height","topojson","world","largest1","smallest1","centroid"], _chart2);
   main.variable(observer("data")).define("data", ["year_filtered_data","countrymap"], _data);
   main.variable(observer("largest1")).define("largest1", ["d3","year_filtered_data"], _largest1);
   main.variable(observer("smallest1")).define("smallest1", ["d3","year_filtered_data"], _smallest1);
